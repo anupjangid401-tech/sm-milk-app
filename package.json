@@ -12,11 +12,15 @@
     "@capacitor/android": "^8.5.0",
     "@capacitor/cli": "^8.5.0",
     "@capacitor/core": "^8.5.0",
+    "@tailwindcss/postcss": "^4.3.3",
+    "autoprefixer": "^10.5.4",
     "framer-motion": "^12.38.0",
     "lucide-react": "^1.11.0",
     "next": "16.2.4",
+    "postcss": "^8.5.26",
     "react": "19.2.4",
-    "react-dom": "19.2.4"
+    "react-dom": "19.2.4",
+    "tailwindcss": "^4.3.3"
   },
   "devDependencies": {
     "@types/node": "^20",
