@@ -1,0 +1,127 @@
+WORKBOOK: DAILY HIRED VEHICLES & DG STATEMENT 01062026.xlsx
+SHEETS (2): ['BLANK FORMAT', 'SUMMARY BLANK FORMAT']
+
+==================================================
+SHEET: 'BLANK FORMAT' (Rows: 1249, Cols: 169)
+==================================================
+
+Row  1: ['MS CHOUHAN INFRAVENTURES PVT. LTD.', '', '', '', '', '', '', '', '', '', '', '', '', '']
+Row  3: ['DAILY HIRED VEHICLES & DG STATEMENT FOR THE MONTH OF ................... 2026', '', '', '', '', '', '', '', '', '', '', '', '', '']
+Row  4: ['00-00-2026', '', '', '', '', '', '', '', '', '', '', '', '', '']
+Row  5: ['SR. NO.', 'NAME OF THE SITE', 'VEHICLE NO.', 'VEHICLE TYPE / NAME', "VEHICLE OWNER'S NAME", "DRIVER'S NAME", '1', '', '', '', '', '2', '', '']
+Row  6: ['', '', '', '', '', '', 'DIESEL ISSUED QTY. (IN LTRS.)', 'ODOMETER READING', '', 'TOTAL KM (RUNNING)', 'AVERAGE (KM/L)', 'DIESEL ISSUED QTY. (IN LTRS.)', 'ODOMETER READING', '']
+Row  7: ['', '', '', '', '', '', '', 'OPENING (START)', 'CLOSING (END)', '', '', '', 'OPENING (START)', 'CLOSING (END)']
+Row  8: ['1', 'BAIYA', '', '', '', '', '', '', '', '', '#DIV/0!', '', '', '']
+Row  9: ['2', 'BAIYA', '', '', '', '', '', '', '', '', '#DIV/0!', '', '', '']
+
+--- DATA ROWS SAMPLE (Rows 8-15) ---
+Row  8: ['1', 'BAIYA', '', '', '', '', '', '', '', '', '#DIV/0!', '', '', '']
+Row  9: ['2', 'BAIYA', '', '', '', '', '', '', '', '', '#DIV/0!', '', '', '']
+Row 10: ['3', 'BAIYA', '', '', '', '', '', '', '', '', '#DIV/0!', '', '', '']
+Row 11: ['4', 'BAIYA', '', '', '', '', '', '', '', '', '#DIV/0!', '', '', '']
+Row 12: ['5', 'BAIYA', '', '', '', '', '', '', '', '', '#DIV/0!', '', '', '']
+Row 13: ['6', 'BAIYA', '', '', '', '', '', '', '', '', '#DIV/0!', '', '', '']
+Row 14: ['7', 'BAIYA', '', '', '', '', '', '', '', '', '#DIV/0!', '', '', '']
+Row 15: ['8', 'BAIYA', '', '', '', '', '', '', '', '', '#DIV/0!', '', '', '']
+
+--- TOTALS / BOTTOM ROWS ---
+Row 1244 VALUES  : ['107', '', '', '', '', '', '', '', '', '', '#DIV/0!', '', '', '', '', '#DIV/0!', '', '', '']
+Row 1244 FORMULAS: ['107', '', '', '', '', '', '', '', '', '=I1244-H1244', '=J1244/G1244', '', '', '', '=N1244-M1244', '=O1244/L1244', '', '', '']
+
+Row 1245 VALUES  : ['108', '', '', '', '', '', '', '', '', '', '#DIV/0!', '', '', '', '', '#DIV/0!', '', '', '']
+Row 1245 FORMULAS: ['108', '', '', '', '', '', '', '', '', '=I1245-H1245', '=J1245/G1245', '', '', '', '=N1245-M1245', '=O1245/L1245', '', '', '']
+
+Row 1246 VALUES  : ['109', '', '', '', '', '', '', '', '', '', '#DIV/0!', '', '', '', '', '#DIV/0!', '', '', '']
+Row 1246 FORMULAS: ['109', '', '', '', '', '', '', '', '', '=I1246-H1246', '=J1246/G1246', '', '', '', '=N1246-M1246', '=O1246/L1246', '', '', '']
+
+Row 1247 VALUES  : ['110', '', '', '', '', '', '', '', '', '', '#DIV/0!', '', '', '', '', '#DIV/0!', '', '', '']
+Row 1247 FORMULAS: ['110', '', '', '', '', '', '', '', '', '=I1247-H1247', '=J1247/G1247', '', '', '', '=N1247-M1247', '=O1247/L1247', '', '', '']
+
+Row 1248 VALUES  : ['111', '', '', '', '', '', '', '', '', '', '#DIV/0!', '', '', '', '', '#DIV/0!', '', '', '']
+Row 1248 FORMULAS: ['111', '', '', '', '', '', '', '', '', '=I1248-H1248', '=J1248/G1248', '', '', '', '=N1248-M1248', '=O1248/L1248', '', '', '']
+
+Row 1249 VALUES  : ['TOTAL', '', '', '', '', '', '', '', '', '', '#DIV/0!', '', '', '', '', '#DIV/0!', '', '', '']
+Row 1249 FORMULAS: ['TOTAL', '', '', '', '', '', '=SUM(G1138:G1248)', '=SUM(H1138:H1248)', '=SUM(I1138:I1248)', '=SUM(J1138:J1248)', '=J1249/G1249', '=SUM(L1138:L1248)', '=SUM(M1138:M1248)', '=SUM(N1138:N1248)', '=SUM(O1138:O1248)', '=O1249/L1249', '=SUM(Q1138:Q1248)', '=SUM(R1138:R1248)', '=SUM(S1138:S1248)']
+
+
+TOTAL FORMULA ERROR CELLS IN 'BLANK FORMAT': 39424
+  Cell K8: Value='#DIV/0!', Formula='=J8/G8'
+  Cell P8: Value='#DIV/0!', Formula='=O8/L8'
+  Cell U8: Value='#DIV/0!', Formula='=T8/Q8'
+  Cell Z8: Value='#DIV/0!', Formula='=Y8/V8'
+  Cell AE8: Value='#DIV/0!', Formula='=AD8/AA8'
+  Cell AJ8: Value='#DIV/0!', Formula='=AI8/AF8'
+  Cell AO8: Value='#DIV/0!', Formula='=AN8/AK8'
+  Cell AT8: Value='#DIV/0!', Formula='=AS8/AP8'
+  Cell AY8: Value='#DIV/0!', Formula='=AX8/AU8'
+  Cell BD8: Value='#DIV/0!', Formula='=BC8/AZ8'
+  Cell BI8: Value='#DIV/0!', Formula='=BH8/BE8'
+  Cell BN8: Value='#DIV/0!', Formula='=BM8/BJ8'
+  Cell BS8: Value='#DIV/0!', Formula='=BR8/BO8'
+  Cell BX8: Value='#DIV/0!', Formula='=BW8/BT8'
+  Cell CC8: Value='#DIV/0!', Formula='=CB8/BY8'
+  Cell CH8: Value='#DIV/0!', Formula='=CG8/CD8'
+  Cell CM8: Value='#DIV/0!', Formula='=CL8/CI8'
+  Cell CR8: Value='#DIV/0!', Formula='=CQ8/CN8'
+  Cell CW8: Value='#DIV/0!', Formula='=CV8/CS8'
+  Cell DB8: Value='#DIV/0!', Formula='=DA8/CX8'
+
+
+==================================================
+SHEET: 'SUMMARY BLANK FORMAT' (Rows: 17, Cols: 5)
+==================================================
+
+Row  1: ['MS CHOUHAN INFRAVENTURES PVT. LTD.', '', '', '', '']
+Row  3: ['HIRED VEHICLES & DG - DIESEL CONSUMPTION SUMMARY FOR THE MONTH OF ................... 2026', '', '', '', '']
+Row  4: ['00-00-2026', '00:00:00', '', '', '']
+Row  5: ['SR. NO.', 'NAME OF THE SITE', 'TOTAL DIESEL ISSUED ( CONSUMPTION ) QTY. ( IN LTRS. )', 'TOTAL KM ( RUNNING )', 'AVERAGE ( KM/L )']
+Row  6: ['1', 'BAIYA', '', '', '#DIV/0!']
+Row  7: ['2', 'DANGRI', '', '', '#DIV/0!']
+Row  8: ['3', 'GUDDI', '', '', '#DIV/0!']
+Row  9: ['4', 'NEEMBA', '', '', '#DIV/0!']
+
+--- DATA ROWS SAMPLE (Rows 8-15) ---
+Row  8: ['3', 'GUDDI', '', '', '#DIV/0!']
+Row  9: ['4', 'NEEMBA', '', '', '#DIV/0!']
+Row 10: ['5', '425 MW KHAVDA ( A 6 )', '', '', '#DIV/0!']
+Row 11: ['6', '442 MW KHAVDA ( S 5 )', '', '', '#DIV/0!']
+Row 12: ['7', 'KHAVDA PLANT 1, 2, 4', '', '', '#DIV/0!']
+Row 13: ['8', 'KHAVDA PLANT 3', '', '', '#DIV/0!']
+Row 14: ['9', 'KHAVDA PLANT 5, 6', '', '', '#DIV/0!']
+Row 15: ['10', 'KHAVDA PLANT 7, 8', '', '', '#DIV/0!']
+
+--- TOTALS / BOTTOM ROWS ---
+Row 12 VALUES  : ['7', 'KHAVDA PLANT 1, 2, 4', '', '', '#DIV/0!']
+Row 12 FORMULAS: ['7', 'KHAVDA PLANT 1, 2, 4', "='BLANK FORMAT'!FF797", "='BLANK FORMAT'!FI797", "='BLANK FORMAT'!FJ797"]
+
+Row 13 VALUES  : ['8', 'KHAVDA PLANT 3', '', '', '#DIV/0!']
+Row 13 FORMULAS: ['8', 'KHAVDA PLANT 3', "='BLANK FORMAT'!FF910", "='BLANK FORMAT'!FI910", "='BLANK FORMAT'!FJ910"]
+
+Row 14 VALUES  : ['9', 'KHAVDA PLANT 5, 6', '', '', '#DIV/0!']
+Row 14 FORMULAS: ['9', 'KHAVDA PLANT 5, 6', "='BLANK FORMAT'!FF1023", "='BLANK FORMAT'!FI1023", "='BLANK FORMAT'!FJ1023"]
+
+Row 15 VALUES  : ['10', 'KHAVDA PLANT 7, 8', '', '', '#DIV/0!']
+Row 15 FORMULAS: ['10', 'KHAVDA PLANT 7, 8', "='BLANK FORMAT'!FF1136", "='BLANK FORMAT'!FI1136", "='BLANK FORMAT'!FJ1136"]
+
+Row 16 VALUES  : ['11', '', '', '', '#DIV/0!']
+Row 16 FORMULAS: ['11', '', "='BLANK FORMAT'!FF1249", "='BLANK FORMAT'!FI1249", "='BLANK FORMAT'!FJ1249"]
+
+Row 17 VALUES  : ['T  O  T  A  L', '', '', '', '#DIV/0!']
+Row 17 FORMULAS: ['T  O  T  A  L', '', '=SUM(C6:C16)', '=SUM(D6:D16)', '=D17/C17']
+
+
+TOTAL FORMULA ERROR CELLS IN 'SUMMARY BLANK FORMAT': 12
+  Cell E6: Value='#DIV/0!', Formula='='BLANK FORMAT'!FJ119'
+  Cell E7: Value='#DIV/0!', Formula='='BLANK FORMAT'!FJ232'
+  Cell E8: Value='#DIV/0!', Formula='='BLANK FORMAT'!FJ345'
+  Cell E9: Value='#DIV/0!', Formula='='BLANK FORMAT'!FJ458'
+  Cell E10: Value='#DIV/0!', Formula='='BLANK FORMAT'!FJ571'
+  Cell E11: Value='#DIV/0!', Formula='='BLANK FORMAT'!FJ684'
+  Cell E12: Value='#DIV/0!', Formula='='BLANK FORMAT'!FJ797'
+  Cell E13: Value='#DIV/0!', Formula='='BLANK FORMAT'!FJ910'
+  Cell E14: Value='#DIV/0!', Formula='='BLANK FORMAT'!FJ1023'
+  Cell E15: Value='#DIV/0!', Formula='='BLANK FORMAT'!FJ1136'
+  Cell E16: Value='#DIV/0!', Formula='='BLANK FORMAT'!FJ1249'
+  Cell E17: Value='#DIV/0!', Formula='=D17/C17'
+
+

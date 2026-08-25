@@ -17,10 +17,11 @@ import SettingsModal from "@/components/modals/SettingsModal";
 
 import { Member, MilkPurchaseRecord, MilkSaleRecord, ItemSaleRecord, ShiftType } from "@/lib/types";
 import { INITIAL_MEMBERS, INITIAL_PURCHASES, INITIAL_SALES, INITIAL_ITEM_SALES } from "@/lib/initialData";
-import { Smartphone, RefreshCw } from "lucide-react";
+import { Smartphone, RefreshCw, Sparkles, Monitor } from "lucide-react";
 
 export default function Home() {
   const [shift, setShift] = useState<ShiftType>("MORNING");
+  const [viewMode, setViewMode] = useState<'desktop' | 'mobile'>('desktop');
   const [activeModal, setActiveModal] = useState<string | null>(null);
 
   const [members, setMembers] = useState<Member[]>(INITIAL_MEMBERS);
@@ -31,10 +32,10 @@ export default function Home() {
   // Load state from localStorage on client load
   useEffect(() => {
     try {
-      const savedMembers = localStorage.getItem("vdc_members");
-      const savedPurchases = localStorage.getItem("vdc_purchases");
-      const savedSales = localStorage.getItem("vdc_sales");
-      const savedItemSales = localStorage.getItem("vdc_item_sales");
+      const savedMembers = localStorage.getItem("sm_members");
+      const savedPurchases = localStorage.getItem("sm_purchases");
+      const savedSales = localStorage.getItem("sm_sales");
+      const savedItemSales = localStorage.getItem("sm_item_sales");
 
       if (savedMembers) setMembers(JSON.parse(savedMembers));
       if (savedPurchases) setPurchases(JSON.parse(savedPurchases));
@@ -48,81 +49,105 @@ export default function Home() {
   // Save to localStorage when state changes
   const saveMembers = (newMembers: Member[]) => {
     setMembers(newMembers);
-    localStorage.setItem("vdc_members", JSON.stringify(newMembers));
+    localStorage.setItem("sm_members", JSON.stringify(newMembers));
   };
 
   const savePurchases = (record: MilkPurchaseRecord) => {
     const updated = [record, ...purchases];
     setPurchases(updated);
-    localStorage.setItem("vdc_purchases", JSON.stringify(updated));
+    localStorage.setItem("sm_purchases", JSON.stringify(updated));
   };
 
   const saveSales = (record: MilkSaleRecord) => {
     const updated = [record, ...sales];
     setSales(updated);
-    localStorage.setItem("vdc_sales", JSON.stringify(updated));
+    localStorage.setItem("sm_sales", JSON.stringify(updated));
   };
 
   const saveItemSales = (record: ItemSaleRecord) => {
     const updated = [record, ...itemSales];
     setItemSales(updated);
-    localStorage.setItem("vdc_item_sales", JSON.stringify(updated));
+    localStorage.setItem("sm_item_sales", JSON.stringify(updated));
   };
 
   const handleToggleShift = () => {
     setShift((prev) => (prev === "MORNING" ? "EVENING" : "MORNING"));
   };
 
+  const handleToggleViewMode = () => {
+    setViewMode((prev) => (prev === "desktop" ? "mobile" : "desktop"));
+  };
+
   return (
-    <div className="min-h-screen bg-slate-950 text-slate-100 flex flex-col justify-center items-center py-0 sm:py-6">
-      {/* Mobile App Container Frame */}
-      <div className="app-container w-full min-h-screen sm:min-h-[840px] sm:h-[840px] sm:rounded-[36px] sm:overflow-hidden sm:border sm:border-white/15">
-        
+    <div className="min-h-screen bg-slate-950 text-slate-100 flex flex-col justify-center items-center py-0 sm:py-4">
+      {/* Container Wrapper: Full width desktop or phone frame based on viewMode */}
+      <div
+        className={`w-full transition-all duration-500 ease-in-out relative flex flex-col ${
+          viewMode === 'mobile'
+            ? 'max-w-[480px] min-h-screen sm:min-h-[850px] sm:h-[850px] sm:rounded-[36px] sm:overflow-hidden sm:border sm:border-white/20 sm:shadow-2xl sm:shadow-cyan-500/10'
+            : 'max-w-6xl min-h-screen sm:min-h-[900px] sm:rounded-[28px] sm:overflow-hidden sm:border sm:border-white/15 sm:shadow-2xl'
+        }`}
+      >
         {/* App Header */}
         <MilkHeader
           shift={shift}
+          viewMode={viewMode}
           onToggleShift={handleToggleShift}
-          onOpenHelp={() => setActiveModal("sm-settings")}
+          onToggleViewMode={handleToggleViewMode}
+          onOpenSettings={() => setActiveModal("sm-settings")}
         />
 
-        {/* Scrollable Dashboard Body */}
+        {/* Dashboard Main Content Area */}
         <div className="flex-1 overflow-y-auto no-scrollbar pb-16">
-          {/* Quick Metrics Summary */}
+          {/* Quick Metrics Cards */}
           <QuickStats purchases={purchases} memberCount={members.length} />
 
-          {/* Grid Title */}
+          {/* Section Header */}
           <div className="px-4 py-2 flex items-center justify-between">
-            <h2 className="text-xs font-bold uppercase tracking-wider text-slate-400">
-              डेयरी सेवाएं एवं रिपोर्ट (Services & Reports)
-            </h2>
-            <span className="text-[10px] text-cyan-400 bg-cyan-500/10 px-2 py-0.5 rounded-full border border-cyan-500/20">
-              12 Modules
+            <div className="flex items-center gap-2">
+              <Sparkles className="w-4 h-4 text-cyan-400" />
+              <h2 className="text-xs font-extrabold uppercase tracking-widest text-slate-300">
+                डेयरी सेवाएं एवं नियंत्रण (Services & Operations)
+              </h2>
+            </div>
+            <span className="text-[10px] font-bold text-cyan-300 bg-cyan-500/15 px-2.5 py-1 rounded-full border border-cyan-500/30">
+              12 Active Modules
             </span>
           </div>
 
-          {/* 12 Modern Glassmorphism Modules */}
+          {/* 12 Luxury Dashboard Module Cards */}
           <ModuleGrid onSelectModule={(id) => setActiveModal(id)} />
         </div>
 
-        {/* Bottom App Footer Bar */}
-        <div className="glass-nav absolute bottom-0 left-0 right-0 py-2.5 px-4 flex items-center justify-between border-t border-white/10 text-xs">
-          <div className="flex items-center gap-2 text-slate-400">
+        {/* Bottom App Status Bar */}
+        <div className="glass-nav absolute bottom-0 left-0 right-0 py-2.5 px-4 flex items-center justify-between border-t border-white/10 text-xs backdrop-blur-2xl">
+          <div className="flex items-center gap-2 text-slate-300">
             <Smartphone className="w-4 h-4 text-cyan-400" />
-            <span className="text-[11px] font-semibold text-slate-300">SM MILK Mobile App</span>
+            <span className="text-[11px] font-bold text-slate-200">SM MILK Mobile ERP v3.5 Pro</span>
           </div>
 
-          <button
-            onClick={() => {
-              if (confirm("क्या आप डेमो डेटा रीसेट करना चाहते हैं?")) {
-                localStorage.clear();
-                window.location.reload();
-              }
-            }}
-            className="flex items-center gap-1 text-[10px] text-slate-400 hover:text-white bg-white/5 hover:bg-white/10 px-2.5 py-1 rounded-lg border border-white/10"
-          >
-            <RefreshCw className="w-3 h-3 text-slate-400" />
-            <span>Reset Demo</span>
-          </button>
+          <div className="flex items-center gap-2">
+            <button
+              onClick={handleToggleViewMode}
+              className="hidden sm:flex items-center gap-1 text-[10px] text-cyan-300 bg-cyan-500/15 hover:bg-cyan-500/25 px-2.5 py-1 rounded-lg border border-cyan-500/30"
+            >
+              {viewMode === 'mobile' ? <Monitor className="w-3 h-3" /> : <Smartphone className="w-3 h-3" />}
+              <span>{viewMode === 'mobile' ? 'Desktop View' : 'Phone View'}</span>
+            </button>
+
+            <button
+              onClick={() => {
+                if (confirm("क्या आप डेमो डेटा रीसेट करना चाहते हैं?")) {
+                  localStorage.clear();
+                  window.location.reload();
+                }
+              }}
+              className="flex items-center gap-1 text-[10px] text-slate-400 hover:text-white bg-white/5 hover:bg-white/10 px-2.5 py-1 rounded-lg border border-white/10"
+            >
+              <RefreshCw className="w-3 h-3 text-slate-400" />
+              <span>Reset Data</span>
+            </button>
+          </div>
         </div>
       </div>
 

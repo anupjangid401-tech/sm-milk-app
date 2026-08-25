@@ -1,0 +1,142 @@
+\documentclass[a4paper,10pt]{article}
+
+% --- Packages ---
+\usepackage[a4paper, margin=0.55in]{geometry}
+\usepackage{titlesec}
+\usepackage{enumitem}
+\usepackage{xcolor}
+\usepackage[hidelinks, pdftex]{hyperref}
+\usepackage{fontawesome5}
+\usepackage{tabularx}
+
+% --- Color Palette ---
+\definecolor{primary}{RGB}{26, 54, 93}      % Deep Navy Blue
+\definecolor{secondary}{RGB}{74, 85, 104}   % Steel Slate Gray
+\definecolor{accent}{RGB}{43, 108, 176}     % Professional Sapphire Blue
+\definecolor{darktext}{RGB}{45, 55, 72}     % Charcoal Body Text
+
+\color{darktext}
+
+% --- Page Setup ---
+\setlength{\parindent}{0pt}
+\pagestyle{empty}
+
+% --- Clickable Hyperlink Colors ---
+\hypersetup{
+    colorlinks=true,
+    linkcolor=accent,
+    urlcolor=accent,
+    pdftitle={Kanika Jangir - Resume},
+    pdfauthor={Kanika Jangir}
+}
+
+% --- Custom Section Title Styling ---
+\titleformat{\section}
+{\medium\bfseries\color{primary}\uppercase}
+{}{0em}{}
+[\color{accent}\titlerule]
+
+\titlespacing*{\section}{0pt}{8pt}{3pt}
+
+% --- Custom Bullet Item Styling ---
+\setlist[itemize]{leftmargin=1.2em, itemsep=1.5pt, parsep=0pt, topsep=1.5pt}
+\setlist[enumerate]{leftmargin=1.2em, itemsep=1.5pt, parsep=0pt, topsep=1.5pt}
+
+% ==========================================
+%            DOCUMENT START
+% ==========================================
+\begin{document}
+
+% ------------------------------------------
+% HEADER SECTION
+% ------------------------------------------
+\begin{center}
+    {\Huge \textbf{\color{primary} KANIKA JANGIR}}\\[4pt]
+    {\fontfamily{phv}\selectfont \color{secondary}\small \textbf{B.Com (Accountancy \& Taxation) Student \quad|\quad Finance \& Accounting Enthusiast}}\\[6pt]
+    
+    \small \color{darktext}
+    \faMapMarker* \ \text{Jhunjhunu, Rajasthan} \quad \bullet \quad
+    \faPhone* \ \href{tel:+918949129397}{+91 89491 29397} \quad \bullet \quad
+    \faEnvelope \ \href{mailto:kanikaajangirr@gmail.com}{kanikaajangirr@gmail.com} \quad \bullet \quad
+    \faLinkedin \ \href{https://linkedin.com/in/kanika-jangir}{linkedin.com/in/kanika-jangir}
+\end{center}
+
+\vspace{-6pt}
+
+% ------------------------------------------
+% PROFESSIONAL PROFILE
+% ------------------------------------------
+\section*{\faUser \ Executive Profile}
+Dedicated and detail-oriented \textbf{Bachelor of Commerce (Accountancy \& Taxation)} student with a strong foundation in corporate finance, ratio analysis, management accounting, and tax compliance. Possesses hands-on internship experience in general ledger maintenance, GST compliance support, voucher preparation, and abstract sheet drafting. Highly analytical, proficient in cost accounting and audit fundamentals, and eager to contribute to process optimization and data-driven financial decision-making in a high-growth corporate environment.
+
+% ------------------------------------------
+% EDUCATION
+% ------------------------------------------
+\section*{\faGraduationCap \ Education}
+
+\begin{tabularx}{\textwidth}{@{}X r@{}}
+    \textbf{\color{primary} Bachelor of Commerce (Accountancy \& Taxation)} & \textbf{2023 -- 2026} \\
+    \textit{School of Business, Mody University of Science and Technology, Lakshmangarh} & \\
+    \textbf{CGPA / Score: 7.80} & \\
+\end{tabularx}
+
+\vspace{3pt}
+
+\begin{tabularx}{\textwidth}{@{}X r@{}}
+    \textbf{\color{primary} Senior Secondary / Intermediate (CBSE - Class XII)} & \textbf{2022 -- 2023} \\
+    \textit{Emmanuel Mission School} & \\
+    \textbf{CGPA / Score: 7.57} & \\
+\end{tabularx}
+
+% ------------------------------------------
+% WORK EXPERIENCE
+% ------------------------------------------
+\section*{\faBriefcase \ Work Experience}
+
+\begin{tabularx}{\textwidth}{@{}X r@{}}
+    \textbf{\color{primary} Finance \& Accounts Intern} & \textbf{June 2025 -- July 2025} \\
+    \textit{MS Chouhan Infraventures Pvt. Ltd.} & \textit{Jaisalmer, Rajasthan} \\
+\end{tabularx}
+
+\begin{itemize}
+    \item \textbf{Financial \& Bank Reconciliation:} Analyzed and reconciled monthly bank statements to ensure accounting accuracy.
+    \item \textbf{Voucher \& Ledger Accounting:} Prepared accurate accounting vouchers and systematically updated general ledgers.
+    \item \textbf{GST \& Tax Compliance:} Assisted senior finance team in preparing documentation for GST filing and return reconciliation.
+    \item \textbf{Inventory \& Reporting:} Managed site inventory tracking logs and compiled detailed abstract sheets for financial reviews.
+\end{itemize}
+
+% ------------------------------------------
+% CORE & TECHNICAL SKILLS
+% ------------------------------------------
+\section*{\faTools \ Core Skills \& Competencies}
+
+\begin{description}[font=\color{primary}\bfseries, leftmargin=0pt, itemsep=2.5pt]
+    \item[Accounting \& Finance:] Financial Accounting, Management Accounting, Cost Accounting, Ratio Analysis, Budgeting.
+    \item[Taxation \& Compliance:] Goods \& Services Tax (GST) Compliance, Auditing Standards, Corporate Law.
+    \item[Business Operations:] General Ledger Maintenance, Inventory Control, Financial Abstract Sheets, Financial Documentation.
+\end{description}
+
+% ------------------------------------------
+% SOFT SKILLS & LANGUAGES
+% ------------------------------------------
+\section*{\faCogs \ Soft Skills \& Languages}
+
+\begin{tabularx}{\textwidth}{@{}X X@{}}
+    \textbf{\color{primary} Professional Soft Skills:} & \textbf{\color{primary} Languages Spoken:} \\
+    \bullet \ Strategic Problem Solving \& Critical Thinking & \bullet \ \textbf{English} -- Professional Working Fluency \\
+    \bullet \ Leadership \& Cross-Functional Teamwork & \bullet \ \textbf{Hindi} -- Native / Fluent \\
+    \bullet \ Time Management \& Task Prioritization & \\
+    \bullet \ Effective Business Communication & \\
+\end{tabularx}
+
+% ------------------------------------------
+% ACHIEVEMENTS & COMPETITIONS
+% ------------------------------------------
+\section*{\faTrophy \ Key Achievements \& Honors}
+
+\begin{itemize}
+    \item \textbf{2nd Position -- DROID 7.0 Tech Fest:} Secured 2nd Place in the \textit{Entrepreneur's Point} business competition at Mody University.
+    \item \textbf{2nd Position -- Sustainability Symposium:} Awarded 2nd Place in the national \textit{Symposium on Biodiversity and Business Sustainability}.
+\end{itemize}
+
+\end{document}

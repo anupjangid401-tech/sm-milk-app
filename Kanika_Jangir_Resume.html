@@ -1,0 +1,357 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kanika Jangir - Resume</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@600;700&display=swap');
+
+        @page {
+            size: A4 portrait;
+            margin: 0;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        html, body {
+            width: 210mm;
+            height: 295mm;
+            font-family: 'Inter', sans-serif;
+            background-color: #ffffff;
+            color: #2d3748;
+            line-height: 1.25;
+            overflow: hidden;
+            -webkit-print-color-adjust: exact;
+            print-color-adjust: exact;
+        }
+
+        .resume-card {
+            width: 210mm;
+            height: 290mm;
+            background: #ffffff;
+            padding: 20px 28px;
+            box-sizing: border-box;
+            overflow: hidden;
+        }
+
+        /* Action Bar */
+        .no-print-bar {
+            position: fixed;
+            top: 15px;
+            right: 15px;
+            z-index: 999;
+        }
+        .btn-print {
+            background: linear-gradient(135deg, #1a365d, #2b6cb0);
+            color: #ffffff;
+            border: none;
+            padding: 8px 16px;
+            font-family: 'Inter', sans-serif;
+            font-size: 11.5px;
+            font-weight: 600;
+            border-radius: 30px;
+            cursor: pointer;
+            box-shadow: 0 4px 12px rgba(26, 54, 93, 0.3);
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        /* Header */
+        .header {
+            text-align: center;
+            padding-bottom: 5px;
+            border-bottom: 1.5px solid #e2e8f0;
+            margin-bottom: 8px;
+        }
+        .name {
+            font-family: 'Playfair Display', serif;
+            font-size: 22px;
+            font-weight: 700;
+            color: #1a365d;
+            letter-spacing: 0.8px;
+            text-transform: uppercase;
+            margin-bottom: 1px;
+        }
+        .tagline {
+            font-size: 10px;
+            font-weight: 600;
+            color: #4a5568;
+            text-transform: uppercase;
+            letter-spacing: 0.8px;
+            margin-bottom: 4px;
+        }
+        .contact-info {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 12px;
+            font-size: 10.5px;
+            color: #4a5568;
+        }
+        .contact-info a {
+            color: #2b6cb0;
+            text-decoration: none;
+            font-weight: 500;
+        }
+        .contact-info i {
+            color: #1a365d;
+            margin-right: 3px;
+        }
+
+        /* Section Header */
+        .section {
+            margin-bottom: 8px;
+        }
+        .section-title {
+            font-size: 11px;
+            font-weight: 700;
+            color: #1a365d;
+            text-transform: uppercase;
+            letter-spacing: 0.8px;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            padding-bottom: 2px;
+            border-bottom: 1.5px solid #2b6cb0;
+            margin-bottom: 5px;
+        }
+        .section-title i {
+            color: #2b6cb0;
+            font-size: 10.5px;
+        }
+
+        /* Profile text */
+        .profile-text {
+            font-size: 11px;
+            color: #2d3748;
+            text-align: justify;
+            line-height: 1.35;
+        }
+
+        /* Item Row Layout */
+        .item-row {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 1px;
+        }
+        .item-title {
+            font-size: 11.5px;
+            font-weight: 700;
+            color: #1a365d;
+        }
+        .item-date {
+            font-size: 10.5px;
+            font-weight: 600;
+            color: #4a5568;
+        }
+        .item-sub {
+            font-size: 10.5px;
+            font-style: italic;
+            color: #4a5568;
+            margin-bottom: 3px;
+        }
+
+        /* Bullet List */
+        .bullet-list {
+            list-style: none;
+            padding-left: 0;
+            margin-top: 1px;
+        }
+        .bullet-list li {
+            position: relative;
+            padding-left: 12px;
+            font-size: 11px;
+            color: #2d3748;
+            margin-bottom: 2px;
+            line-height: 1.3;
+        }
+        .bullet-list li::before {
+            content: "•";
+            position: absolute;
+            left: 2px;
+            color: #2b6cb0;
+            font-weight: bold;
+            font-size: 11px;
+        }
+
+        /* Skills Grid */
+        .skills-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 6px 12px;
+        }
+        .skill-group {
+            background: #f7fafc;
+            border-left: 2.5px solid #1a365d;
+            padding: 4px 8px;
+            border-radius: 0 3px 3px 0;
+        }
+        .skill-cat {
+            font-size: 10px;
+            font-weight: 700;
+            color: #1a365d;
+            text-transform: uppercase;
+            letter-spacing: 0.3px;
+            margin-bottom: 2px;
+        }
+        .skill-tags {
+            font-size: 10.5px;
+            color: #4a5568;
+        }
+
+        /* Two Column Layout */
+        .two-col {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 14px;
+        }
+
+        @media print {
+            body {
+                background: none;
+                padding: 0;
+                width: 210mm;
+                height: 290mm;
+                overflow: hidden;
+            }
+            .resume-card {
+                box-shadow: none;
+                width: 210mm;
+                height: 290mm;
+                padding: 15px 22px;
+            }
+            .no-print-bar {
+                display: none !important;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="no-print-bar">
+        <button class="btn-print" onclick="window.print()">
+            <i class="fa-solid fa-file-pdf"></i> Save / Print PDF
+        </button>
+    </div>
+
+    <div class="resume-card">
+        <!-- HEADER -->
+        <div class="header">
+            <h1 class="name">Kanika Jangir</h1>
+            <div class="tagline">B.Com (Accountancy & Taxation) Student &nbsp;|&nbsp; Finance Enthusiast</div>
+            <div class="contact-info">
+                <span><i class="fa-solid fa-location-dot"></i> Jhunjhunu, Rajasthan</span>
+                <span><i class="fa-solid fa-phone"></i> <a href="tel:+918949129397">+91 89491 29397</a></span>
+                <span><i class="fa-solid fa-envelope"></i> <a href="mailto:kanikaajangirr@gmail.com">kanikaajangirr@gmail.com</a></span>
+                <span><i class="fa-brands fa-linkedin"></i> <a href="#">linkedin.com/in/kanika-jangir</a></span>
+            </div>
+        </div>
+
+        <!-- EXECUTIVE PROFILE -->
+        <div class="section">
+            <div class="section-title"><i class="fa-solid fa-user"></i> Executive Profile</div>
+            <p class="profile-text">
+                Dedicated and detail-oriented <strong>Bachelor of Commerce (Accountancy & Taxation)</strong> student with a strong foundation in corporate finance, ratio analysis, management accounting, and tax compliance. Possesses hands-on internship experience in general ledger maintenance, GST compliance support, voucher preparation, and abstract sheet drafting. Highly analytical, proficient in cost accounting and audit fundamentals, and eager to contribute to process optimization and data-driven financial decision-making.
+            </p>
+        </div>
+
+        <!-- EDUCATION -->
+        <div class="section">
+            <div class="section-title"><i class="fa-solid fa-graduation-cap"></i> Education</div>
+            
+            <div style="margin-bottom: 4px;">
+                <div class="item-row">
+                    <div class="item-title">Bachelor of Commerce (Accountancy & Taxation)</div>
+                    <div class="item-date">2023 – 2026</div>
+                </div>
+                <div class="item-sub">School of Business, Mody University of Science and Technology, Lakshmangarh &nbsp;|&nbsp; <strong>CGPA / Score: 7.80</strong></div>
+            </div>
+
+            <div>
+                <div class="item-row">
+                    <div class="item-title">Senior Secondary / Intermediate (CBSE - Class XII)</div>
+                    <div class="item-date">2022 – 2023</div>
+                </div>
+                <div class="item-sub">Emmanuel Mission School &nbsp;|&nbsp; <strong>CGPA / Score: 7.57</strong></div>
+            </div>
+        </div>
+
+        <!-- WORK EXPERIENCE -->
+        <div class="section">
+            <div class="section-title"><i class="fa-solid fa-briefcase"></i> Professional Experience</div>
+            
+            <div class="item-row">
+                <div class="item-title">Finance & Accounts Intern</div>
+                <div class="item-date">June 2025 – July 2025</div>
+            </div>
+            <div class="item-sub">MS Chouhan Infraventures Pvt. Ltd., Jaisalmer, Rajasthan</div>
+            
+            <ul class="bullet-list">
+                <li><strong>Financial & Bank Reconciliation:</strong> Analyzed and reconciled monthly bank statements to ensure accounting accuracy and discrepancy identification.</li>
+                <li><strong>Voucher & Ledger Accounting:</strong> Prepared accurate accounting vouchers and systematically updated and maintained general ledgers.</li>
+                <li><strong>GST & Regulatory Compliance:</strong> Assisted senior finance team in preparing documentation for GST filing, return reconciliation, and regulatory compliance.</li>
+                <li><strong>Inventory & Reporting:</strong> Managed site inventory tracking logs and compiled detailed abstract sheets for senior management financial reviews.</li>
+            </ul>
+        </div>
+
+        <!-- CORE SKILLS -->
+        <div class="section">
+            <div class="section-title"><i class="fa-solid fa-gears"></i> Core Competencies & Skills</div>
+            
+            <div class="skills-grid">
+                <div class="skill-group">
+                    <div class="skill-cat">Accounting & Finance</div>
+                    <div class="skill-tags">Financial Accounting, Management Accounting, Cost Accounting, Ratio Analysis, Budgeting</div>
+                </div>
+                <div class="skill-group">
+                    <div class="skill-cat">Taxation & Compliance</div>
+                    <div class="skill-tags">Goods & Services Tax (GST) Compliance, Auditing Standards, Corporate Law</div>
+                </div>
+                <div class="skill-group">
+                    <div class="skill-cat">Business Operations</div>
+                    <div class="skill-tags">General Ledger Maintenance, Inventory Control, Financial Abstract Sheets, Financial Documentation</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- TWO COL: SOFT SKILLS & LANGUAGES -->
+        <div class="section">
+            <div class="two-col">
+                <div>
+                    <div class="section-title"><i class="fa-solid fa-user-gear"></i> Soft Skills</div>
+                    <ul class="bullet-list">
+                        <li>Strategic Problem Solving & Critical Thinking</li>
+                        <li>Leadership & Cross-Functional Teamwork</li>
+                        <li>Time Management & Task Prioritization</li>
+                        <li>Effective Business Communication</li>
+                    </ul>
+                </div>
+                <div>
+                    <div class="section-title"><i class="fa-solid fa-language"></i> Languages</div>
+                    <ul class="bullet-list">
+                        <li><strong>English:</strong> Professional Working Fluency</li>
+                        <li><strong>Hindi:</strong> Native / Fluent</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- ACHIEVEMENTS -->
+        <div class="section">
+            <div class="section-title"><i class="fa-solid fa-trophy"></i> Key Achievements & Honors</div>
+            <ul class="bullet-list">
+                <li><strong>2nd Position – DROID 7.0 Tech Fest:</strong> Secured 2nd Place in the <em>Entrepreneur's Point</em> business competition at Mody University.</li>
+                <li><strong>2nd Position – Sustainability Symposium:</strong> Awarded 2nd Place in the national <em>Symposium on Biodiversity and Business Sustainability</em>.</li>
+            </ul>
+        </div>
+    </div>
+
+</body>
+</html>
