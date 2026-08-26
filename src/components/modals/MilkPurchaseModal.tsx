@@ -100,7 +100,7 @@ export default function MilkPurchaseModal({
   // Save Record
   const handleSaveEntry = () => {
     if (numLiters <= 0) {
-      alert("कृपया दूध की मात्रा (Qty/Liters) दर्ज करें!");
+      alert("Please enter milk quantity (Liters)!");
       return;
     }
 
@@ -133,11 +133,11 @@ export default function MilkPurchaseModal({
 
   return (
     <div className="fixed inset-0 z-50 w-full h-full bg-slate-950 text-slate-100 flex flex-col overflow-hidden">
-      {/* ── UNIFIED PROFESSIONAL TOP BAR (Sky Navy Blue) ── */}
+      {/* ── TOP BAR (Sky Navy Blue) ── */}
       <div className="h-12 bg-sky-900 text-white px-4 flex items-center justify-between shadow-md border-b border-sky-800 flex-shrink-0">
         <div className="flex items-center gap-2">
           <Droplets className="w-5 h-5 text-cyan-300" />
-          <span className="font-extrabold text-sm tracking-tight">SM MILK / Milk Purchase (दूध खरीद)</span>
+          <span className="font-extrabold text-sm tracking-tight">SM MILK / Milk Purchase</span>
         </div>
         <button
           onClick={onClose}
@@ -197,7 +197,7 @@ export default function MilkPurchaseModal({
               onClick={() => setMilkType((t) => (t === "BUFFALO" ? "COW" : "BUFFALO"))}
               className="w-full py-2.5 rounded-xl font-extrabold text-xs bg-slate-950 border border-slate-800 text-cyan-300 text-center"
             >
-              {milkType === "BUFFALO" ? "Buffalo (भैंस)" : "Cow (गाय)"}
+              {milkType === "BUFFALO" ? "Buffalo" : "Cow"}
             </button>
           </div>
 
@@ -235,7 +235,7 @@ export default function MilkPurchaseModal({
           </div>
         </div>
 
-        {/* ROW 4: Entry Fields + On-Screen Touch Numpad */}
+        {/* ROW 4: Entry Fields + Touch Numpad */}
         <div className="grid grid-cols-12 gap-3 items-start">
           {/* Left Column Inputs (Qty, Fat, SNF) */}
           <div className="col-span-4 space-y-2">
@@ -247,7 +247,7 @@ export default function MilkPurchaseModal({
                   : "bg-slate-950 border-slate-800"
               }`}
             >
-              <div className="text-[10px] font-bold text-slate-400 mb-0.5">Qty. (लीटर)</div>
+              <div className="text-[10px] font-bold text-slate-400 mb-0.5 uppercase">Qty. (Ltr)</div>
               <div className="text-lg font-black text-white font-mono min-h-[24px]">
                 {liters || <span className="text-slate-600">0.0</span>}
               </div>
@@ -261,7 +261,7 @@ export default function MilkPurchaseModal({
                   : "bg-slate-950 border-slate-800"
               }`}
             >
-              <div className="text-[10px] font-bold text-slate-400 mb-0.5">Fat %</div>
+              <div className="text-[10px] font-bold text-slate-400 mb-0.5 uppercase">Fat %</div>
               <div className="text-lg font-black text-cyan-300 font-mono min-h-[24px]">
                 {fat || <span className="text-slate-600">0.0</span>}
               </div>
@@ -275,7 +275,7 @@ export default function MilkPurchaseModal({
                   : "bg-slate-950 border-slate-800"
               }`}
             >
-              <div className="text-[10px] font-bold text-slate-400 mb-0.5">S N F %</div>
+              <div className="text-[10px] font-bold text-slate-400 mb-0.5 uppercase">S N F %</div>
               <div className="text-lg font-black text-cyan-300 font-mono min-h-[24px]">
                 {snf || <span className="text-slate-600">0.0</span>}
               </div>
@@ -291,7 +291,7 @@ export default function MilkPurchaseModal({
             </div>
           </div>
 
-          {/* Right Section: On-Screen Touch Numpad */}
+          {/* Right Section: Touch Numpad */}
           <div className="col-span-8 bg-slate-950 border border-slate-800 rounded-2xl p-2.5 shadow-xl">
             <div className="grid grid-cols-4 gap-2">
               <button onClick={() => handleKeypadPress("7")} className="numpad-btn">7</button>
@@ -324,7 +324,7 @@ export default function MilkPurchaseModal({
         {/* Live Entries Table */}
         <div className="bg-slate-950 border border-slate-800 rounded-xl overflow-hidden mt-3">
           <div className="bg-slate-900 px-3 py-1.5 text-xs font-bold text-white flex items-center justify-between border-b border-slate-800">
-            <span>Saved Records (खरीद एंट्रीज)</span>
+            <span>Saved Purchase Entries</span>
             <span className="text-[10px] bg-slate-950 px-2 py-0.5 rounded text-cyan-300 border border-slate-800">{sessionEntries.length} Items</span>
           </div>
 
@@ -346,7 +346,7 @@ export default function MilkPurchaseModal({
                 {sessionEntries.length === 0 ? (
                   <tr>
                     <td colSpan={8} className="p-3 text-center text-slate-500 font-sans text-xs">
-                      कोई एंट्री दर्ज नहीं हुई है। Numpad से दर्ज करें!
+                      No records entered yet. Use Numpad to record entries!
                     </td>
                   </tr>
                 ) : (
@@ -369,7 +369,7 @@ export default function MilkPurchaseModal({
         </div>
       </div>
 
-      {/* ── UNIFIED BOTTOM BAR (Sky Navy) ── */}
+      {/* ── BOTTOM BAR (Sky Navy) ── */}
       <div className="h-10 bg-sky-900 text-white px-3 flex items-center justify-between text-xs font-extrabold flex-shrink-0 border-t border-sky-800 font-mono">
         <div className="flex items-center gap-1">
           <Search className="w-4 h-4 text-cyan-300" />

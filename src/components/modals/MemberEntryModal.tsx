@@ -44,7 +44,7 @@ export default function MemberEntryModal({ members, onAddMember, onClose }: Memb
       <div className="h-12 bg-sky-900 text-white px-4 flex items-center justify-between shadow-md border-b border-sky-800 flex-shrink-0">
         <div className="flex items-center gap-2">
           <UserPlus className="w-5 h-5 text-cyan-300" />
-          <span className="font-extrabold text-sm tracking-tight">SM MILK / Member Entry (सदस्य रजिस्टर)</span>
+          <span className="font-extrabold text-sm tracking-tight">SM MILK / Member Entry</span>
         </div>
         <button
           onClick={onClose}
@@ -72,7 +72,7 @@ export default function MemberEntryModal({ members, onAddMember, onClose }: Memb
             <div className="grid grid-cols-2 gap-3">
               <div>
                 <label className="block text-xs font-bold text-slate-300 mb-1.5 uppercase tracking-wider">
-                  1. Member Code (किसान कोड)
+                  1. Member Code
                 </label>
                 <input
                   type="text"
@@ -84,22 +84,22 @@ export default function MemberEntryModal({ members, onAddMember, onClose }: Memb
               </div>
               <div>
                 <label className="block text-xs font-bold text-slate-300 mb-1.5 uppercase tracking-wider">
-                  2. Default Milk (दूध प्रकार)
+                  2. Default Milk
                 </label>
                 <select
                   value={milkType}
                   onChange={(e) => setMilkType(e.target.value as MilkType)}
                   className="w-full bg-slate-900 border border-slate-800 rounded-xl p-3 text-white text-sm outline-none"
                 >
-                  <option value="BUFFALO">Buffalo (भैंस)</option>
-                  <option value="COW">Cow (गाय)</option>
+                  <option value="BUFFALO">Buffalo</option>
+                  <option value="COW">Cow</option>
                 </select>
               </div>
             </div>
 
             <div>
               <label className="block text-xs font-bold text-slate-300 mb-1.5 uppercase tracking-wider">
-                3. Farmer Full Name (किसान का नाम)
+                3. Farmer Full Name
               </label>
               <input
                 type="text"
@@ -114,7 +114,7 @@ export default function MemberEntryModal({ members, onAddMember, onClose }: Memb
             <div className="grid grid-cols-2 gap-3">
               <div>
                 <label className="block text-xs font-bold text-slate-300 mb-1.5 uppercase tracking-wider">
-                  4. Mobile Number (फोन)
+                  4. Mobile Number
                 </label>
                 <input
                   type="tel"
@@ -126,7 +126,7 @@ export default function MemberEntryModal({ members, onAddMember, onClose }: Memb
               </div>
               <div>
                 <label className="block text-xs font-bold text-slate-300 mb-1.5 uppercase tracking-wider">
-                  5. Village Name (गांव)
+                  5. Village Name
                 </label>
                 <input
                   type="text"
@@ -139,7 +139,7 @@ export default function MemberEntryModal({ members, onAddMember, onClose }: Memb
 
             <div className="pt-2 flex gap-3">
               <button type="submit" className="flex-1 py-3.5 rounded-2xl bg-gradient-to-r from-sky-600 to-blue-700 hover:opacity-90 font-extrabold text-white text-base shadow-lg">
-                Save Member (सदस्य जोड़ें)
+                Save Member
               </button>
               <button type="button" onClick={onClose} className="px-5 py-3.5 rounded-2xl bg-slate-800 text-slate-300 font-bold">
                 Cancel

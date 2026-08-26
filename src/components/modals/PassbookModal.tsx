@@ -36,7 +36,7 @@ export default function PassbookModal({ members, purchases, itemSales, onClose }
       <div className="h-12 bg-sky-900 text-white px-4 flex items-center justify-between shadow-md border-b border-sky-800 flex-shrink-0">
         <div className="flex items-center gap-2">
           <BookOpen className="w-5 h-5 text-cyan-300" />
-          <span className="font-extrabold text-sm tracking-tight">SM MILK / Passbook (किसान लेजर पासबुक)</span>
+          <span className="font-extrabold text-sm tracking-tight">SM MILK / Customer Passbook</span>
         </div>
         <button
           onClick={onClose}
@@ -48,7 +48,7 @@ export default function PassbookModal({ members, purchases, itemSales, onClose }
 
       {/* Main Full Screen Body */}
       <div className="flex-1 overflow-y-auto p-4 space-y-4 bg-slate-900">
-        {/* Search Input - Perfectly Centered Search Icon */}
+        {/* Search Input */}
         <div className="relative flex items-center">
           <Search className="w-4 h-4 text-slate-400 absolute left-3.5 pointer-events-none" />
           <input
@@ -103,11 +103,11 @@ export default function PassbookModal({ members, purchases, itemSales, onClose }
 
             {/* Milk Transactions List */}
             <div className="space-y-2">
-              <h4 className="text-xs font-bold text-slate-400 uppercase tracking-wider px-1">Milk Deposit History (दूध जमा रिकॉर्ड)</h4>
+              <h4 className="text-xs font-bold text-slate-400 uppercase tracking-wider px-1">Milk Deposit History</h4>
 
               {memberPurchases.length === 0 ? (
                 <div className="p-6 text-center text-slate-500 bg-slate-950 rounded-2xl border border-slate-800 text-xs">
-                  कोई दूध रिकॉर्ड नहीं मिला।
+                  No milk deposit records found.
                 </div>
               ) : (
                 memberPurchases.map((p) => (
@@ -130,7 +130,7 @@ export default function PassbookModal({ members, purchases, itemSales, onClose }
               {/* Feed Deductions */}
               {memberItemSales.length > 0 && (
                 <>
-                  <h4 className="text-xs font-bold text-slate-400 uppercase tracking-wider px-1 pt-2">Feed Deductions (आहार कटौती)</h4>
+                  <h4 className="text-xs font-bold text-slate-400 uppercase tracking-wider px-1 pt-2">Feed Deductions</h4>
                   {memberItemSales.map((item) => (
                     <div key={item.id} className="p-3 rounded-2xl bg-slate-950 border border-slate-800 flex items-center justify-between text-xs">
                       <div>
@@ -153,7 +153,7 @@ export default function PassbookModal({ members, purchases, itemSales, onClose }
             </div>
           </div>
         ) : (
-          <div className="p-6 text-center text-slate-500 text-xs">कृपया किसान चुनें!</div>
+          <div className="p-6 text-center text-slate-500 text-xs">Please select a farmer!</div>
         )}
       </div>
     </div>
