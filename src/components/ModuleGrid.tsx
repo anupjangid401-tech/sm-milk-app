@@ -29,8 +29,8 @@ const MODULES: ModuleItem[] = [
   {
     id: "milk-purchase",
     titleEn: "Milk Purchase",
-    titleHi: "दूध खरीद प्रविष्टि",
-    descHi: "FAT/SNF रेट ऑटो गणना",
+    titleHi: "Milk Purchase Entry",
+    descHi: "FAT/SNF Auto Rate Calc",
     icon: Milk,
     iconTheme: "amber",
     badge: "Primary",
@@ -38,72 +38,72 @@ const MODULES: ModuleItem[] = [
   {
     id: "milk-sale",
     titleEn: "Milk Sale",
-    titleHi: "दूध बिक्री प्रविष्टि",
-    descHi: "खुदरा व डेयरी बिक्री",
+    titleHi: "Milk Sale Entry",
+    descHi: "Retail & Dairy Sales",
     icon: ShoppingCart,
     iconTheme: "green",
   },
   {
     id: "member-entry",
     titleEn: "Member Entry",
-    titleHi: "सदस्य / किसान जोड़ें",
-    descHi: "नया किसान कोड रजिस्टर",
+    titleHi: "Add Member / Farmer",
+    descHi: "Register New Farmer Code",
     icon: UserPlus,
     iconTheme: "purple",
   },
   {
     id: "purchase-report",
     titleEn: "Purchase Report",
-    titleHi: "दूध खरीद रिपोर्ट",
-    descHi: "शिफ्ट वार खरीद समरी",
+    titleHi: "Milk Purchase Report",
+    descHi: "Shift-wise Purchase Summary",
     icon: FileSpreadsheet,
     iconTheme: "red",
   },
   {
     id: "sale-report",
     titleEn: "Sale Report",
-    titleHi: "दूध बिक्री रिपोर्ट",
-    descHi: "दैनिक बिक्री व बिलिंग",
+    titleHi: "Milk Sale Report",
+    descHi: "Daily Sales & Billing",
     icon: TrendingUp,
     iconTheme: "amber",
   },
   {
     id: "rate-chart",
     titleEn: "Milk Rate Edit",
-    titleHi: "FAT/SNF दर तालिका",
-    descHi: "राजस्थान/अमूल रेट मैट्रिक्स",
+    titleHi: "FAT/SNF Rate Table",
+    descHi: "Rajasthan / Amul Rate Matrix",
     icon: Sliders,
     iconTheme: "green",
   },
   {
     id: "payment-report",
     titleEn: "Payment Report",
-    titleHi: "भुगतान एवं बिल रिपोर्ट",
-    descHi: "किसान भुगतान रजिस्टर",
+    titleHi: "Payment & Bill Report",
+    descHi: "Farmer Payment Register",
     icon: CreditCard,
     iconTheme: "purple",
   },
   {
     id: "date-summary",
     titleEn: "Date Summary",
-    titleHi: "दिनांक अनुसार सारांश",
-    descHi: "दिनांक वार दूध संकलन",
+    titleHi: "Date-wise Summary",
+    descHi: "Date-wise Milk Collection",
     icon: CalendarRange,
     iconTheme: "blue",
   },
   {
     id: "datewise-summary",
     titleEn: "Datewise Milk",
-    titleHi: "तारीख वार दूध सारांश",
-    descHi: "सुबह व शाम तुलनात्मक",
+    titleHi: "Datewise Milk Summary",
+    descHi: "Morning & Evening Comparison",
     icon: CalendarDays,
     iconTheme: "cyan",
   },
   {
     id: "customer-passbook",
     titleEn: "Customer Passbook",
-    titleHi: "ग्राहक पासबुक खाते",
-    descHi: "किसान लेजर व बकाया राशि",
+    titleHi: "Customer Passbook",
+    descHi: "Farmer Ledger & Dues",
     icon: BookOpen,
     iconTheme: "green",
     badge: "Passbook",
@@ -111,16 +111,16 @@ const MODULES: ModuleItem[] = [
   {
     id: "item-sale",
     titleEn: "Item Sale",
-    titleHi: "दाना / फीड बिक्री",
-    descHi: "पशु आहार, खल व मिनरल",
+    titleHi: "Feed / Item Sale",
+    descHi: "Cattle Feed, Khal & Mineral",
     icon: PackageCheck,
     iconTheme: "purple",
   },
   {
     id: "sm-settings",
     titleEn: "SM Settings",
-    titleHi: "प्रिंटर, कांटा व Slip",
-    descHi: "WiFi कांटा व BT प्रिंटर",
+    titleHi: "Printer, Scale & Slip",
+    descHi: "WiFi Scale & BT Printer",
     icon: Settings,
     iconTheme: "cyan",
     badge: "WiFi & BT",
@@ -137,7 +137,7 @@ export default function ModuleGrid({ onSelectModule }: ModuleGridProps) {
       <div className="section-header">
         <div>
           <div className="section-title">Operations Centre</div>
-          <div className="section-title-hi">ऑपरेशन मॉड्यूल</div>
+          <div className="section-title-hi">Operation Modules</div>
         </div>
         <div className="section-badge">{MODULES.length} Modules</div>
       </div>
@@ -150,7 +150,7 @@ export default function ModuleGrid({ onSelectModule }: ModuleGridProps) {
               key={mod.id}
               className="module-card"
               onClick={() => onSelectModule(mod.id)}
-              aria-label={`Open ${mod.titleEn} — ${mod.titleHi}`}
+              aria-label={`Open ${mod.titleEn}`}
             >
               {/* Badge */}
               {mod.badge && (

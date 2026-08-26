@@ -50,8 +50,8 @@ export default function ItemSaleModal({ members, onSave, onClose }: ItemSaleModa
               <PackageCheck className="w-5 h-5" />
             </div>
             <div>
-              <h2 className="text-lg font-extrabold text-white tracking-tight">दाना / फीड बिक्री <span className="text-xs font-semibold text-slate-400">(Item Sale)</span></h2>
-              <p className="text-xs text-slate-400">खल, पशु आहार एवं मिनरल मिक्चर बिक्री</p>
+              <h2 className="text-lg font-extrabold text-white tracking-tight">Item / Feed Sale <span className="text-xs font-semibold text-slate-400">(Item Sale)</span></h2>
+              <p className="text-xs text-slate-400">Feed, Khal & Mineral Mixture Sales</p>
             </div>
           </div>
           <button 
@@ -65,17 +65,17 @@ export default function ItemSaleModal({ members, onSave, onClose }: ItemSaleModa
         {isSaved ? (
           <div className="text-center py-6 space-y-4">
             <CheckCircle className="w-12 h-12 text-purple-400 mx-auto animate-bounce" />
-            <h3 className="text-base font-extrabold text-white">सामान बिक्री दर्ज की गई!</h3>
-            <p className="text-xs text-slate-400">सामान: <strong className="text-purple-300">{itemName}</strong> | कुल बिल: <strong className="text-emerald-400">₹{totalAmount}</strong></p>
+            <h3 className="text-base font-extrabold text-white">Item sale recorded!</h3>
+            <p className="text-xs text-slate-400">Item: <strong className="text-purple-300">{itemName}</strong> | Total Bill: <strong className="text-emerald-400">₹{totalAmount}</strong></p>
             <button onClick={onClose} className="glass-btn w-full mt-4 py-3 bg-gradient-to-r from-purple-500 to-indigo-600">
-              ठीक है (Close)
+              OK (Close)
             </button>
           </div>
         ) : (
           <form onSubmit={handleSubmit} className="space-y-4">
             <div>
               <label className="block text-xs font-bold text-slate-300 mb-1.5 uppercase tracking-wider">
-                1. किसान का चुनाव करें (Select Member)
+                1. Select Member
               </label>
               <select
                 value={memberCode}
@@ -92,7 +92,7 @@ export default function ItemSaleModal({ members, onSave, onClose }: ItemSaleModa
 
             <div>
               <label className="block text-xs font-bold text-slate-300 mb-1.5 uppercase tracking-wider">
-                2. सामान (Select Feed Product)
+                2. Select Feed Product
               </label>
               <select
                 value={itemName}
@@ -104,16 +104,16 @@ export default function ItemSaleModal({ members, onSave, onClose }: ItemSaleModa
                 }}
                 className="glass-select"
               >
-                <option value="Amul Cattle Feed (50kg Bag)" className="bg-slate-900 text-white">अमूल पशु आहार 50Kg (₹1250)</option>
-                <option value="Kapas Khal / Cotton Seed (50kg)" className="bg-slate-900 text-white">कपास खल 50Kg (₹1400)</option>
-                <option value="Mineral Mixture (1kg Pack)" className="bg-slate-900 text-white">मिनरल मिक्सचर 1Kg (₹250)</option>
+                <option value="Amul Cattle Feed (50kg Bag)" className="bg-slate-900 text-white">Amul Cattle Feed 50Kg (₹1250)</option>
+                <option value="Kapas Khal / Cotton Seed (50kg)" className="bg-slate-900 text-white">Cotton Seed Khal 50Kg (₹1400)</option>
+                <option value="Mineral Mixture (1kg Pack)" className="bg-slate-900 text-white">Mineral Mixture 1Kg (₹250)</option>
               </select>
             </div>
 
             <div className="grid grid-cols-2 gap-3.5">
               <div>
                 <label className="block text-xs font-bold text-slate-300 mb-1.5 uppercase tracking-wider">
-                  3. मात्रा (Quantity)
+                  3. Quantity
                 </label>
                 <input
                   type="number"
@@ -126,7 +126,7 @@ export default function ItemSaleModal({ members, onSave, onClose }: ItemSaleModa
               </div>
               <div>
                 <label className="block text-xs font-bold text-slate-300 mb-1.5 uppercase tracking-wider">
-                  4. दर प्रति पैकेट (₹/Pack)
+                  4. Price per Pack (₹/Pack)
                 </label>
                 <input
                   type="number"
@@ -144,7 +144,7 @@ export default function ItemSaleModal({ members, onSave, onClose }: ItemSaleModa
                   <Calculator className="w-5 h-5" />
                 </div>
                 <div>
-                  <span className="text-[11px] font-bold text-slate-400 block uppercase tracking-wider">कुल फीड बिल राशि</span>
+                  <span className="text-[11px] font-bold text-slate-400 block uppercase tracking-wider">Total Feed Bill Amount</span>
                   <span className="text-xs text-slate-400">{quantity} Pack × ₹{unitPrice}</span>
                 </div>
               </div>
@@ -153,10 +153,10 @@ export default function ItemSaleModal({ members, onSave, onClose }: ItemSaleModa
 
             <div className="pt-2 flex gap-3">
               <button type="submit" className="glass-btn flex-1 py-3.5 text-base bg-gradient-to-r from-purple-600 to-indigo-600">
-                सामान बिल सेव करें (Save Bill)
+                Save Bill
               </button>
               <button type="button" onClick={onClose} className="glass-btn-secondary px-5">
-                रद्द करें
+                Cancel
               </button>
             </div>
           </form>

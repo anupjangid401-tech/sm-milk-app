@@ -28,10 +28,10 @@ export default function ShiftBarChart({ purchases }: ShiftBarChartProps) {
   const total = morningLiters + eveningLiters || 1;
 
   const bars = [
-    { label: "Morning", labelHi: "प्रातः", value: morningLiters, color: "var(--amber)", pct: morningLiters / total },
-    { label: "Evening", labelHi: "सायं",   value: eveningLiters, color: "var(--blue)",  pct: eveningLiters / total },
-    { label: "Buffalo", labelHi: "भैंस",   value: buffaloLiters, color: "var(--amber)", pct: buffaloLiters / (buffaloLiters + cowLiters || 1) },
-    { label: "Cow",     labelHi: "गाय",    value: cowLiters,     color: "var(--blue)",  pct: cowLiters / (buffaloLiters + cowLiters || 1) },
+    { label: "Morning", labelHi: "Morning",  value: morningLiters, color: "var(--amber)", pct: morningLiters / total },
+    { label: "Evening", labelHi: "Evening",  value: eveningLiters, color: "var(--blue)",  pct: eveningLiters / total },
+    { label: "Buffalo", labelHi: "Buffalo",  value: buffaloLiters, color: "var(--amber)", pct: buffaloLiters / (buffaloLiters + cowLiters || 1) },
+    { label: "Cow",     labelHi: "Cow",      value: cowLiters,     color: "var(--blue)",  pct: cowLiters / (buffaloLiters + cowLiters || 1) },
   ];
 
   return (
@@ -41,7 +41,7 @@ export default function ShiftBarChart({ purchases }: ShiftBarChartProps) {
           <div className="section-title" style={{ fontSize: 13 }}>
             Distribution
           </div>
-          <div className="section-title-hi">शिफ्ट / दूध प्रकार</div>
+          <div className="section-title-hi">Shift / Milk Type</div>
         </div>
       </div>
 
@@ -126,7 +126,7 @@ export default function ShiftBarChart({ purchases }: ShiftBarChartProps) {
           color: "var(--text-dim)",
         }}
       >
-        <span>कुल संग्रह</span>
+        <span>Total Collection</span>
         <span style={{ color: "var(--text-primary)", fontWeight: 600, fontVariantNumeric: "tabular-nums" }}>
           {(morningLiters + eveningLiters).toFixed(1)} Ltrs
         </span>

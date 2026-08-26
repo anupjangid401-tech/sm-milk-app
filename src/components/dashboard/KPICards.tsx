@@ -33,7 +33,7 @@ export default function KPICards({ purchases, memberCount }: KPICardsProps) {
         <div className="kpi-card-header">
           <div className="kpi-card-labels">
             <div className="kpi-label-en">Today's Collection</div>
-            <div className="kpi-label-hi">आज का संग्रह</div>
+            <div className="kpi-label-hi">Today's Collection</div>
           </div>
           <div className="kpi-icon cyan">
             <Droplets size={16} />
@@ -44,7 +44,7 @@ export default function KPICards({ purchases, memberCount }: KPICardsProps) {
           <span className="kpi-unit">Ltrs</span>
         </div>
         <div className="kpi-footer">
-          <span className="kpi-footer-label">प्रविष्टियां</span>
+          <span className="kpi-footer-label">Entries</span>
           <span className="kpi-footer-value cyan">{purchases.length} Records</span>
         </div>
       </div>
@@ -54,7 +54,7 @@ export default function KPICards({ purchases, memberCount }: KPICardsProps) {
         <div className="kpi-card-header">
           <div className="kpi-card-labels">
             <div className="kpi-label-en">Total Payable</div>
-            <div className="kpi-label-hi">कुल देय राशि</div>
+            <div className="kpi-label-hi">Total Payable</div>
           </div>
           <div className="kpi-icon green">
             <IndianRupee size={16} />
@@ -67,7 +67,7 @@ export default function KPICards({ purchases, memberCount }: KPICardsProps) {
           </span>
         </div>
         <div className="kpi-footer">
-          <span className="kpi-footer-label">औसत दर</span>
+          <span className="kpi-footer-label">Avg Rate</span>
           <span className="kpi-footer-value green">₹{avgRate.toFixed(2)} / Ltr</span>
         </div>
       </div>
@@ -77,7 +77,7 @@ export default function KPICards({ purchases, memberCount }: KPICardsProps) {
         <div className="kpi-card-header">
           <div className="kpi-card-labels">
             <div className="kpi-label-en">Quality (FAT / SNF)</div>
-            <div className="kpi-label-hi">दूध गुणवत्ता</div>
+            <div className="kpi-label-hi">Milk Quality</div>
           </div>
           <div className="kpi-icon amber">
             <FlaskConical size={16} />
@@ -122,8 +122,8 @@ export default function KPICards({ purchases, memberCount }: KPICardsProps) {
           </div>
         </div>
         <div className="kpi-footer">
-          <span className="kpi-footer-label">मानक</span>
-          <span className="kpi-footer-value amber">राजस्थान चार्ट</span>
+          <span className="kpi-footer-label">Standard</span>
+          <span className="kpi-footer-value amber">Rajasthan Chart</span>
         </div>
       </div>
 
@@ -132,7 +132,7 @@ export default function KPICards({ purchases, memberCount }: KPICardsProps) {
         <div className="kpi-card-header">
           <div className="kpi-card-labels">
             <div className="kpi-label-en">Registered Farmers</div>
-            <div className="kpi-label-hi">पंजीकृत किसान</div>
+            <div className="kpi-label-hi">Registered Farmers</div>
           </div>
           <div className="kpi-icon purple">
             <Users size={16} />
@@ -140,10 +140,10 @@ export default function KPICards({ purchases, memberCount }: KPICardsProps) {
         </div>
         <div className="kpi-value-row">
           <span className="kpi-value">{memberCount}</span>
-          <span className="kpi-unit">सदस्य</span>
+          <span className="kpi-unit">Members</span>
         </div>
         <div className="kpi-footer">
-          <span className="kpi-footer-label">आज सक्रिय</span>
+          <span className="kpi-footer-label">Active Today</span>
           <span className="kpi-footer-value purple">
             <span style={{ color: "var(--amber)" }}>🐃 {buffaloCount}</span>
             {"  "}

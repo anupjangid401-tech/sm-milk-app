@@ -20,12 +20,12 @@ interface SidebarProps {
 }
 
 const NAV_ITEMS = [
-  { id: "dashboard",   label: "Dashboard",    labelHi: "डैशबोर्ड",   icon: LayoutDashboard, active: true  },
-  { id: "collection",  label: "Collection",   labelHi: "दूध संकलन",   icon: Droplets,        active: false },
-  { id: "members",     label: "Members",      labelHi: "किसान सदस्य", icon: Users,           active: false },
-  { id: "payments",    label: "Payments",     labelHi: "भुगतान",       icon: CreditCard,      active: false },
-  { id: "quality",     label: "Milk Quality", labelHi: "दूध गुणवत्ता", icon: FlaskConical,    active: false },
-  { id: "reports",     label: "Reports",      labelHi: "रिपोर्ट",     icon: BarChart3,       active: false },
+  { id: "dashboard",   label: "Dashboard",    labelHi: "Dashboard",      icon: LayoutDashboard, active: true  },
+  { id: "collection",  label: "Collection",   labelHi: "Milk Collection", icon: Droplets,        active: false },
+  { id: "members",     label: "Members",      labelHi: "Farmer Members",  icon: Users,           active: false },
+  { id: "payments",    label: "Payments",     labelHi: "Payments",        icon: CreditCard,      active: false },
+  { id: "quality",     label: "Milk Quality", labelHi: "Milk Quality",    icon: FlaskConical,    active: false },
+  { id: "reports",     label: "Reports",      labelHi: "Reports",         icon: BarChart3,       active: false },
 ];
 
 export default function Sidebar({ collapsed, onToggle, onOpenSettings }: SidebarProps) {
@@ -74,7 +74,7 @@ export default function Sidebar({ collapsed, onToggle, onOpenSettings }: Sidebar
         <button
           className="sidebar-item"
           onClick={onOpenSettings}
-          title={collapsed ? "Settings (सेटिंग)" : undefined}
+          title={collapsed ? "Settings" : undefined}
           style={{ justifyContent: collapsed ? "center" : undefined }}
         >
           <Settings className="sidebar-icon" size={16} />

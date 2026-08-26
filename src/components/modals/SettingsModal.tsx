@@ -54,7 +54,7 @@ export default function SettingsModal({ onClose }: SettingsModalProps) {
             </div>
             <div>
               <h2 className="text-lg font-bold text-white">SM MILK -- Settings</h2>
-              <p className="text-xs text-slate-400">प्रिंटर, कांटा, FAT एवं रसीद सेटिंग्स</p>
+              <p className="text-xs text-slate-400">Printer, Scale, FAT & Receipt Settings</p>
             </div>
           </div>
           <button onClick={onClose} className="p-1.5 rounded-lg bg-white/5 hover:bg-white/10 text-slate-300">
@@ -74,10 +74,10 @@ export default function SettingsModal({ onClose }: SettingsModalProps) {
                   : 'text-slate-400 hover:text-white'
               }`}
             >
-              {tab === 'Slip' && 'Slip (पर्ची)'}
-              {tab === 'Fat' && 'Fat (गुणवत्ता)'}
-              {tab === 'Weight' && 'Weight (कांटा)'}
-              {tab === 'Printer' && 'Printer (प्रिंटर)'}
+              {tab === 'Slip' && 'Slip (Receipt)'}
+              {tab === 'Fat' && 'Fat (Quality)'}
+              {tab === 'Weight' && 'Weight (Scale)'}
+              {tab === 'Printer' && 'Printer (Print)'}
             </button>
           ))}
         </div>
@@ -85,10 +85,10 @@ export default function SettingsModal({ onClose }: SettingsModalProps) {
         {isSaved ? (
           <div className="text-center py-6 space-y-3">
             <CheckCircle className="w-12 h-12 text-cyan-400 mx-auto animate-bounce" />
-            <h3 className="text-base font-bold text-white">सेटिंग्स सफलतापूर्वक सेव हो गईं!</h3>
-            <p className="text-xs text-slate-400">सारे प्रिंटर एवं तोल कांटा पैरामीटर अपडेट हो चुके हैं।</p>
+            <h3 className="text-base font-bold text-white">Settings saved successfully!</h3>
+            <p className="text-xs text-slate-400">All printer & scale parameters have been updated.</p>
             <button onClick={onClose} className="glass-btn w-full mt-4">
-              ठीक है (Close)
+              OK (Close)
             </button>
           </div>
         ) : (
@@ -105,7 +105,7 @@ export default function SettingsModal({ onClose }: SettingsModalProps) {
                       className="glass-select"
                     >
                       <option value="English" className="bg-slate-900">English</option>
-                      <option value="Hindi" className="bg-slate-900">Hindi (हिंदी)</option>
+                      <option value="Hindi" className="bg-slate-900">Hindi</option>
                     </select>
                   </div>
                   <div>
@@ -145,7 +145,7 @@ export default function SettingsModal({ onClose }: SettingsModalProps) {
                 {/* Toggles */}
                 <div className="p-3 rounded-xl bg-slate-950/70 border border-white/10 space-y-2">
                   <div className="flex justify-between items-center">
-                    <span className="text-white">SMS Slip (मोबाइल मैसेज पर्ची)</span>
+                    <span className="text-white">SMS Slip (Mobile Message)</span>
                     <input
                       type="checkbox"
                       checked={smsSlip}
@@ -154,7 +154,7 @@ export default function SettingsModal({ onClose }: SettingsModalProps) {
                     />
                   </div>
                   <div className="flex justify-between items-center">
-                    <span className="text-white">Logo On Slip (डेयरी लोगो)</span>
+                    <span className="text-white">Logo On Slip (Dairy Logo)</span>
                     <input
                       type="checkbox"
                       checked={logoOnSlip}
@@ -163,7 +163,7 @@ export default function SettingsModal({ onClose }: SettingsModalProps) {
                     />
                   </div>
                   <div className="flex justify-between items-center">
-                    <span className="text-white">Auto Cutter (ऑटो पेपर कटर)</span>
+                    <span className="text-white">Auto Cutter (Auto Paper Cutter)</span>
                     <input
                       type="checkbox"
                       checked={autoCutter}
@@ -179,7 +179,7 @@ export default function SettingsModal({ onClose }: SettingsModalProps) {
             {activeTab === 'Fat' && (
               <div className="space-y-3 text-xs">
                 <div>
-                  <label className="block text-slate-400 mb-1 font-semibold">Grade FAT Type (रेट चार्ट)</label>
+                  <label className="block text-slate-400 mb-1 font-semibold">Grade FAT Type (Rate Chart)</label>
                   <select
                     value={fatChartType}
                     onChange={(e) => setFatChartType(e.target.value)}
@@ -301,7 +301,7 @@ export default function SettingsModal({ onClose }: SettingsModalProps) {
 
                 <div className="p-3 rounded-xl bg-slate-950/70 border border-white/10 space-y-2">
                   <div className="flex justify-between items-center">
-                    <span className="text-white">Print Slip (पर्ची प्रिंट)</span>
+                    <span className="text-white">Print Slip (Receipt Print)</span>
                     <input
                       type="checkbox"
                       checked={printSlip}
@@ -310,7 +310,7 @@ export default function SettingsModal({ onClose }: SettingsModalProps) {
                     />
                   </div>
                   <div className="flex justify-between items-center">
-                    <span className="text-white">Usb Slip Printing (USB केबल प्रिंट)</span>
+                    <span className="text-white">Usb Slip Printing (USB Cable Print)</span>
                     <input
                       type="checkbox"
                       checked={usbSlipPrinting}
@@ -319,7 +319,7 @@ export default function SettingsModal({ onClose }: SettingsModalProps) {
                     />
                   </div>
                   <div className="flex justify-between items-center">
-                    <span className="text-white">English Number (अंक इंग्लिश में)</span>
+                    <span className="text-white">English Number (Digits in English)</span>
                     <input
                       type="checkbox"
                       checked={englishNumber}
@@ -334,10 +334,10 @@ export default function SettingsModal({ onClose }: SettingsModalProps) {
             {/* Save Action */}
             <div className="pt-3 flex gap-2">
               <button type="submit" className="glass-btn flex-1">
-                सेटिंग्स सेव करें (Save Settings)
+                Save Settings
               </button>
               <button type="button" onClick={onClose} className="glass-btn-secondary">
-                रद्द करें
+                Cancel
               </button>
             </div>
           </form>

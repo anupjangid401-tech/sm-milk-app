@@ -18,7 +18,7 @@ export default function RecentTable({ purchases, onOpenPurchase }: RecentTablePr
             Recent Milk Entries
           </div>
           <div style={{ fontSize: 11, color: "var(--text-dim)", marginTop: 2 }}>
-            हालिया दूध प्रविष्टियां
+            Latest Milk Entries
           </div>
         </div>
         <div style={{ display: "flex", gap: 8 }}>
@@ -59,7 +59,7 @@ export default function RecentTable({ purchases, onOpenPurchase }: RecentTablePr
                     fontSize: 13,
                   }}
                 >
-                  कोई प्रविष्टि नहीं — No entries yet for today
+                  No entries yet for today
                 </td>
               </tr>
             ) : (

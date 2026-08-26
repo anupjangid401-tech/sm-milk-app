@@ -46,7 +46,7 @@ export default function ReportsModal({ reportType, purchases, sales, onClose }: 
             </div>
             <div>
               <h2 className="text-base font-bold text-white">SM MILK / Milk Purchase Report</h2>
-              <p className="text-[11px] text-slate-400">दूध संकलन रिपोर्ट एवं प्रिंट कंट्रोल</p>
+              <p className="text-[11px] text-slate-400">Milk Collection Report & Print Controls</p>
             </div>
           </div>
           <button onClick={onClose} className="p-1.5 rounded-lg bg-white/5 hover:bg-white/10 text-slate-300">
@@ -135,7 +135,7 @@ export default function ReportsModal({ reportType, purchases, sales, onClose }: 
               {filteredPurchases.length === 0 ? (
                 <tr>
                   <td colSpan={9} className="p-4 text-center text-slate-500">
-                    कोई खरीद डेटा उपलब्ध नहीं है (No Records).
+                    No purchase data available (No Records).
                   </td>
                 </tr>
               ) : (
@@ -169,7 +169,7 @@ export default function ReportsModal({ reportType, purchases, sales, onClose }: 
 
         <div className="mt-3 text-center">
           <button onClick={onClose} className="glass-btn w-full text-xs">
-            बंद करें (Close Report)
+            Close Report
           </button>
         </div>
       </div>

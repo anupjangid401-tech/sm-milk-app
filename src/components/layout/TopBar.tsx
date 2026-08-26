@@ -18,7 +18,7 @@ export default function TopBar({
   onToggleSidebar,
   purchaseCount,
 }: TopBarProps) {
-  const today = new Date().toLocaleDateString("hi-IN", {
+  const today = new Date().toLocaleDateString("en-IN", {
     weekday: "long",
     year: "numeric",
     month: "long",
@@ -42,7 +42,7 @@ export default function TopBar({
         <div className="topbar-divider" />
 
         <div style={{ minWidth: 0 }}>
-          <div className="topbar-page-title">स्मार्ट डेयरी कलेक्शन सेंटर</div>
+          <div className="topbar-page-title">Smart Dairy Collection Centre</div>
           <div className="topbar-breadcrumb">{today}</div>
         </div>
       </div>

@@ -47,8 +47,8 @@ export default function MemberEntryModal({ members, onAddMember, onClose }: Memb
               <UserPlus className="w-5 h-5" />
             </div>
             <div>
-              <h2 className="text-lg font-extrabold text-white tracking-tight">सदस्य / किसान जोड़ें <span className="text-xs font-semibold text-slate-400">(Member Entry)</span></h2>
-              <p className="text-xs text-slate-400">नया दूध उत्पादक किसान रजिस्टर करें</p>
+              <h2 className="text-lg font-extrabold text-white tracking-tight">Add Member / Farmer <span className="text-xs font-semibold text-slate-400">(Member Entry)</span></h2>
+              <p className="text-xs text-slate-400">Register new milk producer farmer</p>
             </div>
           </div>
           <button 
@@ -62,10 +62,10 @@ export default function MemberEntryModal({ members, onAddMember, onClose }: Memb
         {isSuccess ? (
           <div className="text-center py-6 space-y-4">
             <CheckCircle className="w-12 h-12 text-purple-400 mx-auto animate-bounce" />
-            <h3 className="text-base font-extrabold text-white">नया किसान सफलतापूर्वक जोड़ा गया!</h3>
-            <p className="text-xs text-slate-400">कोड: <strong className="text-cyan-300">#{code}</strong> | नाम: <strong className="text-white">{name}</strong></p>
+            <h3 className="text-base font-extrabold text-white">New farmer added successfully!</h3>
+            <p className="text-xs text-slate-400">Code: <strong className="text-cyan-300">#{code}</strong> | Name: <strong className="text-white">{name}</strong></p>
             <button onClick={onClose} className="glass-btn w-full mt-4 py-3 bg-gradient-to-r from-purple-600 to-indigo-600">
-              संपन्न (Done)
+              Done
             </button>
           </div>
         ) : (
@@ -73,7 +73,7 @@ export default function MemberEntryModal({ members, onAddMember, onClose }: Memb
             <div className="grid grid-cols-2 gap-3.5">
               <div>
                 <label className="block text-xs font-bold text-slate-300 mb-1.5 uppercase tracking-wider">
-                  1. किसान कोड (Member Code)
+                  1. Member Code
                 </label>
                 <input
                   type="text"
@@ -85,22 +85,22 @@ export default function MemberEntryModal({ members, onAddMember, onClose }: Memb
               </div>
               <div>
                 <label className="block text-xs font-bold text-slate-300 mb-1.5 uppercase tracking-wider">
-                  2. मुख्य दूध (Default Milk)
+                  2. Default Milk
                 </label>
                 <select
                   value={milkType}
                   onChange={(e) => setMilkType(e.target.value as MilkType)}
                   className="glass-select"
                 >
-                  <option value="BUFFALO" className="bg-slate-900 text-white">भैंस (Buffalo)</option>
-                  <option value="COW" className="bg-slate-900 text-white">गाय (Cow)</option>
+                  <option value="BUFFALO" className="bg-slate-900 text-white">Buffalo</option>
+                  <option value="COW" className="bg-slate-900 text-white">Cow</option>
                 </select>
               </div>
             </div>
 
             <div>
               <label className="block text-xs font-bold text-slate-300 mb-1.5 uppercase tracking-wider">
-                3. किसान का पूरा नाम (Full Name)
+                3. Farmer Full Name
               </label>
               <input
                 type="text"
@@ -115,7 +115,7 @@ export default function MemberEntryModal({ members, onAddMember, onClose }: Memb
             <div className="grid grid-cols-2 gap-3.5">
               <div>
                 <label className="block text-xs font-bold text-slate-300 mb-1.5 uppercase tracking-wider">
-                  4. मोबाइल नंबर (Mobile No)
+                  4. Mobile Number
                 </label>
                 <input
                   type="tel"
@@ -127,7 +127,7 @@ export default function MemberEntryModal({ members, onAddMember, onClose }: Memb
               </div>
               <div>
                 <label className="block text-xs font-bold text-slate-300 mb-1.5 uppercase tracking-wider">
-                  5. गांव (Village Name)
+                  5. Village Name
                 </label>
                 <input
                   type="text"
@@ -140,17 +140,17 @@ export default function MemberEntryModal({ members, onAddMember, onClose }: Memb
 
             <div className="pt-2 flex gap-3">
               <button type="submit" className="glass-btn flex-1 py-3.5 text-base bg-gradient-to-r from-purple-600 to-indigo-600">
-                सदस्य सेव करें (Add Member)
+                Add Member
               </button>
               <button type="button" onClick={onClose} className="glass-btn-secondary px-5">
-                रद्द करें
+                Cancel
               </button>
             </div>
 
             {/* Current Member count tag */}
             <div className="pt-3 border-t border-slate-800 text-center text-xs text-slate-400 flex items-center justify-center gap-1.5">
               <Users className="w-3.5 h-3.5 text-purple-400" />
-              <span>वर्तमान कुल सदस्य: <strong className="text-white">{members.length}</strong></span>
+              <span>Total Registered Members: <strong className="text-white">{members.length}</strong></span>
             </div>
           </form>
         )}

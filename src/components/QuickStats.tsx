@@ -28,7 +28,7 @@ export default function QuickStats({ purchases, memberCount }: QuickStatsProps) 
       <div className="glass-panel-luxury p-4 relative overflow-hidden group">
         <div className="absolute -right-4 -top-4 w-20 h-20 bg-cyan-500/15 rounded-full blur-2xl group-hover:bg-cyan-500/30 transition-all duration-500" />
         <div className="flex items-center justify-between mb-2">
-          <span className="text-xs font-bold text-slate-400 uppercase tracking-wider">आज का संकलन</span>
+          <span className="text-xs font-bold text-slate-400 uppercase tracking-wider">Today's Collection</span>
           <div className="w-8 h-8 rounded-xl bg-cyan-500/20 text-cyan-300 flex items-center justify-center border border-cyan-500/30">
             <Droplets className="w-4 h-4" />
           </div>
@@ -38,7 +38,7 @@ export default function QuickStats({ purchases, memberCount }: QuickStatsProps) 
           <span className="text-xs font-bold text-cyan-400">Ltrs</span>
         </div>
         <div className="mt-2 pt-2 border-t border-white/5 flex items-center justify-between text-[11px]">
-          <span className="text-slate-400 font-medium">प्रविष्टियां</span>
+          <span className="text-slate-400 font-medium">Entries</span>
           <span className="text-cyan-300 font-bold bg-cyan-500/20 px-2 py-0.5 rounded-md border border-cyan-500/30">
             {purchases.length} Records
           </span>
@@ -49,7 +49,7 @@ export default function QuickStats({ purchases, memberCount }: QuickStatsProps) 
       <div className="glass-panel-luxury p-4 relative overflow-hidden group">
         <div className="absolute -right-4 -top-4 w-20 h-20 bg-emerald-500/15 rounded-full blur-2xl group-hover:bg-emerald-500/30 transition-all duration-500" />
         <div className="flex items-center justify-between mb-2">
-          <span className="text-xs font-bold text-slate-400 uppercase tracking-wider">कुल देय राशि</span>
+          <span className="text-xs font-bold text-slate-400 uppercase tracking-wider">Total Payable</span>
           <div className="w-8 h-8 rounded-xl bg-emerald-500/20 text-emerald-300 flex items-center justify-center border border-emerald-500/30">
             <IndianRupee className="w-4 h-4" />
           </div>
@@ -61,7 +61,7 @@ export default function QuickStats({ purchases, memberCount }: QuickStatsProps) 
           </span>
         </div>
         <div className="mt-2 pt-2 border-t border-white/5 flex items-center justify-between text-[11px]">
-          <span className="text-slate-400 font-medium">औसत दर</span>
+          <span className="text-slate-400 font-medium">Avg Rate</span>
           <span className="text-emerald-300 font-bold bg-emerald-500/20 px-2 py-0.5 rounded-md border border-emerald-500/30">
             ₹{avgRate}/Ltr
           </span>
@@ -72,7 +72,7 @@ export default function QuickStats({ purchases, memberCount }: QuickStatsProps) 
       <div className="glass-panel-luxury p-4 relative overflow-hidden group">
         <div className="absolute -right-4 -top-4 w-20 h-20 bg-amber-500/15 rounded-full blur-2xl group-hover:bg-amber-500/30 transition-all duration-500" />
         <div className="flex items-center justify-between mb-2">
-          <span className="text-xs font-bold text-slate-400 uppercase tracking-wider">गुणवत्ता (FAT/SNF)</span>
+          <span className="text-xs font-bold text-slate-400 uppercase tracking-wider">Quality (FAT/SNF)</span>
           <div className="w-8 h-8 rounded-xl bg-amber-500/20 text-amber-300 flex items-center justify-center border border-amber-500/30">
             <Activity className="w-4 h-4" />
           </div>
@@ -89,8 +89,8 @@ export default function QuickStats({ purchases, memberCount }: QuickStatsProps) 
           </div>
         </div>
         <div className="mt-2 pt-2 border-t border-white/5 flex items-center justify-between text-[11px]">
-          <span className="text-slate-400 font-medium">चार्ट प्रकार</span>
-          <span className="text-amber-300 font-bold">राजस्थान मानक</span>
+          <span className="text-slate-400 font-medium">Chart Type</span>
+          <span className="text-amber-300 font-bold">Rajasthan Standard</span>
         </div>
       </div>
 
@@ -98,19 +98,19 @@ export default function QuickStats({ purchases, memberCount }: QuickStatsProps) 
       <div className="glass-panel-luxury p-4 relative overflow-hidden group">
         <div className="absolute -right-4 -top-4 w-20 h-20 bg-purple-500/15 rounded-full blur-2xl group-hover:bg-purple-500/30 transition-all duration-500" />
         <div className="flex items-center justify-between mb-2">
-          <span className="text-xs font-bold text-slate-400 uppercase tracking-wider">पंजीकृत किसान</span>
+          <span className="text-xs font-bold text-slate-400 uppercase tracking-wider">Registered Farmers</span>
           <div className="w-8 h-8 rounded-xl bg-purple-500/20 text-purple-300 flex items-center justify-center border border-purple-500/30">
             <Users className="w-4 h-4" />
           </div>
         </div>
         <div className="flex items-baseline gap-1">
           <span className="text-2xl font-black text-white tracking-tight">{memberCount}</span>
-          <span className="text-xs font-bold text-purple-400">सदस्य</span>
+          <span className="text-xs font-bold text-purple-400">Members</span>
         </div>
         <div className="mt-2 pt-2 border-t border-white/5 flex items-center justify-between text-[11px]">
-          <span className="text-slate-400 font-medium">स्थिति</span>
+          <span className="text-slate-400 font-medium">Status</span>
           <span className="text-purple-300 font-bold flex items-center gap-1">
-            <span className="w-2 h-2 rounded-full bg-emerald-400 animate-ping" /> ऑनलाइन
+            <span className="w-2 h-2 rounded-full bg-emerald-400 animate-ping" /> Online
           </span>
         </div>
       </div>

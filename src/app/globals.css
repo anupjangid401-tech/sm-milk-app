@@ -702,3 +702,32 @@ input[type=number] { -moz-appearance: textfield; }
   position: relative;
   color: var(--text-primary);
 }
+
+/* Touch Numpad Buttons */
+.numpad-btn {
+  background: #0f1c38;
+  border: 1px solid #1e3a6d;
+  color: #ffffff;
+  font-family: var(--font-mono);
+  font-weight: 800;
+  font-size: 16px;
+  padding: 10px 0;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: all 0.1s ease;
+  user-select: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.numpad-btn:hover {
+  background: #1d335e;
+  border-color: #38bdf8;
+}
+
+.numpad-btn:active {
+  transform: scale(0.95);
+  background: #0284c7;
+}
+

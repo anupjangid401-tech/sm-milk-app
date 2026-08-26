@@ -16,7 +16,7 @@ Aapko phone me koi software ya Android Studio install nahi karna padega:
 3. Computer ka IP Address dekhein (e.g., `http://192.168.31.173:3000`).
 4. Apne **Android Phone me Chrome Browser** kholein aur wahi IP address enter karein:
    `http://192.168.31.173:3000`
-5. Chrome me uper **3 Dots ⋮** par tap karein aur **"Add to Home Screen" (होम स्क्रीन पर जोड़ें)** par click karein.
+5. Chrome me uper **3 Dots ⋮** par tap karein aur **"Add to Home Screen"** par click karein.
 6. 🎉 **SM MILK** App aapke phone ki home screen par install ho jayegi aur bilkul asli Android App ki tarah fullscreen chalegi!
 
 ---

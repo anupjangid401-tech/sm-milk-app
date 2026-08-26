@@ -28,8 +28,8 @@ export default function RateChartModal({ onClose }: RateChartModalProps) {
               <Sliders className="w-5 h-5" />
             </div>
             <div>
-              <h2 className="text-lg font-bold text-white">दूध दर तालिका (Rate Chart Setup)</h2>
-              <p className="text-xs text-slate-400">FAT / SNF दर मैट्रिक्स तालिका</p>
+              <h2 className="text-lg font-bold text-white">Milk Rate Chart Setup</h2>
+              <p className="text-xs text-slate-400">FAT / SNF Rate Matrix Table</p>
             </div>
           </div>
           <button onClick={onClose} className="p-1.5 rounded-lg bg-white/5 hover:bg-white/10 text-slate-300">
@@ -40,19 +40,19 @@ export default function RateChartModal({ onClose }: RateChartModalProps) {
         {isSaved ? (
           <div className="text-center py-6 space-y-3">
             <CheckCircle className="w-12 h-12 text-cyan-400 mx-auto animate-bounce" />
-            <h3 className="text-base font-bold text-white">दूध दर तालिका अपडेट हो गई!</h3>
-            <p className="text-xs text-slate-400">नई दरें सभी खरीद प्रविष्टियों पर तुरंत लागू हो गई हैं।</p>
+            <h3 className="text-base font-bold text-white">Milk Rate Chart Updated!</h3>
+            <p className="text-xs text-slate-400">New rates are now applied to all purchase entries.</p>
             <button onClick={onClose} className="glass-btn w-full mt-4">
-              ठीक है (Close)
+              OK (Close)
             </button>
           </div>
         ) : (
           <form onSubmit={handleSave} className="space-y-4">
             <div className="p-3 rounded-xl bg-slate-900/80 border border-white/10 space-y-3">
-              <h4 className="text-xs font-bold text-amber-300 uppercase tracking-wider">गाय का दूध (Cow Base Rate)</h4>
+              <h4 className="text-xs font-bold text-amber-300 uppercase tracking-wider">Cow Milk (Cow Base Rate)</h4>
               <div className="grid grid-cols-2 gap-3">
                 <div>
-                  <label className="block text-[11px] text-slate-400 mb-1">बेस रेट (Standard Rate ₹)</label>
+                  <label className="block text-[11px] text-slate-400 mb-1">Base Rate (Standard Rate ₹)</label>
                   <input
                     type="number"
                     step="0.5"
@@ -62,17 +62,17 @@ export default function RateChartModal({ onClose }: RateChartModalProps) {
                   />
                 </div>
                 <div>
-                  <label className="block text-[11px] text-slate-400 mb-1">मानक FAT (Standard FAT)</label>
+                  <label className="block text-[11px] text-slate-400 mb-1">Standard FAT</label>
                   <input type="text" value="3.5 %" disabled className="glass-input opacity-60" />
                 </div>
               </div>
             </div>
 
             <div className="p-3 rounded-xl bg-slate-900/80 border border-white/10 space-y-3">
-              <h4 className="text-xs font-bold text-purple-300 uppercase tracking-wider">भैंस का दूध (Buffalo Base Rate)</h4>
+              <h4 className="text-xs font-bold text-purple-300 uppercase tracking-wider">Buffalo Milk (Buffalo Base Rate)</h4>
               <div className="grid grid-cols-2 gap-3">
                 <div>
-                  <label className="block text-[11px] text-slate-400 mb-1">बेस रेट (Standard Rate ₹)</label>
+                  <label className="block text-[11px] text-slate-400 mb-1">Base Rate (Standard Rate ₹)</label>
                   <input
                     type="number"
                     step="0.5"
@@ -82,7 +82,7 @@ export default function RateChartModal({ onClose }: RateChartModalProps) {
                   />
                 </div>
                 <div>
-                  <label className="block text-[11px] text-slate-400 mb-1">मानक FAT (Standard FAT)</label>
+                  <label className="block text-[11px] text-slate-400 mb-1">Standard FAT</label>
                   <input type="text" value="6.5 %" disabled className="glass-input opacity-60" />
                 </div>
               </div>
@@ -90,7 +90,7 @@ export default function RateChartModal({ onClose }: RateChartModalProps) {
 
             <div className="grid grid-cols-2 gap-3">
               <div>
-                <label className="block text-xs font-semibold text-slate-300 mb-1">+0.1 FAT बढ़ोतरी (₹)</label>
+                <label className="block text-xs font-semibold text-slate-300 mb-1">+0.1 FAT Increment (₹)</label>
                 <input
                   type="number"
                   step="0.05"
@@ -100,7 +100,7 @@ export default function RateChartModal({ onClose }: RateChartModalProps) {
                 />
               </div>
               <div>
-                <label className="block text-xs font-semibold text-slate-300 mb-1">+0.1 SNF बढ़ोतरी (₹)</label>
+                <label className="block text-xs font-semibold text-slate-300 mb-1">+0.1 SNF Increment (₹)</label>
                 <input
                   type="number"
                   step="0.05"
@@ -113,10 +113,10 @@ export default function RateChartModal({ onClose }: RateChartModalProps) {
 
             <div className="pt-2 flex gap-2">
               <button type="submit" className="glass-btn flex-1 bg-gradient-to-r from-cyan-500 to-blue-600">
-                रेट चार्ट सेव करें (Save Rates)
+                Save Rates
               </button>
               <button type="button" onClick={onClose} className="glass-btn-secondary">
-                रद्द करें
+                Cancel
               </button>
             </div>
           </form>

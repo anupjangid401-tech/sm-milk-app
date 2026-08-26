@@ -64,7 +64,7 @@ export default function CollectionChart({ purchases }: CollectionChartProps) {
           <div className="section-title" style={{ fontSize: 13 }}>
             7-Day Collection Trend
           </div>
-          <div className="section-title-hi">साप्ताहिक संग्रह रुझान</div>
+          <div className="section-title-hi">Weekly Collection Trend</div>
         </div>
         <div
           style={{

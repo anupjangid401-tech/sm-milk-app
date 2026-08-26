@@ -16,7 +16,7 @@ export default function HelpModal({ onClose }: HelpModalProps) {
               <HelpCircle className="w-5 h-5" />
             </div>
             <div>
-              <h2 className="text-lg font-bold text-white">सहायता एवं हेल्पलाइन (Help & Guide)</h2>
+              <h2 className="text-lg font-bold text-white">Help & Guide</h2>
               <p className="text-xs text-slate-400">SM MILK Dairy Support</p>
             </div>
           </div>
@@ -33,7 +33,7 @@ export default function HelpModal({ onClose }: HelpModalProps) {
                 <PhoneCall className="w-5 h-5" />
               </div>
               <div>
-                <h4 className="font-bold text-white">डेयरी कस्टमर केयर नंबर</h4>
+                <h4 className="font-bold text-white">Dairy Customer Care Number</h4>
                 <p className="text-[11px] text-slate-400">+91 98290-XXXXX / 1800-SM-MILK</p>
               </div>
             </div>
@@ -46,12 +46,12 @@ export default function HelpModal({ onClose }: HelpModalProps) {
           <div className="p-3.5 rounded-xl bg-slate-900 border border-white/10 space-y-2">
             <h4 className="font-bold text-amber-300 flex items-center gap-1.5">
               <ShieldCheck className="w-4 h-4 text-amber-400" />
-              एप्लीकेशन का उपयोग कैसे करें?
+              How to use the application?
             </h4>
             <ul className="space-y-1 text-slate-300 text-[11px] list-disc list-inside">
-              <li><strong>दूध खरीद:</strong> किसान का कोड डालकर FAT% और SNF% दर्ज करें, ऑटो दर गणना हो जाएगी।</li>
-              <li><strong>शिफ्ट बदलो:</strong> ऊपर दिए गए बटन से सुबह (AM) या शाम (PM) शिफ्ट चुनें।</li>
-              <li><strong>ग्राहक पासबुक:</strong> किसान का नाम खोजकर उसका पूरा खाता विवरण देखें।</li>
+              <li><strong>Milk Purchase:</strong> Enter member code, input FAT% and SNF%, rate is calculated automatically.</li>
+              <li><strong>Switch Shift:</strong> Select Morning (AM) or Evening (PM) shift from top bar button.</li>
+              <li><strong>Customer Passbook:</strong> Search member name/code to view full account statement and balance.</li>
             </ul>
           </div>
 
@@ -63,7 +63,7 @@ export default function HelpModal({ onClose }: HelpModalProps) {
           </div>
 
           <button onClick={onClose} className="glass-btn w-full mt-2">
-            बंद करें (Close)
+            Close
           </button>
         </div>
       </div>

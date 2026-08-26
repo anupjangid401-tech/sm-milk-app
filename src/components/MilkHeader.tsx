@@ -76,12 +76,12 @@ export default function MilkHeader({
             {shift === 'MORNING' ? (
               <>
                 <Sun className="w-4 h-4 text-amber-400 animate-spin-slow" />
-                <span>सुबह (AM Shift)</span>
+                <span>Morning (AM)</span>
               </>
             ) : (
               <>
                 <Moon className="w-4 h-4 text-indigo-400" />
-                <span>शाम (PM Shift)</span>
+                <span>Evening (PM)</span>
               </>
             )}
           </button>
