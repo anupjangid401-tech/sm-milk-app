@@ -1,17 +1,22 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { RefreshCw, Smartphone, Monitor, Sparkles } from "lucide-react";
-
-// Layout
-import Sidebar from "@/components/layout/Sidebar";
-import TopBar from "@/components/layout/TopBar";
+import {
+  Milk,
+  Home as HomeIcon,
+  BookOpen,
+  Settings,
+  Sun,
+  Moon,
+  Printer,
+  Sparkles,
+  UserCheck,
+  Droplets,
+  TrendingUp,
+  RefreshCw,
+} from "lucide-react";
 
 // Dashboard components
-import KPICards from "@/components/dashboard/KPICards";
-import CollectionChart from "@/components/dashboard/CollectionChart";
-import ShiftBarChart from "@/components/dashboard/ShiftBarChart";
-import RecentTable from "@/components/dashboard/RecentTable";
 import ModuleGrid from "@/components/ModuleGrid";
 
 // Modals (all preserved)
@@ -42,8 +47,7 @@ import {
 
 export default function Home() {
   const [shift, setShift] = useState<ShiftType>("MORNING");
-  const [sidebarCollapsed, setSidebarCollapsed] = useState(false);
-  const [viewMode, setViewMode] = useState<'mobile' | 'desktop'>('mobile');
+  const [activeTab, setActiveTab] = useState<"home" | "purchase" | "passbook" | "settings">("home");
   const [activeModal, setActiveModal] = useState<string | null>(null);
 
   const [members, setMembers] = useState<Member[]>(INITIAL_MEMBERS);
@@ -54,13 +58,13 @@ export default function Home() {
   // Load from localStorage on mount
   useEffect(() => {
     try {
-      const savedMembers   = localStorage.getItem("sm_members");
+      const savedMembers = localStorage.getItem("sm_members");
       const savedPurchases = localStorage.getItem("sm_purchases");
-      const savedSales     = localStorage.getItem("sm_sales");
+      const savedSales = localStorage.getItem("sm_sales");
       const savedItemSales = localStorage.getItem("sm_item_sales");
-      if (savedMembers)   setMembers(JSON.parse(savedMembers));
+      if (savedMembers) setMembers(JSON.parse(savedMembers));
       if (savedPurchases) setPurchases(JSON.parse(savedPurchases));
-      if (savedSales)     setSales(JSON.parse(savedSales));
+      if (savedSales) setSales(JSON.parse(savedSales));
       if (savedItemSales) setItemSales(JSON.parse(savedItemSales));
     } catch (err) {
       console.error("Failed to load local state", err);
@@ -91,135 +95,154 @@ export default function Home() {
     localStorage.setItem("sm_item_sales", JSON.stringify(updated));
   };
 
-  // Today's purchases only (for KPI)
+  // Summary Metrics
   const todayStr = new Date().toISOString().split("T")[0];
   const todayPurchases = purchases.filter((p) => p.date === todayStr);
+  const totalLitersToday = todayPurchases.reduce((acc, curr) => acc + curr.liters, 0);
+  const totalPayoutToday = todayPurchases.reduce((acc, curr) => acc + curr.totalAmount, 0);
 
   return (
-    <div className={`min-h-screen bg-slate-950 text-slate-100 flex flex-col justify-center items-center ${viewMode === 'mobile' ? 'py-4' : 'p-0'}`}>
-      
-      {/* View Mode Bar for localhost testing */}
-      <div className="w-full max-w-5xl px-4 py-2 flex items-center justify-between bg-slate-900/80 border-b border-white/10 text-xs mb-2 rounded-xl backdrop-blur-md">
-        <div className="flex items-center gap-2">
-          <Sparkles className="w-4 h-4 text-cyan-400" />
-          <span className="font-bold text-white">SM MILK — Viewport Mode:</span>
-          <span className="text-cyan-300 font-semibold px-2 py-0.5 rounded bg-cyan-500/20 border border-cyan-500/30">
-            {viewMode === 'mobile' ? '📱 Mobile Phone Screen View (Android APK Preview)' : '🖥️ Desktop Command Center'}
-          </span>
-        </div>
-
-        <button
-          onClick={() => setViewMode(v => v === 'mobile' ? 'desktop' : 'mobile')}
-          className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl font-extrabold bg-gradient-to-r from-cyan-500 to-blue-600 text-white shadow-lg shadow-cyan-500/20 hover:scale-105 transition-all cursor-pointer"
-        >
-          {viewMode === 'mobile' ? (
-            <>
-              <Monitor className="w-3.5 h-3.5" />
-              <span>Switch to Desktop View</span>
-            </>
-          ) : (
-            <>
-              <Smartphone className="w-3.5 h-3.5" />
-              <span>Switch to Mobile View</span>
-            </>
-          )}
-        </button>
-      </div>
-
-      {/* Main Container Wrapper */}
-      <div
-        className={`w-full transition-all duration-300 ease-in-out relative flex flex-col ${
-          viewMode === 'mobile'
-            ? 'max-w-[430px] min-h-[840px] h-[840px] rounded-[44px] overflow-hidden border-[8px] border-slate-800 shadow-2xl shadow-cyan-500/20 bg-slate-950'
-            : 'max-w-full min-h-screen bg-slate-950'
-        }`}
-      >
-        <div className="app-shell flex-1">
-          {/* Sidebar */}
-          {viewMode === 'desktop' && (
-            <Sidebar
-              collapsed={sidebarCollapsed}
-              onToggle={() => setSidebarCollapsed((v) => !v)}
-              onOpenSettings={() => setActiveModal("sm-settings")}
-            />
-          )}
-
-          {/* Main area */}
-          <div className="main-area flex-1">
-            {/* TopBar */}
-            <TopBar
-              currentShift={shift}
-              onToggleShift={() => setShift((s) => (s === "MORNING" ? "EVENING" : "MORNING"))}
-              onOpenSettings={() => setActiveModal("sm-settings")}
-              onToggleSidebar={() => setSidebarCollapsed((v) => !v)}
-              purchaseCount={todayPurchases.length}
-            />
-
-            {/* Dashboard content */}
-            <main className="page-content overflow-y-auto no-scrollbar pb-16">
-              {/* KPI Cards */}
-              <KPICards purchases={todayPurchases} memberCount={members.length} />
-
-              {/* Charts Row (Only in Desktop view or optimized in mobile) */}
-              {viewMode === 'desktop' && (
-                <div className="charts-grid">
-                  <CollectionChart purchases={purchases} />
-                  <ShiftBarChart purchases={todayPurchases} />
-                </div>
-              )}
-
-              {/* Recent Entries Table */}
-              <RecentTable
-                purchases={purchases}
-                onOpenPurchase={() => setActiveModal("milk-purchase")}
-              />
-
-              {/* Operations Module Grid */}
-              <ModuleGrid onSelectModule={(id) => setActiveModal(id)} />
-
-              {/* Footer reset */}
-              <div
-                style={{
-                  display: "flex",
-                  justifyContent: "space-between",
-                  alignItems: "center",
-                  padding: "12px 16px",
-                  borderTop: "1px solid rgba(255,255,255,0.1)",
-                  fontSize: 11,
-                  color: "#94a3b8",
-                }}
-              >
-                <span>SM MILK Mobile ERP v3.5</span>
-                <button
-                  onClick={() => {
-                    if (confirm("Reset demo data? All data will be cleared.")) {
-                      localStorage.clear();
-                      window.location.reload();
-                    }
-                  }}
-                  style={{
-                    display: "flex",
-                    alignItems: "center",
-                    gap: 5,
-                    cursor: "pointer",
-                    background: "none",
-                    border: "1px solid rgba(255,255,255,0.15)",
-                    borderRadius: 8,
-                    padding: "4px 10px",
-                    color: "#94a3b8",
-                    fontSize: 11,
-                  }}
-                >
-                  <RefreshCw size={11} />
-                  Reset
-                </button>
-              </div>
-            </main>
+    <div className="w-full min-h-screen bg-slate-950 text-slate-100 flex flex-col justify-between overflow-x-hidden font-sans">
+      {/* ── NATIVE MOBILE APP HEADER BAR ── */}
+      <header className="sticky top-0 z-40 bg-sky-800 text-white px-4 py-3 flex items-center justify-between shadow-lg border-b border-sky-700">
+        <div className="flex items-center gap-2.5">
+          <div className="w-9 h-9 rounded-xl bg-white/10 flex items-center justify-center border border-white/20 shadow-inner">
+            <Droplets className="w-5 h-5 text-cyan-300 animate-pulse" />
+          </div>
+          <div>
+            <h1 className="font-black text-base tracking-tight leading-none text-white">SM MILK</h1>
+            <p className="text-[10px] font-bold text-sky-200 mt-0.5 tracking-wide">Dairy ERP App v3.5</p>
           </div>
         </div>
-      </div>
 
-      {/* ── ALL MODALS (fully preserved) ── */}
+        {/* Shift & Bluetooth Printer Status */}
+        <div className="flex items-center gap-2">
+          <button
+            onClick={() => setShift((s) => (s === "MORNING" ? "EVENING" : "MORNING"))}
+            className={`px-3 py-1.5 rounded-xl text-xs font-bold flex items-center gap-1.5 border transition-all ${
+              shift === "MORNING"
+                ? "bg-amber-400 text-slate-950 border-amber-300 shadow-md"
+                : "bg-indigo-900 text-indigo-100 border-indigo-700"
+            }`}
+          >
+            {shift === "MORNING" ? <Sun className="w-3.5 h-3.5 text-amber-950" /> : <Moon className="w-3.5 h-3.5 text-indigo-300" />}
+            <span>{shift === "MORNING" ? "Morning" : "Evening"}</span>
+          </button>
+
+          <button
+            onClick={() => setActiveModal("sm-settings")}
+            className="p-2 rounded-xl bg-sky-900/60 hover:bg-sky-700 border border-sky-600/50 text-sky-100"
+            title="Printer & Weight Settings"
+          >
+            <Printer className="w-4 h-4" />
+          </button>
+        </div>
+      </header>
+
+      {/* ── MAIN MOBILE CONTENT AREA ── */}
+      <main className="flex-1 overflow-y-auto px-3.5 py-3 space-y-4 pb-20">
+        {/* Mobile Quick Stats Banner */}
+        <div className="grid grid-cols-2 gap-2.5">
+          <div className="bg-gradient-to-br from-sky-900/60 to-slate-900 p-3 rounded-2xl border border-sky-500/30 shadow-md">
+            <div className="flex items-center justify-between text-[11px] font-extrabold text-sky-300">
+              <span>आज का संकलन</span>
+              <Droplets className="w-4 h-4 text-cyan-400" />
+            </div>
+            <div className="text-xl font-black text-white font-mono mt-1">
+              {totalLitersToday.toFixed(1)} <span className="text-xs text-sky-300 font-sans font-bold">Ltr</span>
+            </div>
+            <div className="text-[10px] text-slate-400 mt-1 font-semibold">
+              {todayPurchases.length} Entries Today
+            </div>
+          </div>
+
+          <div className="bg-gradient-to-br from-emerald-900/60 to-slate-900 p-3 rounded-2xl border border-emerald-500/30 shadow-md">
+            <div className="flex items-center justify-between text-[11px] font-extrabold text-emerald-300">
+              <span>कुल भुगतान</span>
+              <TrendingUp className="w-4 h-4 text-emerald-400" />
+            </div>
+            <div className="text-xl font-black text-emerald-400 font-mono mt-1">
+              ₹{totalPayoutToday.toFixed(0)}
+            </div>
+            <div className="text-[10px] text-slate-400 mt-1 font-semibold">
+              {members.length} Registered Farmers
+            </div>
+          </div>
+        </div>
+
+        {/* 12 Operations Grid */}
+        <div>
+          <div className="flex items-center justify-between px-1 mb-2">
+            <h2 className="text-xs font-black uppercase tracking-wider text-slate-300 flex items-center gap-1.5">
+              <Sparkles className="w-3.5 h-3.5 text-amber-400" />
+              <span>डेयरी सेवाएं (Milk Operations)</span>
+            </h2>
+            <span className="text-[10px] font-extrabold text-cyan-400 bg-cyan-500/15 px-2 py-0.5 rounded-full border border-cyan-500/30">
+              12 Services
+            </span>
+          </div>
+
+          <ModuleGrid onSelectModule={(id) => setActiveModal(id)} />
+        </div>
+
+        {/* Reset Data Footer */}
+        <div className="pt-2 text-center">
+          <button
+            onClick={() => {
+              if (confirm("Reset demo data? All records will be cleared.")) {
+                localStorage.clear();
+                window.location.reload();
+              }
+            }}
+            className="inline-flex items-center gap-1.5 text-xs text-slate-400 hover:text-red-400 px-3 py-1.5 rounded-xl border border-slate-800 bg-slate-900/50"
+          >
+            <RefreshCw className="w-3.5 h-3.5" />
+            <span>Reset Demo Data</span>
+          </button>
+        </div>
+      </main>
+
+      {/* ── NATIVE MOBILE BOTTOM NAVIGATION BAR ── */}
+      <nav className="fixed bottom-0 left-0 right-0 z-40 bg-slate-900 border-t border-slate-800 px-4 py-2 flex items-center justify-around shadow-2xl backdrop-blur-lg">
+        <button
+          onClick={() => setActiveTab("home")}
+          className={`flex flex-col items-center gap-0.5 text-xs font-bold transition-all ${
+            activeTab === "home" ? "text-cyan-400 scale-105" : "text-slate-400"
+          }`}
+        >
+          <HomeIcon className="w-5 h-5" />
+          <span>Home</span>
+        </button>
+
+        <button
+          onClick={() => setActiveModal("milk-purchase")}
+          className="flex flex-col items-center gap-0.5 text-xs font-extrabold text-amber-400 -mt-4 bg-sky-700 hover:bg-sky-600 text-white p-3 rounded-full border-4 border-slate-950 shadow-xl shadow-sky-600/50 active:scale-95 transition-all"
+        >
+          <Milk className="w-6 h-6" />
+        </button>
+
+        <button
+          onClick={() => setActiveModal("customer-passbook")}
+          className={`flex flex-col items-center gap-0.5 text-xs font-bold transition-all ${
+            activeTab === "passbook" ? "text-cyan-400 scale-105" : "text-slate-400"
+          }`}
+        >
+          <BookOpen className="w-5 h-5" />
+          <span>Passbook</span>
+        </button>
+
+        <button
+          onClick={() => setActiveModal("sm-settings")}
+          className={`flex flex-col items-center gap-0.5 text-xs font-bold transition-all ${
+            activeTab === "settings" ? "text-cyan-400 scale-105" : "text-slate-400"
+          }`}
+        >
+          <Settings className="w-5 h-5" />
+          <span>Settings</span>
+        </button>
+      </nav>
+
+      {/* ── MODALS & FULL SCREEN SCREENS ── */}
       {activeModal === "milk-purchase" && (
         <MilkPurchaseModal
           members={members}
