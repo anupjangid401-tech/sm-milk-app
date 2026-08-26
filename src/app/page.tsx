@@ -10,7 +10,6 @@ import {
   Moon,
   Printer,
   Sparkles,
-  UserCheck,
   Droplets,
   TrendingUp,
   RefreshCw,
@@ -19,7 +18,7 @@ import {
 // Dashboard components
 import ModuleGrid from "@/components/ModuleGrid";
 
-// Modals (all preserved)
+// Modals
 import MilkPurchaseModal from "@/components/modals/MilkPurchaseModal";
 import MilkSaleModal from "@/components/modals/MilkSaleModal";
 import MemberEntryModal from "@/components/modals/MemberEntryModal";
@@ -102,37 +101,37 @@ export default function Home() {
   const totalPayoutToday = todayPurchases.reduce((acc, curr) => acc + curr.totalAmount, 0);
 
   return (
-    <div className="w-full min-h-screen bg-slate-950 text-slate-100 flex flex-col justify-between overflow-x-hidden font-sans">
+    <div className="w-full min-h-screen bg-slate-950 text-slate-100 flex flex-col justify-between overflow-x-hidden font-sans select-none">
       {/* ── NATIVE MOBILE APP HEADER BAR ── */}
-      <header className="sticky top-0 z-40 bg-sky-800 text-white px-4 py-3 flex items-center justify-between shadow-lg border-b border-sky-700">
-        <div className="flex items-center gap-2.5">
-          <div className="w-9 h-9 rounded-xl bg-white/10 flex items-center justify-center border border-white/20 shadow-inner">
-            <Droplets className="w-5 h-5 text-cyan-300 animate-pulse" />
+      <header className="sticky top-0 z-40 bg-sky-900 text-white px-3.5 py-2.5 flex items-center justify-between shadow-lg border-b border-sky-800">
+        <div className="flex items-center gap-2 min-w-0">
+          <div className="w-8 h-8 rounded-xl bg-cyan-500/20 flex items-center justify-center border border-cyan-400/40 shadow-inner flex-shrink-0">
+            <Droplets className="w-4 h-4 text-cyan-300 animate-pulse" />
           </div>
-          <div>
-            <h1 className="font-black text-base tracking-tight leading-none text-white">SM MILK</h1>
-            <p className="text-[10px] font-bold text-sky-200 mt-0.5 tracking-wide">Dairy ERP App v3.5</p>
+          <div className="truncate">
+            <h1 className="font-black text-sm tracking-tight leading-none text-white truncate">SM MILK</h1>
+            <p className="text-[9px] font-extrabold text-cyan-300 mt-0.5 tracking-wider truncate uppercase">Dairy POS v3.5</p>
           </div>
         </div>
 
         {/* Shift & Bluetooth Printer Status */}
-        <div className="flex items-center gap-2">
+        <div className="flex items-center gap-2 flex-shrink-0">
           <button
             onClick={() => setShift((s) => (s === "MORNING" ? "EVENING" : "MORNING"))}
-            className={`px-3 py-1.5 rounded-xl text-xs font-bold flex items-center gap-1.5 border transition-all ${
+            className={`px-2.5 py-1 rounded-xl text-xs font-black flex items-center gap-1 border transition-all ${
               shift === "MORNING"
                 ? "bg-amber-400 text-slate-950 border-amber-300 shadow-md"
-                : "bg-indigo-900 text-indigo-100 border-indigo-700"
+                : "bg-slate-950 text-cyan-300 border-slate-800"
             }`}
           >
-            {shift === "MORNING" ? <Sun className="w-3.5 h-3.5 text-amber-950" /> : <Moon className="w-3.5 h-3.5 text-indigo-300" />}
+            {shift === "MORNING" ? <Sun className="w-3.5 h-3.5 text-amber-950" /> : <Moon className="w-3.5 h-3.5 text-blue-400" />}
             <span>{shift === "MORNING" ? "Morning" : "Evening"}</span>
           </button>
 
           <button
             onClick={() => setActiveModal("sm-settings")}
-            className="p-2 rounded-xl bg-sky-900/60 hover:bg-sky-700 border border-sky-600/50 text-sky-100"
-            title="Printer & Weight Settings"
+            className="p-1.5 rounded-xl bg-slate-950 hover:bg-slate-900 border border-slate-800 text-cyan-300"
+            title="Printer & Scale Settings"
           >
             <Printer className="w-4 h-4" />
           </button>
@@ -140,32 +139,32 @@ export default function Home() {
       </header>
 
       {/* ── MAIN MOBILE CONTENT AREA ── */}
-      <main className="flex-1 overflow-y-auto px-3.5 py-3 space-y-4 pb-20">
+      <main className="flex-1 overflow-y-auto px-3.5 py-3 space-y-3.5 pb-24">
         {/* Mobile Quick Stats Banner */}
         <div className="grid grid-cols-2 gap-2.5">
-          <div className="bg-gradient-to-br from-sky-900/60 to-slate-900 p-3 rounded-2xl border border-sky-500/30 shadow-md">
-            <div className="flex items-center justify-between text-[11px] font-extrabold text-sky-300">
-              <span>आज का संकलन</span>
-              <Droplets className="w-4 h-4 text-cyan-400" />
+          <div className="bg-slate-950 p-3 rounded-2xl border border-slate-800 shadow-md flex flex-col justify-between">
+            <div className="flex items-center justify-between text-[11px] font-extrabold text-cyan-300">
+              <span className="truncate">आज का दूध संकलन</span>
+              <Droplets className="w-4 h-4 text-cyan-400 flex-shrink-0" />
             </div>
-            <div className="text-xl font-black text-white font-mono mt-1">
-              {totalLitersToday.toFixed(1)} <span className="text-xs text-sky-300 font-sans font-bold">Ltr</span>
+            <div className="text-lg font-black text-white font-mono mt-1.5 truncate">
+              {totalLitersToday.toFixed(1)} <span className="text-xs text-cyan-300 font-sans font-extrabold">Ltr</span>
             </div>
-            <div className="text-[10px] text-slate-400 mt-1 font-semibold">
+            <div className="text-[10px] text-slate-400 font-bold mt-1 truncate">
               {todayPurchases.length} Entries Today
             </div>
           </div>
 
-          <div className="bg-gradient-to-br from-emerald-900/60 to-slate-900 p-3 rounded-2xl border border-emerald-500/30 shadow-md">
-            <div className="flex items-center justify-between text-[11px] font-extrabold text-emerald-300">
-              <span>कुल भुगतान</span>
-              <TrendingUp className="w-4 h-4 text-emerald-400" />
+          <div className="bg-slate-950 p-3 rounded-2xl border border-slate-800 shadow-md flex flex-col justify-between">
+            <div className="flex items-center justify-between text-[11px] font-extrabold text-emerald-400">
+              <span className="truncate">कुल डेयरी भुगतान</span>
+              <TrendingUp className="w-4 h-4 text-emerald-400 flex-shrink-0" />
             </div>
-            <div className="text-xl font-black text-emerald-400 font-mono mt-1">
+            <div className="text-lg font-black text-emerald-400 font-mono mt-1.5 truncate">
               ₹{totalPayoutToday.toFixed(0)}
             </div>
-            <div className="text-[10px] text-slate-400 mt-1 font-semibold">
-              {members.length} Registered Farmers
+            <div className="text-[10px] text-slate-400 font-bold mt-1 truncate">
+              {members.length} Farmers
             </div>
           </div>
         </div>
@@ -173,12 +172,12 @@ export default function Home() {
         {/* 12 Operations Grid */}
         <div>
           <div className="flex items-center justify-between px-1 mb-2">
-            <h2 className="text-xs font-black uppercase tracking-wider text-slate-300 flex items-center gap-1.5">
-              <Sparkles className="w-3.5 h-3.5 text-amber-400" />
-              <span>डेयरी सेवाएं (Milk Operations)</span>
+            <h2 className="text-xs font-black uppercase tracking-wider text-slate-300 flex items-center gap-1.5 truncate">
+              <Sparkles className="w-3.5 h-3.5 text-amber-400 flex-shrink-0" />
+              <span>डेयरी सेवाएं (Operations)</span>
             </h2>
-            <span className="text-[10px] font-extrabold text-cyan-400 bg-cyan-500/15 px-2 py-0.5 rounded-full border border-cyan-500/30">
-              12 Services
+            <span className="text-[9px] font-extrabold text-cyan-300 bg-sky-900/60 px-2 py-0.5 rounded-full border border-sky-700/50 flex-shrink-0">
+              12 Modules
             </span>
           </div>
 
@@ -186,7 +185,7 @@ export default function Home() {
         </div>
 
         {/* Reset Data Footer */}
-        <div className="pt-2 text-center">
+        <div className="pt-1 text-center">
           <button
             onClick={() => {
               if (confirm("Reset demo data? All records will be cleared.")) {
@@ -194,7 +193,7 @@ export default function Home() {
                 window.location.reload();
               }
             }}
-            className="inline-flex items-center gap-1.5 text-xs text-slate-400 hover:text-red-400 px-3 py-1.5 rounded-xl border border-slate-800 bg-slate-900/50"
+            className="inline-flex items-center gap-1.5 text-xs text-slate-400 hover:text-red-400 px-3 py-1.5 rounded-xl border border-slate-800 bg-slate-950 font-bold"
           >
             <RefreshCw className="w-3.5 h-3.5" />
             <span>Reset Demo Data</span>
@@ -203,7 +202,7 @@ export default function Home() {
       </main>
 
       {/* ── NATIVE MOBILE BOTTOM NAVIGATION BAR ── */}
-      <nav className="fixed bottom-0 left-0 right-0 z-40 bg-slate-900 border-t border-slate-800 px-4 py-2 flex items-center justify-around shadow-2xl backdrop-blur-lg">
+      <nav className="fixed bottom-0 left-0 right-0 z-40 bg-slate-950 border-t border-slate-800 px-4 py-2 flex items-center justify-around shadow-2xl backdrop-blur-lg">
         <button
           onClick={() => setActiveTab("home")}
           className={`flex flex-col items-center gap-0.5 text-xs font-bold transition-all ${
@@ -216,7 +215,7 @@ export default function Home() {
 
         <button
           onClick={() => setActiveModal("milk-purchase")}
-          className="flex flex-col items-center gap-0.5 text-xs font-extrabold text-amber-400 -mt-4 bg-sky-700 hover:bg-sky-600 text-white p-3 rounded-full border-4 border-slate-950 shadow-xl shadow-sky-600/50 active:scale-95 transition-all"
+          className="flex flex-col items-center gap-0.5 text-xs font-extrabold -mt-5 bg-gradient-to-r from-sky-600 to-blue-700 text-white p-3.5 rounded-full border-4 border-slate-950 shadow-xl shadow-sky-600/50 active:scale-95 transition-all"
         >
           <Milk className="w-6 h-6" />
         </button>
