@@ -46,14 +46,14 @@ export default function SettingsModal({ onClose }: SettingsModalProps) {
   return (
     <div className="fixed inset-0 z-50 w-full h-full bg-slate-950 text-slate-100 flex flex-col overflow-hidden">
       {/* Top Mobile Bar */}
-      <div className="h-12 bg-slate-900 text-white px-4 flex items-center justify-between shadow-md border-b border-slate-800 flex-shrink-0">
+      <div className="h-12 bg-sky-900 text-white px-4 flex items-center justify-between shadow-md border-b border-sky-800 flex-shrink-0">
         <div className="flex items-center gap-2">
-          <Settings className="w-5 h-5 text-cyan-400" />
+          <Settings className="w-5 h-5 text-cyan-300" />
           <span className="font-extrabold text-sm tracking-tight">SM MILK / Settings (ऐप सेटिंग्स)</span>
         </div>
         <button
           onClick={onClose}
-          className="p-1.5 rounded-lg bg-slate-800 hover:bg-red-600 text-white transition-colors"
+          className="p-1.5 rounded-lg bg-sky-950 hover:bg-red-600 text-white transition-colors"
         >
           <X className="w-5 h-5" />
         </button>
@@ -67,8 +67,8 @@ export default function SettingsModal({ onClose }: SettingsModalProps) {
             onClick={() => setActiveTab(tab)}
             className={`flex-1 py-2 px-3 rounded-xl font-bold text-center transition-all ${
               activeTab === tab
-                ? 'bg-cyan-600 text-white shadow-md'
-                : 'text-slate-400 bg-slate-950 hover:text-white'
+                ? 'bg-sky-700 text-white border border-cyan-400/50 shadow-md'
+                : 'text-slate-400 bg-slate-950 border border-slate-800 hover:text-white'
             }`}
           >
             {tab === 'Slip' && 'Slip (रसीद)'}
@@ -82,11 +82,11 @@ export default function SettingsModal({ onClose }: SettingsModalProps) {
       {/* Main Full Screen Body */}
       <div className="flex-1 overflow-y-auto p-4 space-y-4 bg-slate-900">
         {isSaved ? (
-          <div className="text-center py-10 space-y-4 bg-slate-950 p-6 rounded-3xl border border-cyan-500/40 shadow-xl">
-            <CheckCircle className="w-14 h-14 text-cyan-400 mx-auto animate-bounce" />
+          <div className="text-center py-10 space-y-4 bg-slate-950 p-6 rounded-3xl border border-slate-800 shadow-xl">
+            <CheckCircle className="w-14 h-14 text-emerald-400 mx-auto animate-bounce" />
             <h3 className="text-lg font-black text-white">Settings Saved Successfully!</h3>
             <p className="text-sm text-slate-400">All printer, scale, and slip parameters have been saved.</p>
-            <button onClick={onClose} className="w-full py-3.5 rounded-2xl bg-cyan-600 font-extrabold text-white text-base shadow-lg shadow-cyan-600/40">
+            <button onClick={onClose} className="w-full py-3.5 rounded-2xl bg-gradient-to-r from-sky-600 to-blue-700 font-extrabold text-white text-base shadow-lg">
               OK (Done)
             </button>
           </div>
@@ -101,7 +101,7 @@ export default function SettingsModal({ onClose }: SettingsModalProps) {
                     <select
                       value={printLang}
                       onChange={(e) => setPrintLang(e.target.value)}
-                      className="w-full bg-slate-900 border border-slate-700 rounded-xl p-3 text-white text-sm outline-none"
+                      className="w-full bg-slate-900 border border-slate-800 rounded-xl p-3 text-white text-sm outline-none"
                     >
                       <option value="English">English</option>
                       <option value="Hindi">Hindi (हिंदी)</option>
@@ -112,7 +112,7 @@ export default function SettingsModal({ onClose }: SettingsModalProps) {
                     <select
                       value={rollType}
                       onChange={(e) => setRollType(e.target.value)}
-                      className="w-full bg-slate-900 border border-slate-700 rounded-xl p-3 text-white text-sm outline-none"
+                      className="w-full bg-slate-900 border border-slate-800 rounded-xl p-3 text-white text-sm outline-none"
                     >
                       <option value="Big">Big Roll (3 inch)</option>
                       <option value="Small">Small Roll (2 inch)</option>
@@ -127,7 +127,7 @@ export default function SettingsModal({ onClose }: SettingsModalProps) {
                       type="number"
                       value={skipLine}
                       onChange={(e) => setSkipLine(e.target.value)}
-                      className="w-full bg-slate-900 border border-slate-700 rounded-xl p-3 text-white font-mono font-bold outline-none"
+                      className="w-full bg-slate-900 border border-slate-800 rounded-xl p-3 text-white font-mono font-bold outline-none"
                     />
                   </div>
                   <div>
@@ -136,7 +136,7 @@ export default function SettingsModal({ onClose }: SettingsModalProps) {
                       type="number"
                       value={amountRound}
                       onChange={(e) => setAmountRound(e.target.value)}
-                      className="w-full bg-slate-900 border border-slate-700 rounded-xl p-3 text-white font-mono font-bold outline-none"
+                      className="w-full bg-slate-900 border border-slate-800 rounded-xl p-3 text-white font-mono font-bold outline-none"
                     />
                   </div>
                 </div>
@@ -172,7 +172,7 @@ export default function SettingsModal({ onClose }: SettingsModalProps) {
                   <select
                     value={fatChartType}
                     onChange={(e) => setFatChartType(e.target.value)}
-                    className="w-full bg-slate-900 border border-slate-700 rounded-xl p-3 text-white text-sm outline-none"
+                    className="w-full bg-slate-900 border border-slate-800 rounded-xl p-3 text-white text-sm outline-none"
                   >
                     <option value="FAT SNF CHART RAJSTHAN">FAT SNF CHART RAJSTHAN</option>
                     <option value="FAT SNF CHART GUJARAT">FAT SNF CHART GUJARAT</option>
@@ -187,7 +187,7 @@ export default function SettingsModal({ onClose }: SettingsModalProps) {
                       type="number"
                       value={maxFatCow}
                       onChange={(e) => setMaxFatCow(e.target.value)}
-                      className="w-full bg-slate-900 border border-slate-700 rounded-xl p-2.5 text-white font-mono font-bold outline-none"
+                      className="w-full bg-slate-900 border border-slate-800 rounded-xl p-2.5 text-white font-mono font-bold outline-none"
                     />
                   </div>
                   <div>
@@ -196,7 +196,7 @@ export default function SettingsModal({ onClose }: SettingsModalProps) {
                       type="number"
                       value={maxFatBuff}
                       onChange={(e) => setMaxFatBuff(e.target.value)}
-                      className="w-full bg-slate-900 border border-slate-700 rounded-xl p-2.5 text-white font-mono font-bold outline-none"
+                      className="w-full bg-slate-900 border border-slate-800 rounded-xl p-2.5 text-white font-mono font-bold outline-none"
                     />
                   </div>
                   <div>
@@ -205,7 +205,7 @@ export default function SettingsModal({ onClose }: SettingsModalProps) {
                       type="number"
                       value={avgFatDays}
                       onChange={(e) => setAvgFatDays(e.target.value)}
-                      className="w-full bg-slate-900 border border-slate-700 rounded-xl p-2.5 text-white font-mono font-bold outline-none"
+                      className="w-full bg-slate-900 border border-slate-800 rounded-xl p-2.5 text-white font-mono font-bold outline-none"
                     />
                   </div>
                 </div>
@@ -215,7 +215,7 @@ export default function SettingsModal({ onClose }: SettingsModalProps) {
             {/* TAB 3: WEIGHT SETTINGS */}
             {activeTab === 'Weight' && (
               <div className="space-y-4 text-xs">
-                <div className="p-4 rounded-2xl bg-cyan-500/10 border border-cyan-500/30 flex items-center justify-between">
+                <div className="p-4 rounded-2xl bg-slate-900 border border-slate-800 flex items-center justify-between">
                   <div className="flex items-center gap-3">
                     <Wifi className="w-6 h-6 text-cyan-400 animate-pulse" />
                     <div>
@@ -231,7 +231,7 @@ export default function SettingsModal({ onClose }: SettingsModalProps) {
                     <select
                       value={weightType}
                       onChange={(e) => setWeightType(e.target.value)}
-                      className="w-full bg-slate-900 border border-slate-700 rounded-xl p-3 text-white text-sm outline-none"
+                      className="w-full bg-slate-900 border border-slate-800 rounded-xl p-3 text-white text-sm outline-none"
                     >
                       <option value="VDC(WIFI)">VDC(WIFI)</option>
                       <option value="BLUETOOTH(SCALE)">BLUETOOTH(SCALE)</option>
@@ -243,7 +243,7 @@ export default function SettingsModal({ onClose }: SettingsModalProps) {
                     <select
                       value={fatType}
                       onChange={(e) => setFatType(e.target.value)}
-                      className="w-full bg-slate-900 border border-slate-700 rounded-xl p-3 text-white text-sm outline-none"
+                      className="w-full bg-slate-900 border border-slate-800 rounded-xl p-3 text-white text-sm outline-none"
                     >
                       <option value="Normal">Normal Auto</option>
                       <option value="EkoMilk">EkoMilk Analyzer</option>
@@ -256,18 +256,18 @@ export default function SettingsModal({ onClose }: SettingsModalProps) {
             {/* TAB 4: PRINTER SETTINGS */}
             {activeTab === 'Printer' && (
               <div className="space-y-4 text-xs">
-                <div className="p-4 rounded-2xl bg-emerald-500/10 border border-emerald-500/30 flex items-center justify-between">
+                <div className="p-4 rounded-2xl bg-slate-900 border border-slate-800 flex items-center justify-between">
                   <div className="flex items-center gap-3">
-                    <Bluetooth className="w-6 h-6 text-emerald-400" />
+                    <Bluetooth className="w-6 h-6 text-cyan-300" />
                     <div>
                       <span className="font-extrabold text-sm text-white block">SET RECEIPT PRINTER</span>
-                      <span className="text-xs font-mono text-emerald-300">{btPrinterMac}</span>
+                      <span className="text-xs font-mono text-cyan-300">{btPrinterMac}</span>
                     </div>
                   </div>
                   <button
                     type="button"
                     onClick={() => alert("Scanning for Bluetooth printers...")}
-                    className="px-3 py-1.5 rounded-xl bg-emerald-500 text-slate-950 font-black text-xs shadow-md"
+                    className="px-3 py-1.5 rounded-xl bg-sky-700 text-white font-black text-xs shadow-md"
                   >
                     Scan BT
                   </button>
@@ -280,7 +280,7 @@ export default function SettingsModal({ onClose }: SettingsModalProps) {
                       type="checkbox"
                       checked={printSlip}
                       onChange={(e) => setPrintSlip(e.target.checked)}
-                      className="w-5 h-5 accent-emerald-500 cursor-pointer"
+                      className="w-5 h-5 accent-cyan-500 cursor-pointer"
                     />
                   </div>
                   <div className="flex justify-between items-center text-sm font-bold">
@@ -289,7 +289,7 @@ export default function SettingsModal({ onClose }: SettingsModalProps) {
                       type="checkbox"
                       checked={usbSlipPrinting}
                       onChange={(e) => setUsbSlipPrinting(e.target.checked)}
-                      className="w-5 h-5 accent-emerald-500 cursor-pointer"
+                      className="w-5 h-5 accent-cyan-500 cursor-pointer"
                     />
                   </div>
                 </div>
@@ -297,7 +297,7 @@ export default function SettingsModal({ onClose }: SettingsModalProps) {
             )}
 
             <div className="pt-2 flex gap-3">
-              <button type="submit" className="flex-1 py-3.5 rounded-2xl bg-cyan-600 hover:bg-cyan-500 font-extrabold text-white text-base shadow-lg shadow-cyan-600/30">
+              <button type="submit" className="flex-1 py-3.5 rounded-2xl bg-gradient-to-r from-sky-600 to-blue-700 hover:opacity-90 font-extrabold text-white text-base shadow-lg">
                 Save Settings (सेटिंग्स सेव करें)
               </button>
               <button type="button" onClick={onClose} className="px-5 py-3.5 rounded-2xl bg-slate-800 text-slate-300 font-bold">

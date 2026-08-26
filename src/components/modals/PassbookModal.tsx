@@ -33,14 +33,14 @@ export default function PassbookModal({ members, purchases, itemSales, onClose }
   return (
     <div className="fixed inset-0 z-50 w-full h-full bg-slate-950 text-slate-100 flex flex-col overflow-hidden">
       {/* Top Mobile Bar */}
-      <div className="h-12 bg-emerald-800 text-white px-4 flex items-center justify-between shadow-md border-b border-emerald-700 flex-shrink-0">
+      <div className="h-12 bg-sky-900 text-white px-4 flex items-center justify-between shadow-md border-b border-sky-800 flex-shrink-0">
         <div className="flex items-center gap-2">
-          <BookOpen className="w-5 h-5 text-emerald-200" />
+          <BookOpen className="w-5 h-5 text-cyan-300" />
           <span className="font-extrabold text-sm tracking-tight">SM MILK / Passbook (किसान लेजर पासबुक)</span>
         </div>
         <button
           onClick={onClose}
-          className="p-1.5 rounded-lg bg-emerald-900/80 hover:bg-red-600 text-white transition-colors"
+          className="p-1.5 rounded-lg bg-sky-950 hover:bg-red-600 text-white transition-colors"
         >
           <X className="w-5 h-5" />
         </button>
@@ -56,7 +56,7 @@ export default function PassbookModal({ members, purchases, itemSales, onClose }
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
             placeholder="Search farmer name or code..."
-            className="w-full bg-slate-950 border border-slate-800 rounded-2xl pl-10 pr-4 py-3 text-sm text-white outline-none focus:border-emerald-400"
+            className="w-full bg-slate-950 border border-slate-800 rounded-2xl pl-10 pr-4 py-3 text-sm text-white outline-none focus:border-cyan-400"
           />
         </div>
 
@@ -68,7 +68,7 @@ export default function PassbookModal({ members, purchases, itemSales, onClose }
               onClick={() => setSelectedCode(m.code)}
               className={`px-3.5 py-2 rounded-xl text-xs font-bold whitespace-nowrap border transition-all ${
                 selectedCode === m.code
-                  ? "bg-emerald-600 border-emerald-400 text-white shadow-md"
+                  ? "bg-sky-700 border-cyan-400 text-white shadow-md"
                   : "bg-slate-950 border-slate-800 text-slate-300"
               }`}
             >
@@ -80,15 +80,15 @@ export default function PassbookModal({ members, purchases, itemSales, onClose }
         {/* Selected Member Ledger Card */}
         {currentMember ? (
           <div className="space-y-3">
-            <div className="p-4 rounded-3xl bg-slate-950 border border-emerald-500/30 flex items-center justify-between shadow-xl">
+            <div className="p-4 rounded-3xl bg-slate-950 border border-slate-800 flex items-center justify-between shadow-xl">
               <div className="flex items-center gap-3">
-                <div className="w-12 h-12 rounded-2xl bg-emerald-500/20 text-emerald-300 flex items-center justify-center font-black text-lg border border-emerald-500/40">
+                <div className="w-12 h-12 rounded-2xl bg-sky-900/60 text-cyan-300 flex items-center justify-center font-black text-lg border border-sky-700/50">
                   {currentMember.name[0]}
                 </div>
                 <div>
                   <h3 className="text-base font-extrabold text-white flex items-center gap-1.5">
                     {currentMember.name}
-                    <UserCheck className="w-4 h-4 text-emerald-400" />
+                    <UserCheck className="w-4 h-4 text-cyan-400" />
                   </h3>
                   <p className="text-xs text-slate-400">
                     Code: <strong className="text-cyan-300">#{currentMember.code}</strong> | {currentMember.village}
@@ -130,14 +130,14 @@ export default function PassbookModal({ members, purchases, itemSales, onClose }
               {/* Feed Deductions */}
               {memberItemSales.length > 0 && (
                 <>
-                  <h4 className="text-xs font-bold text-amber-400 uppercase tracking-wider px-1 pt-2">Feed Deductions (आहार कटौती)</h4>
+                  <h4 className="text-xs font-bold text-slate-400 uppercase tracking-wider px-1 pt-2">Feed Deductions (आहार कटौती)</h4>
                   {memberItemSales.map((item) => (
-                    <div key={item.id} className="p-3 rounded-2xl bg-amber-500/10 border border-amber-500/30 flex items-center justify-between text-xs">
+                    <div key={item.id} className="p-3 rounded-2xl bg-slate-950 border border-slate-800 flex items-center justify-between text-xs">
                       <div>
-                        <div className="font-bold text-amber-200">{item.itemName}</div>
-                        <div className="text-[11px] text-amber-400/80 font-mono mt-0.5">Qty: {item.quantity} | {item.date}</div>
+                        <div className="font-bold text-slate-200">{item.itemName}</div>
+                        <div className="text-[11px] text-slate-400 font-mono mt-0.5">Qty: {item.quantity} | {item.date}</div>
                       </div>
-                      <div className="text-right font-extrabold text-rose-400 text-sm font-mono">
+                      <div className="text-right font-extrabold text-red-400 text-sm font-mono">
                         -₹{item.totalAmount}
                       </div>
                     </div>
@@ -149,7 +149,7 @@ export default function PassbookModal({ members, purchases, itemSales, onClose }
             {/* Passbook Summary */}
             <div className="p-3.5 rounded-2xl bg-slate-950 border border-slate-800 flex justify-between text-xs font-bold">
               <span className="text-slate-300">Total Milk Bill: <strong className="text-emerald-400 font-mono text-sm">₹{totalMilkEarnings.toFixed(2)}</strong></span>
-              <span className="text-slate-300">Feed Deductions: <strong className="text-rose-400 font-mono text-sm">₹{totalItemDeductions.toFixed(2)}</strong></span>
+              <span className="text-slate-300">Feed Deductions: <strong className="text-red-400 font-mono text-sm">₹{totalItemDeductions.toFixed(2)}</strong></span>
             </div>
           </div>
         ) : (

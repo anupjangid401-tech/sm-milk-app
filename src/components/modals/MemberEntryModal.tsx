@@ -41,14 +41,14 @@ export default function MemberEntryModal({ members, onAddMember, onClose }: Memb
   return (
     <div className="fixed inset-0 z-50 w-full h-full bg-slate-950 text-slate-100 flex flex-col overflow-hidden">
       {/* Top Mobile Header */}
-      <div className="h-12 bg-purple-800 text-white px-4 flex items-center justify-between shadow-md border-b border-purple-700 flex-shrink-0">
+      <div className="h-12 bg-sky-900 text-white px-4 flex items-center justify-between shadow-md border-b border-sky-800 flex-shrink-0">
         <div className="flex items-center gap-2">
-          <UserPlus className="w-5 h-5 text-purple-200" />
+          <UserPlus className="w-5 h-5 text-cyan-300" />
           <span className="font-extrabold text-sm tracking-tight">SM MILK / Member Entry (सदस्य रजिस्टर)</span>
         </div>
         <button
           onClick={onClose}
-          className="p-1.5 rounded-lg bg-purple-900/80 hover:bg-red-600 text-white transition-colors"
+          className="p-1.5 rounded-lg bg-sky-950 hover:bg-red-600 text-white transition-colors"
         >
           <X className="w-5 h-5" />
         </button>
@@ -57,13 +57,13 @@ export default function MemberEntryModal({ members, onAddMember, onClose }: Memb
       {/* Main Content */}
       <div className="flex-1 overflow-y-auto p-4 space-y-4 bg-slate-900">
         {isSuccess ? (
-          <div className="text-center py-10 space-y-4 bg-slate-950 p-6 rounded-3xl border border-purple-500/40 shadow-xl">
-            <CheckCircle className="w-14 h-14 text-purple-400 mx-auto animate-bounce" />
+          <div className="text-center py-10 space-y-4 bg-slate-950 p-6 rounded-3xl border border-slate-800 shadow-xl">
+            <CheckCircle className="w-14 h-14 text-emerald-400 mx-auto animate-bounce" />
             <h3 className="text-lg font-black text-white">Farmer Registered Successfully!</h3>
             <p className="text-sm text-slate-400">
               Code: <strong className="text-cyan-300">#{code}</strong> | Name: <strong className="text-white">{name}</strong>
             </p>
-            <button onClick={onClose} className="w-full py-3.5 rounded-2xl bg-purple-600 font-extrabold text-white text-base shadow-lg shadow-purple-600/40">
+            <button onClick={onClose} className="w-full py-3.5 rounded-2xl bg-gradient-to-r from-sky-600 to-blue-700 font-extrabold text-white text-base shadow-lg">
               OK (Done)
             </button>
           </div>
@@ -78,7 +78,7 @@ export default function MemberEntryModal({ members, onAddMember, onClose }: Memb
                   type="text"
                   value={code}
                   onChange={(e) => setCode(e.target.value)}
-                  className="w-full bg-slate-900 border border-slate-700 rounded-xl p-3 text-cyan-300 font-bold font-mono outline-none"
+                  className="w-full bg-slate-900 border border-slate-800 rounded-xl p-3 text-cyan-300 font-bold font-mono outline-none"
                   required
                 />
               </div>
@@ -89,7 +89,7 @@ export default function MemberEntryModal({ members, onAddMember, onClose }: Memb
                 <select
                   value={milkType}
                   onChange={(e) => setMilkType(e.target.value as MilkType)}
-                  className="w-full bg-slate-900 border border-slate-700 rounded-xl p-3 text-white text-sm outline-none"
+                  className="w-full bg-slate-900 border border-slate-800 rounded-xl p-3 text-white text-sm outline-none"
                 >
                   <option value="BUFFALO">Buffalo (भैंस)</option>
                   <option value="COW">Cow (गाय)</option>
@@ -106,7 +106,7 @@ export default function MemberEntryModal({ members, onAddMember, onClose }: Memb
                 value={name}
                 onChange={(e) => setName(e.target.value)}
                 placeholder="e.g. Ramprasad Jangid"
-                className="w-full bg-slate-900 border border-slate-700 rounded-xl p-3 text-white text-sm outline-none focus:border-purple-400"
+                className="w-full bg-slate-900 border border-slate-800 rounded-xl p-3 text-white text-sm outline-none focus:border-cyan-400"
                 required
               />
             </div>
@@ -121,7 +121,7 @@ export default function MemberEntryModal({ members, onAddMember, onClose }: Memb
                   value={phone}
                   onChange={(e) => setPhone(e.target.value)}
                   placeholder="98290XXXXX"
-                  className="w-full bg-slate-900 border border-slate-700 rounded-xl p-3 text-white text-sm font-mono outline-none"
+                  className="w-full bg-slate-900 border border-slate-800 rounded-xl p-3 text-white text-sm font-mono outline-none"
                 />
               </div>
               <div>
@@ -132,13 +132,13 @@ export default function MemberEntryModal({ members, onAddMember, onClose }: Memb
                   type="text"
                   value={village}
                   onChange={(e) => setVillage(e.target.value)}
-                  className="w-full bg-slate-900 border border-slate-700 rounded-xl p-3 text-white text-sm outline-none"
+                  className="w-full bg-slate-900 border border-slate-800 rounded-xl p-3 text-white text-sm outline-none"
                 />
               </div>
             </div>
 
             <div className="pt-2 flex gap-3">
-              <button type="submit" className="flex-1 py-3.5 rounded-2xl bg-purple-600 hover:bg-purple-500 font-extrabold text-white text-base shadow-lg shadow-purple-600/30">
+              <button type="submit" className="flex-1 py-3.5 rounded-2xl bg-gradient-to-r from-sky-600 to-blue-700 hover:opacity-90 font-extrabold text-white text-base shadow-lg">
                 Save Member (सदस्य जोड़ें)
               </button>
               <button type="button" onClick={onClose} className="px-5 py-3.5 rounded-2xl bg-slate-800 text-slate-300 font-bold">
@@ -147,7 +147,7 @@ export default function MemberEntryModal({ members, onAddMember, onClose }: Memb
             </div>
 
             <div className="pt-3 border-t border-slate-800 text-center text-xs text-slate-400 flex items-center justify-center gap-1.5">
-              <Users className="w-4 h-4 text-purple-400" />
+              <Users className="w-4 h-4 text-cyan-400" />
               <span>Total Registered Farmers: <strong className="text-white">{members.length}</strong></span>
             </div>
           </form>

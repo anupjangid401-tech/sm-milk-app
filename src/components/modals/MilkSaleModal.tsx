@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { MilkSaleRecord, MilkType, ShiftType } from "@/lib/types";
-import { X, ShoppingCart, CheckCircle, Calculator, Sun, Moon } from "lucide-react";
+import { X, ShoppingCart, CheckCircle, Calculator } from "lucide-react";
 
 interface MilkSaleModalProps {
   shift: ShiftType;
@@ -44,14 +44,14 @@ export default function MilkSaleModal({ shift, onSave, onClose }: MilkSaleModalP
   return (
     <div className="fixed inset-0 z-50 w-full h-full bg-slate-950 text-slate-100 flex flex-col overflow-hidden">
       {/* Top Mobile Bar */}
-      <div className="h-12 bg-emerald-800 text-white px-4 flex items-center justify-between shadow-md border-b border-emerald-700 flex-shrink-0">
+      <div className="h-12 bg-sky-900 text-white px-4 flex items-center justify-between shadow-md border-b border-sky-800 flex-shrink-0">
         <div className="flex items-center gap-2">
-          <ShoppingCart className="w-5 h-5 text-emerald-200" />
+          <ShoppingCart className="w-5 h-5 text-cyan-300" />
           <span className="font-extrabold text-sm tracking-tight">SM MILK / Milk Sale (दूध बिक्री)</span>
         </div>
         <button
           onClick={onClose}
-          className="p-1.5 rounded-lg bg-emerald-900/80 hover:bg-red-600 text-white transition-colors"
+          className="p-1.5 rounded-lg bg-sky-950 hover:bg-red-600 text-white transition-colors"
         >
           <X className="w-5 h-5" />
         </button>
@@ -60,13 +60,13 @@ export default function MilkSaleModal({ shift, onSave, onClose }: MilkSaleModalP
       {/* Main Full Screen Body */}
       <div className="flex-1 overflow-y-auto p-4 space-y-4 bg-slate-900">
         {isSaved ? (
-          <div className="text-center py-10 space-y-4 bg-slate-950 p-6 rounded-3xl border border-emerald-500/40">
+          <div className="text-center py-10 space-y-4 bg-slate-950 p-6 rounded-3xl border border-slate-800 shadow-xl">
             <CheckCircle className="w-14 h-14 text-emerald-400 mx-auto animate-bounce" />
             <h3 className="text-lg font-black text-white">Milk Sale Recorded Successfully!</h3>
             <p className="text-sm text-slate-400">
               Customer: <strong className="text-cyan-300">{customerName}</strong> | Total Bill: <strong className="text-emerald-400">₹{totalAmount.toFixed(2)}</strong>
             </p>
-            <button onClick={onClose} className="w-full py-3.5 rounded-2xl bg-emerald-600 font-extrabold text-white text-base shadow-lg shadow-emerald-600/40">
+            <button onClick={onClose} className="w-full py-3.5 rounded-2xl bg-gradient-to-r from-sky-600 to-blue-700 font-extrabold text-white text-base shadow-lg">
               OK (Done)
             </button>
           </div>
@@ -74,14 +74,14 @@ export default function MilkSaleModal({ shift, onSave, onClose }: MilkSaleModalP
           <form onSubmit={handleSubmit} className="space-y-4 bg-slate-950 p-5 rounded-3xl border border-slate-800 shadow-xl">
             <div>
               <label className="block text-xs font-bold text-slate-300 mb-1.5 uppercase tracking-wider">
-                1. Customer / Dairy Name (ग्राहक नाम)
+                1. Customer Name (ग्राहक नाम)
               </label>
               <input
                 type="text"
                 value={customerName}
                 onChange={(e) => setCustomerName(e.target.value)}
                 placeholder="e.g. Krishna Dairy / City Sweets"
-                className="w-full bg-slate-900 border border-slate-700 rounded-xl p-3 text-white text-sm outline-none focus:border-emerald-400"
+                className="w-full bg-slate-900 border border-slate-800 rounded-xl p-3 text-white text-sm outline-none focus:border-cyan-400"
                 required
               />
             </div>
@@ -94,7 +94,7 @@ export default function MilkSaleModal({ shift, onSave, onClose }: MilkSaleModalP
                 <select
                   value={milkType}
                   onChange={(e) => setMilkType(e.target.value as MilkType)}
-                  className="w-full bg-slate-900 border border-slate-700 rounded-xl p-3 text-white text-sm outline-none"
+                  className="w-full bg-slate-900 border border-slate-800 rounded-xl p-3 text-white text-sm outline-none"
                 >
                   <option value="BUFFALO">Buffalo Milk (भैंस)</option>
                   <option value="COW">Cow Milk (गाय)</option>
@@ -110,7 +110,7 @@ export default function MilkSaleModal({ shift, onSave, onClose }: MilkSaleModalP
                   step="0.5"
                   value={liters}
                   onChange={(e) => setLiters(e.target.value)}
-                  className="w-full bg-slate-900 border border-slate-700 rounded-xl p-3 text-white text-sm font-bold font-mono outline-none"
+                  className="w-full bg-slate-900 border border-slate-800 rounded-xl p-3 text-white text-sm font-bold font-mono outline-none"
                   required
                 />
               </div>
@@ -125,15 +125,15 @@ export default function MilkSaleModal({ shift, onSave, onClose }: MilkSaleModalP
                 step="1"
                 value={ratePerLiter}
                 onChange={(e) => setRatePerLiter(e.target.value)}
-                className="w-full bg-slate-900 border border-slate-700 rounded-xl p-3 text-white text-sm font-bold font-mono outline-none"
+                className="w-full bg-slate-900 border border-slate-800 rounded-xl p-3 text-white text-sm font-bold font-mono outline-none"
                 required
               />
             </div>
 
             {/* Bill Summary Card */}
-            <div className="p-4 rounded-2xl bg-gradient-to-r from-slate-900 to-slate-950 border border-emerald-500/30 shadow-md flex items-center justify-between">
+            <div className="p-4 rounded-2xl bg-slate-900 border border-slate-800 flex items-center justify-between">
               <div className="flex items-center gap-3">
-                <div className="p-2.5 rounded-xl bg-emerald-500/15 text-emerald-400 border border-emerald-500/30">
+                <div className="p-2.5 rounded-xl bg-sky-900/60 text-cyan-300 border border-sky-700/50">
                   <Calculator className="w-5 h-5" />
                 </div>
                 <div>
@@ -145,7 +145,7 @@ export default function MilkSaleModal({ shift, onSave, onClose }: MilkSaleModalP
             </div>
 
             <div className="pt-2 flex gap-3">
-              <button type="submit" className="flex-1 py-3.5 rounded-2xl bg-emerald-600 hover:bg-emerald-500 font-extrabold text-white text-base shadow-lg shadow-emerald-600/30">
+              <button type="submit" className="flex-1 py-3.5 rounded-2xl bg-gradient-to-r from-sky-600 to-blue-700 hover:opacity-90 font-extrabold text-white text-base shadow-lg">
                 Save Sale (बिक्री सेव करें)
               </button>
               <button type="button" onClick={onClose} className="px-5 py-3.5 rounded-2xl bg-slate-800 text-slate-300 font-bold">

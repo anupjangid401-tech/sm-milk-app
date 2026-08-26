@@ -33,14 +33,14 @@ export default function ReportsModal({ reportType, purchases, sales, onClose }: 
   return (
     <div className="fixed inset-0 z-50 w-full h-full bg-slate-950 text-slate-100 flex flex-col overflow-hidden">
       {/* Top Mobile Bar */}
-      <div className="h-12 bg-sky-800 text-white px-4 flex items-center justify-between shadow-md border-b border-sky-700 flex-shrink-0">
+      <div className="h-12 bg-sky-900 text-white px-4 flex items-center justify-between shadow-md border-b border-sky-800 flex-shrink-0">
         <div className="flex items-center gap-2">
-          <FileText className="w-5 h-5 text-sky-200" />
+          <FileText className="w-5 h-5 text-cyan-300" />
           <span className="font-extrabold text-sm tracking-tight">SM MILK / Purchase Report (दूध रिपोर्ट)</span>
         </div>
         <button
           onClick={onClose}
-          className="p-1.5 rounded-lg bg-sky-900/80 hover:bg-red-600 text-white transition-colors"
+          className="p-1.5 rounded-lg bg-sky-950 hover:bg-red-600 text-white transition-colors"
         >
           <X className="w-5 h-5" />
         </button>
@@ -54,13 +54,13 @@ export default function ReportsModal({ reportType, purchases, sales, onClose }: 
             type="date"
             value={selectedDate}
             onChange={(e) => setSelectedDate(e.target.value)}
-            className="bg-slate-950 border border-slate-700 rounded-xl p-2.5 text-cyan-300 font-bold outline-none"
+            className="bg-slate-950 border border-slate-800 rounded-xl p-2.5 text-cyan-300 font-bold outline-none"
           />
 
           <select
             value={filterShift}
             onChange={(e) => setFilterShift(e.target.value as any)}
-            className="bg-slate-950 border border-slate-700 rounded-xl p-2.5 text-white outline-none font-bold"
+            className="bg-slate-950 border border-slate-800 rounded-xl p-2.5 text-white outline-none font-bold"
           >
             <option value="Morning">Morning</option>
             <option value="Evening">Evening</option>
@@ -70,7 +70,7 @@ export default function ReportsModal({ reportType, purchases, sales, onClose }: 
           <select
             value={orderType}
             onChange={(e) => setOrderType(e.target.value)}
-            className="bg-slate-950 border border-slate-700 rounded-xl p-2.5 text-white outline-none font-bold"
+            className="bg-slate-950 border border-slate-800 rounded-xl p-2.5 text-white outline-none font-bold"
           >
             <option value="Sampal Order">Sampal Order</option>
             <option value="Member Code Order">Code Order</option>
@@ -79,16 +79,16 @@ export default function ReportsModal({ reportType, purchases, sales, onClose }: 
 
         {/* 4 Print Action Buttons (SHOW, DOT PRINT, LSR PRINT, BT PRINT) */}
         <div className="grid grid-cols-4 gap-2 text-xs font-bold">
-          <button className="py-2.5 rounded-xl bg-amber-500 hover:bg-amber-600 text-slate-950 font-black shadow-md text-center">
+          <button className="py-2.5 rounded-xl bg-slate-950 border border-slate-800 text-cyan-300 font-black shadow-md text-center">
             SHOW
           </button>
-          <button onClick={() => handlePrintAction('DOT')} className="py-2.5 rounded-xl bg-purple-600 hover:bg-purple-700 text-white font-bold shadow-md text-center">
+          <button onClick={() => handlePrintAction('DOT')} className="py-2.5 rounded-xl bg-slate-950 border border-slate-800 text-white font-bold shadow-md text-center">
             DOT PRINT
           </button>
-          <button onClick={() => handlePrintAction('LSR')} className="py-2.5 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white font-bold shadow-md text-center">
+          <button onClick={() => handlePrintAction('LSR')} className="py-2.5 rounded-xl bg-slate-950 border border-slate-800 text-white font-bold shadow-md text-center">
             LSR PRINT
           </button>
-          <button onClick={() => handlePrintAction('BT')} className="py-2.5 rounded-xl bg-rose-600 hover:bg-rose-700 text-white font-bold shadow-md text-center flex items-center justify-center gap-1">
+          <button onClick={() => handlePrintAction('BT')} className="py-2.5 rounded-xl bg-sky-700 text-white font-bold shadow-md text-center flex items-center justify-center gap-1">
             <Bluetooth className="w-3.5 h-3.5" />
             <span>BT PRINT</span>
           </button>
@@ -123,10 +123,10 @@ export default function ReportsModal({ reportType, purchases, sales, onClose }: 
                     <td className="p-2.5 border-r border-slate-800 font-bold">{idx + 1}.0</td>
                     <td className="p-2.5 border-r border-slate-800 font-bold text-cyan-300">{p.memberCode}</td>
                     <td className="p-2.5 border-r border-slate-800 font-sans text-white truncate max-w-[100px]">{p.memberName}</td>
-                    <td className="p-2.5 border-r border-slate-800 font-bold text-amber-300">{p.milkType === 'BUFFALO' ? 'B' : 'C'}</td>
+                    <td className="p-2.5 border-r border-slate-800 font-bold text-cyan-300">{p.milkType === 'BUFFALO' ? 'B' : 'C'}</td>
                     <td className="p-2.5 border-r border-slate-800 font-bold text-white">{p.liters}</td>
-                    <td className="p-2.5 border-r border-slate-800 text-amber-300">{p.fat}</td>
-                    <td className="p-2.5 border-r border-slate-800 text-purple-300">{p.snf}</td>
+                    <td className="p-2.5 border-r border-slate-800 text-cyan-300">{p.fat}</td>
+                    <td className="p-2.5 border-r border-slate-800 text-cyan-300">{p.snf}</td>
                     <td className="p-2.5 border-r border-slate-800 text-right font-extrabold text-emerald-400">₹{p.totalAmount}</td>
                     <td className="p-2.5 text-cyan-300">₹{p.ratePerLiter}</td>
                   </tr>
@@ -138,11 +138,11 @@ export default function ReportsModal({ reportType, purchases, sales, onClose }: 
       </div>
 
       {/* Bottom Summary Bar */}
-      <div className="h-10 bg-indigo-700 text-white px-4 flex items-center justify-between text-xs font-extrabold flex-shrink-0 shadow-lg border-t border-indigo-600 font-mono">
-        <span>Count: <span className="text-amber-300">{filteredPurchases.length}</span></span>
+      <div className="h-10 bg-sky-900 text-white px-4 flex items-center justify-between text-xs font-extrabold flex-shrink-0 border-t border-sky-800 font-mono">
+        <span>Count: <span className="text-cyan-300">{filteredPurchases.length}</span></span>
         <span>Ltr: <span className="text-white">{totalLiters.toFixed(1)}</span></span>
-        <span>Fat: <span className="text-amber-300">{avgFat}%</span></span>
-        <span>Amount: <span className="text-emerald-300 font-black text-sm">₹{totalAmount.toFixed(2)}</span></span>
+        <span>Fat: <span className="text-cyan-300">{avgFat}%</span></span>
+        <span>Amount: <span className="text-emerald-400 font-black text-sm">₹{totalAmount.toFixed(2)}</span></span>
       </div>
     </div>
   );
