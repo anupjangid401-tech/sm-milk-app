@@ -39,118 +39,116 @@ export default function MemberEntryModal({ members, onAddMember, onClose }: Memb
   };
 
   return (
-    <div className="glass-modal-overlay">
-      <div className="glass-modal-container p-6 sm:p-7">
-        <div className="flex items-center justify-between pb-4 mb-5 border-b border-slate-800">
-          <div className="flex items-center gap-3">
-            <div className="p-2.5 rounded-2xl bg-purple-500/15 border border-purple-500/30 text-purple-400">
-              <UserPlus className="w-5 h-5" />
-            </div>
-            <div>
-              <h2 className="text-lg font-extrabold text-white tracking-tight">Add Member / Farmer <span className="text-xs font-semibold text-slate-400">(Member Entry)</span></h2>
-              <p className="text-xs text-slate-400">Register new milk producer farmer</p>
-            </div>
-          </div>
-          <button 
-            onClick={onClose} 
-            className="p-2 rounded-xl bg-slate-800/80 hover:bg-slate-700 text-slate-400 hover:text-white transition-colors border border-slate-700/60"
-          >
-            <X className="w-5 h-5" />
-          </button>
+    <div className="fixed inset-0 z-50 w-full h-full bg-slate-950 text-slate-100 flex flex-col overflow-hidden">
+      {/* Top Mobile Header */}
+      <div className="h-12 bg-purple-800 text-white px-4 flex items-center justify-between shadow-md border-b border-purple-700 flex-shrink-0">
+        <div className="flex items-center gap-2">
+          <UserPlus className="w-5 h-5 text-purple-200" />
+          <span className="font-extrabold text-sm tracking-tight">SM MILK / Member Entry (सदस्य रजिस्टर)</span>
         </div>
+        <button
+          onClick={onClose}
+          className="p-1.5 rounded-lg bg-purple-900/80 hover:bg-red-600 text-white transition-colors"
+        >
+          <X className="w-5 h-5" />
+        </button>
+      </div>
 
+      {/* Main Content */}
+      <div className="flex-1 overflow-y-auto p-4 space-y-4 bg-slate-900">
         {isSuccess ? (
-          <div className="text-center py-6 space-y-4">
-            <CheckCircle className="w-12 h-12 text-purple-400 mx-auto animate-bounce" />
-            <h3 className="text-base font-extrabold text-white">New farmer added successfully!</h3>
-            <p className="text-xs text-slate-400">Code: <strong className="text-cyan-300">#{code}</strong> | Name: <strong className="text-white">{name}</strong></p>
-            <button onClick={onClose} className="glass-btn w-full mt-4 py-3 bg-gradient-to-r from-purple-600 to-indigo-600">
-              Done
+          <div className="text-center py-10 space-y-4 bg-slate-950 p-6 rounded-3xl border border-purple-500/40 shadow-xl">
+            <CheckCircle className="w-14 h-14 text-purple-400 mx-auto animate-bounce" />
+            <h3 className="text-lg font-black text-white">Farmer Registered Successfully!</h3>
+            <p className="text-sm text-slate-400">
+              Code: <strong className="text-cyan-300">#{code}</strong> | Name: <strong className="text-white">{name}</strong>
+            </p>
+            <button onClick={onClose} className="w-full py-3.5 rounded-2xl bg-purple-600 font-extrabold text-white text-base shadow-lg shadow-purple-600/40">
+              OK (Done)
             </button>
           </div>
         ) : (
-          <form onSubmit={handleSubmit} className="space-y-4">
-            <div className="grid grid-cols-2 gap-3.5">
+          <form onSubmit={handleSubmit} className="space-y-4 bg-slate-950 p-5 rounded-3xl border border-slate-800 shadow-xl">
+            <div className="grid grid-cols-2 gap-3">
               <div>
                 <label className="block text-xs font-bold text-slate-300 mb-1.5 uppercase tracking-wider">
-                  1. Member Code
+                  1. Member Code (किसान कोड)
                 </label>
                 <input
                   type="text"
                   value={code}
                   onChange={(e) => setCode(e.target.value)}
-                  className="glass-input text-cyan-300 font-bold"
+                  className="w-full bg-slate-900 border border-slate-700 rounded-xl p-3 text-cyan-300 font-bold font-mono outline-none"
                   required
                 />
               </div>
               <div>
                 <label className="block text-xs font-bold text-slate-300 mb-1.5 uppercase tracking-wider">
-                  2. Default Milk
+                  2. Default Milk (दूध प्रकार)
                 </label>
                 <select
                   value={milkType}
                   onChange={(e) => setMilkType(e.target.value as MilkType)}
-                  className="glass-select"
+                  className="w-full bg-slate-900 border border-slate-700 rounded-xl p-3 text-white text-sm outline-none"
                 >
-                  <option value="BUFFALO" className="bg-slate-900 text-white">Buffalo</option>
-                  <option value="COW" className="bg-slate-900 text-white">Cow</option>
+                  <option value="BUFFALO">Buffalo (भैंस)</option>
+                  <option value="COW">Cow (गाय)</option>
                 </select>
               </div>
             </div>
 
             <div>
               <label className="block text-xs font-bold text-slate-300 mb-1.5 uppercase tracking-wider">
-                3. Farmer Full Name
+                3. Farmer Full Name (किसान का नाम)
               </label>
               <input
                 type="text"
                 value={name}
                 onChange={(e) => setName(e.target.value)}
-                placeholder="e.g. Ramprasad Meena"
-                className="glass-input"
+                placeholder="e.g. Ramprasad Jangid"
+                className="w-full bg-slate-900 border border-slate-700 rounded-xl p-3 text-white text-sm outline-none focus:border-purple-400"
                 required
               />
             </div>
 
-            <div className="grid grid-cols-2 gap-3.5">
+            <div className="grid grid-cols-2 gap-3">
               <div>
                 <label className="block text-xs font-bold text-slate-300 mb-1.5 uppercase tracking-wider">
-                  4. Mobile Number
+                  4. Mobile Number (फोन)
                 </label>
                 <input
                   type="tel"
                   value={phone}
                   onChange={(e) => setPhone(e.target.value)}
                   placeholder="98290XXXXX"
-                  className="glass-input"
+                  className="w-full bg-slate-900 border border-slate-700 rounded-xl p-3 text-white text-sm font-mono outline-none"
                 />
               </div>
               <div>
                 <label className="block text-xs font-bold text-slate-300 mb-1.5 uppercase tracking-wider">
-                  5. Village Name
+                  5. Village Name (गांव)
                 </label>
                 <input
                   type="text"
                   value={village}
                   onChange={(e) => setVillage(e.target.value)}
-                  className="glass-input"
+                  className="w-full bg-slate-900 border border-slate-700 rounded-xl p-3 text-white text-sm outline-none"
                 />
               </div>
             </div>
 
             <div className="pt-2 flex gap-3">
-              <button type="submit" className="glass-btn flex-1 py-3.5 text-base bg-gradient-to-r from-purple-600 to-indigo-600">
-                Add Member
+              <button type="submit" className="flex-1 py-3.5 rounded-2xl bg-purple-600 hover:bg-purple-500 font-extrabold text-white text-base shadow-lg shadow-purple-600/30">
+                Save Member (सदस्य जोड़ें)
               </button>
-              <button type="button" onClick={onClose} className="glass-btn-secondary px-5">
+              <button type="button" onClick={onClose} className="px-5 py-3.5 rounded-2xl bg-slate-800 text-slate-300 font-bold">
                 Cancel
               </button>
             </div>
 
-            {/* Current Member count tag */}
             <div className="pt-3 border-t border-slate-800 text-center text-xs text-slate-400 flex items-center justify-center gap-1.5">
-              <Users className="w-3.5 h-3.5 text-purple-400" />
-              <span>Total Registered Members: <strong className="text-white">{members.length}</strong></span>
+              <Users className="w-4 h-4 text-purple-400" />
+              <span>Total Registered Farmers: <strong className="text-white">{members.length}</strong></span>
             </div>
           </form>
         )}
@@ -158,4 +156,3 @@ export default function MemberEntryModal({ members, onAddMember, onClose }: Memb
     </div>
   );
 }
-

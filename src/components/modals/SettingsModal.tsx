@@ -44,299 +44,263 @@ export default function SettingsModal({ onClose }: SettingsModalProps) {
   };
 
   return (
-    <div className="glass-modal-overlay">
-      <div className="glass-modal-container p-5 max-w-lg">
-        {/* Header */}
-        <div className="flex items-center justify-between pb-3 border-b border-white/10">
-          <div className="flex items-center gap-2">
-            <div className="p-2 rounded-xl bg-cyan-500/20 text-cyan-300">
-              <Settings className="w-5 h-5" />
-            </div>
-            <div>
-              <h2 className="text-lg font-bold text-white">SM MILK -- Settings</h2>
-              <p className="text-xs text-slate-400">Printer, Scale, FAT & Receipt Settings</p>
-            </div>
-          </div>
-          <button onClick={onClose} className="p-1.5 rounded-lg bg-white/5 hover:bg-white/10 text-slate-300">
-            <X className="w-5 h-5" />
+    <div className="fixed inset-0 z-50 w-full h-full bg-slate-950 text-slate-100 flex flex-col overflow-hidden">
+      {/* Top Mobile Bar */}
+      <div className="h-12 bg-slate-900 text-white px-4 flex items-center justify-between shadow-md border-b border-slate-800 flex-shrink-0">
+        <div className="flex items-center gap-2">
+          <Settings className="w-5 h-5 text-cyan-400" />
+          <span className="font-extrabold text-sm tracking-tight">SM MILK / Settings (ऐप सेटिंग्स)</span>
+        </div>
+        <button
+          onClick={onClose}
+          className="p-1.5 rounded-lg bg-slate-800 hover:bg-red-600 text-white transition-colors"
+        >
+          <X className="w-5 h-5" />
+        </button>
+      </div>
+
+      {/* Settings Navigation Tabs */}
+      <div className="flex gap-1 bg-slate-900 p-2 border-b border-slate-800 text-xs overflow-x-auto no-scrollbar flex-shrink-0">
+        {(['Slip', 'Fat', 'Weight', 'Printer'] as const).map((tab) => (
+          <button
+            key={tab}
+            onClick={() => setActiveTab(tab)}
+            className={`flex-1 py-2 px-3 rounded-xl font-bold text-center transition-all ${
+              activeTab === tab
+                ? 'bg-cyan-600 text-white shadow-md'
+                : 'text-slate-400 bg-slate-950 hover:text-white'
+            }`}
+          >
+            {tab === 'Slip' && 'Slip (रसीद)'}
+            {tab === 'Fat' && 'Fat (रेट/चार्ट)'}
+            {tab === 'Weight' && 'Weight (कांटा)'}
+            {tab === 'Printer' && 'Printer (प्रिंटर)'}
           </button>
-        </div>
+        ))}
+      </div>
 
-        {/* Settings Navigation Tabs (Photo 1-4 match) */}
-        <div className="flex gap-1 bg-slate-950/80 p-1 my-3 rounded-xl border border-white/10 text-xs overflow-x-auto no-scrollbar">
-          {(['Slip', 'Fat', 'Weight', 'Printer'] as const).map((tab) => (
-            <button
-              key={tab}
-              onClick={() => setActiveTab(tab)}
-              className={`flex-1 py-1.5 px-3 rounded-lg font-bold text-center transition-all ${
-                activeTab === tab
-                  ? 'bg-gradient-to-r from-cyan-500 to-blue-600 text-white shadow-md shadow-cyan-500/20'
-                  : 'text-slate-400 hover:text-white'
-              }`}
-            >
-              {tab === 'Slip' && 'Slip (Receipt)'}
-              {tab === 'Fat' && 'Fat (Quality)'}
-              {tab === 'Weight' && 'Weight (Scale)'}
-              {tab === 'Printer' && 'Printer (Print)'}
-            </button>
-          ))}
-        </div>
-
+      {/* Main Full Screen Body */}
+      <div className="flex-1 overflow-y-auto p-4 space-y-4 bg-slate-900">
         {isSaved ? (
-          <div className="text-center py-6 space-y-3">
-            <CheckCircle className="w-12 h-12 text-cyan-400 mx-auto animate-bounce" />
-            <h3 className="text-base font-bold text-white">Settings saved successfully!</h3>
-            <p className="text-xs text-slate-400">All printer & scale parameters have been updated.</p>
-            <button onClick={onClose} className="glass-btn w-full mt-4">
-              OK (Close)
+          <div className="text-center py-10 space-y-4 bg-slate-950 p-6 rounded-3xl border border-cyan-500/40 shadow-xl">
+            <CheckCircle className="w-14 h-14 text-cyan-400 mx-auto animate-bounce" />
+            <h3 className="text-lg font-black text-white">Settings Saved Successfully!</h3>
+            <p className="text-sm text-slate-400">All printer, scale, and slip parameters have been saved.</p>
+            <button onClick={onClose} className="w-full py-3.5 rounded-2xl bg-cyan-600 font-extrabold text-white text-base shadow-lg shadow-cyan-600/40">
+              OK (Done)
             </button>
           </div>
         ) : (
-          <form onSubmit={handleSave} className="space-y-3 max-h-[60vh] overflow-y-auto pr-1">
-            {/* TAB 1: SLIP SETTINGS (Matches Photo 1) */}
+          <form onSubmit={handleSave} className="space-y-4 bg-slate-950 p-5 rounded-3xl border border-slate-800 shadow-xl">
+            {/* TAB 1: SLIP SETTINGS */}
             {activeTab === 'Slip' && (
-              <div className="space-y-3 text-xs">
+              <div className="space-y-4 text-xs">
                 <div className="grid grid-cols-2 gap-3">
                   <div>
-                    <label className="block text-slate-400 mb-1 font-semibold">Print Language</label>
+                    <label className="block text-slate-300 mb-1.5 font-bold uppercase tracking-wider">Print Language</label>
                     <select
                       value={printLang}
                       onChange={(e) => setPrintLang(e.target.value)}
-                      className="glass-select"
+                      className="w-full bg-slate-900 border border-slate-700 rounded-xl p-3 text-white text-sm outline-none"
                     >
-                      <option value="English" className="bg-slate-900">English</option>
-                      <option value="Hindi" className="bg-slate-900">Hindi</option>
+                      <option value="English">English</option>
+                      <option value="Hindi">Hindi (हिंदी)</option>
                     </select>
                   </div>
                   <div>
-                    <label className="block text-slate-400 mb-1 font-semibold">Roll Type</label>
+                    <label className="block text-slate-300 mb-1.5 font-bold uppercase tracking-wider">Roll Size</label>
                     <select
                       value={rollType}
                       onChange={(e) => setRollType(e.target.value)}
-                      className="glass-select"
+                      className="w-full bg-slate-900 border border-slate-700 rounded-xl p-3 text-white text-sm outline-none"
                     >
-                      <option value="Big" className="bg-slate-900">Big Roll (3 inch)</option>
-                      <option value="Small" className="bg-slate-900">Small Roll (2 inch)</option>
+                      <option value="Big">Big Roll (3 inch)</option>
+                      <option value="Small">Small Roll (2 inch)</option>
                     </select>
                   </div>
                 </div>
 
                 <div className="grid grid-cols-2 gap-3">
                   <div>
-                    <label className="block text-slate-400 mb-1">Skip Line</label>
+                    <label className="block text-slate-300 mb-1.5 font-bold uppercase tracking-wider">Skip Line</label>
                     <input
                       type="number"
                       value={skipLine}
                       onChange={(e) => setSkipLine(e.target.value)}
-                      className="glass-input"
+                      className="w-full bg-slate-900 border border-slate-700 rounded-xl p-3 text-white font-mono font-bold outline-none"
                     />
                   </div>
                   <div>
-                    <label className="block text-slate-400 mb-1">Amount Round</label>
+                    <label className="block text-slate-300 mb-1.5 font-bold uppercase tracking-wider">Amount Round</label>
                     <input
                       type="number"
                       value={amountRound}
                       onChange={(e) => setAmountRound(e.target.value)}
-                      className="glass-input"
+                      className="w-full bg-slate-900 border border-slate-700 rounded-xl p-3 text-white font-mono font-bold outline-none"
                     />
                   </div>
                 </div>
 
-                {/* Toggles */}
-                <div className="p-3 rounded-xl bg-slate-950/70 border border-white/10 space-y-2">
-                  <div className="flex justify-between items-center">
-                    <span className="text-white">SMS Slip (Mobile Message)</span>
+                <div className="p-4 rounded-2xl bg-slate-900 border border-slate-800 space-y-3">
+                  <div className="flex justify-between items-center text-sm font-bold">
+                    <span className="text-white">SMS Slip (Mobile Text)</span>
                     <input
                       type="checkbox"
                       checked={smsSlip}
                       onChange={(e) => setSmsSlip(e.target.checked)}
-                      className="w-4 h-4 accent-pink-500 cursor-pointer"
+                      className="w-5 h-5 accent-cyan-500 cursor-pointer"
                     />
                   </div>
-                  <div className="flex justify-between items-center">
+                  <div className="flex justify-between items-center text-sm font-bold">
                     <span className="text-white">Logo On Slip (Dairy Logo)</span>
                     <input
                       type="checkbox"
                       checked={logoOnSlip}
                       onChange={(e) => setLogoOnSlip(e.target.checked)}
-                      className="w-4 h-4 accent-pink-500 cursor-pointer"
-                    />
-                  </div>
-                  <div className="flex justify-between items-center">
-                    <span className="text-white">Auto Cutter (Auto Paper Cutter)</span>
-                    <input
-                      type="checkbox"
-                      checked={autoCutter}
-                      onChange={(e) => setAutoCutter(e.target.checked)}
-                      className="w-4 h-4 accent-pink-500 cursor-pointer"
+                      className="w-5 h-5 accent-cyan-500 cursor-pointer"
                     />
                   </div>
                 </div>
               </div>
             )}
 
-            {/* TAB 2: FAT SETTINGS (Matches Photo 2) */}
+            {/* TAB 2: FAT SETTINGS */}
             {activeTab === 'Fat' && (
-              <div className="space-y-3 text-xs">
+              <div className="space-y-4 text-xs">
                 <div>
-                  <label className="block text-slate-400 mb-1 font-semibold">Grade FAT Type (Rate Chart)</label>
+                  <label className="block text-slate-300 mb-1.5 font-bold uppercase tracking-wider">Rate Chart Type</label>
                   <select
                     value={fatChartType}
                     onChange={(e) => setFatChartType(e.target.value)}
-                    className="glass-select"
+                    className="w-full bg-slate-900 border border-slate-700 rounded-xl p-3 text-white text-sm outline-none"
                   >
-                    <option value="FAT SNF CHART RAJSTHAN" className="bg-slate-900">FAT SNF CHART RAJSTHAN</option>
-                    <option value="FAT SNF CHART GUJARAT" className="bg-slate-900">FAT SNF CHART GUJARAT</option>
-                    <option value="AMUL DAIRY RATE CHART" className="bg-slate-900">AMUL DAIRY RATE CHART</option>
+                    <option value="FAT SNF CHART RAJSTHAN">FAT SNF CHART RAJSTHAN</option>
+                    <option value="FAT SNF CHART GUJARAT">FAT SNF CHART GUJARAT</option>
+                    <option value="AMUL DAIRY RATE CHART">AMUL DAIRY RATE CHART</option>
                   </select>
                 </div>
 
                 <div className="grid grid-cols-3 gap-2">
                   <div>
-                    <label className="block text-slate-400 mb-1">Max Cow Fat</label>
+                    <label className="block text-slate-400 mb-1 font-bold">Max Cow Fat</label>
                     <input
                       type="number"
                       value={maxFatCow}
                       onChange={(e) => setMaxFatCow(e.target.value)}
-                      className="glass-input"
+                      className="w-full bg-slate-900 border border-slate-700 rounded-xl p-2.5 text-white font-mono font-bold outline-none"
                     />
                   </div>
                   <div>
-                    <label className="block text-slate-400 mb-1">Max Buff Fat</label>
+                    <label className="block text-slate-400 mb-1 font-bold">Max Buff Fat</label>
                     <input
                       type="number"
                       value={maxFatBuff}
                       onChange={(e) => setMaxFatBuff(e.target.value)}
-                      className="glass-input"
+                      className="w-full bg-slate-900 border border-slate-700 rounded-xl p-2.5 text-white font-mono font-bold outline-none"
                     />
                   </div>
                   <div>
-                    <label className="block text-slate-400 mb-1">Avg Fat Days</label>
+                    <label className="block text-slate-400 mb-1 font-bold">Avg Fat Days</label>
                     <input
                       type="number"
                       value={avgFatDays}
                       onChange={(e) => setAvgFatDays(e.target.value)}
-                      className="glass-input"
+                      className="w-full bg-slate-900 border border-slate-700 rounded-xl p-2.5 text-white font-mono font-bold outline-none"
                     />
                   </div>
                 </div>
               </div>
             )}
 
-            {/* TAB 3: WEIGHT SETTINGS (Matches Photo 3) */}
+            {/* TAB 3: WEIGHT SETTINGS */}
             {activeTab === 'Weight' && (
-              <div className="space-y-3 text-xs">
-                <div className="p-3 rounded-xl bg-cyan-500/10 border border-cyan-500/30 flex items-center justify-between">
-                  <div className="flex items-center gap-2">
-                    <Wifi className="w-5 h-5 text-cyan-400 animate-pulse" />
+              <div className="space-y-4 text-xs">
+                <div className="p-4 rounded-2xl bg-cyan-500/10 border border-cyan-500/30 flex items-center justify-between">
+                  <div className="flex items-center gap-3">
+                    <Wifi className="w-6 h-6 text-cyan-400 animate-pulse" />
                     <div>
-                      <span className="font-bold text-cyan-300 block">Weight Scale Type</span>
-                      <span className="text-[10px] text-slate-400">WiFi Weighing Machine</span>
+                      <span className="font-extrabold text-sm text-cyan-300 block">WiFi Weight Scale Integration</span>
+                      <span className="text-xs text-slate-400">VDC(WIFI) Scale Connected</span>
                     </div>
                   </div>
-                  <span className="px-2 py-1 rounded bg-cyan-500/20 text-cyan-300 text-[10px] font-bold">
-                    Connected
-                  </span>
                 </div>
 
                 <div className="grid grid-cols-2 gap-3">
                   <div>
-                    <label className="block text-slate-400 mb-1 font-semibold">Weight Type</label>
+                    <label className="block text-slate-300 mb-1.5 font-bold uppercase tracking-wider">Weight Scale Type</label>
                     <select
                       value={weightType}
                       onChange={(e) => setWeightType(e.target.value)}
-                      className="glass-select"
+                      className="w-full bg-slate-900 border border-slate-700 rounded-xl p-3 text-white text-sm outline-none"
                     >
-                      <option value="VDC(WIFI)" className="bg-slate-900">VDC(WIFI)</option>
-                      <option value="BLUETOOTH(SCALE)" className="bg-slate-900">BLUETOOTH(SCALE)</option>
-                      <option value="MANUAL" className="bg-slate-900">MANUAL</option>
+                      <option value="VDC(WIFI)">VDC(WIFI)</option>
+                      <option value="BLUETOOTH(SCALE)">BLUETOOTH(SCALE)</option>
+                      <option value="MANUAL">MANUAL</option>
                     </select>
                   </div>
                   <div>
-                    <label className="block text-slate-400 mb-1 font-semibold">Fat Type</label>
+                    <label className="block text-slate-300 mb-1.5 font-bold uppercase tracking-wider">Fat Analyzer</label>
                     <select
                       value={fatType}
                       onChange={(e) => setFatType(e.target.value)}
-                      className="glass-select"
+                      className="w-full bg-slate-900 border border-slate-700 rounded-xl p-3 text-white text-sm outline-none"
                     >
-                      <option value="Normal" className="bg-slate-900">Normal</option>
-                      <option value="EkoMilk" className="bg-slate-900">EkoMilk Analyzer</option>
-                      <option value="UltraFat" className="bg-slate-900">UltraFat Pro</option>
+                      <option value="Normal">Normal Auto</option>
+                      <option value="EkoMilk">EkoMilk Analyzer</option>
                     </select>
                   </div>
-                </div>
-
-                <div>
-                  <label className="block text-slate-400 mb-1">Cutter Time Type</label>
-                  <input
-                    type="text"
-                    value={cutterTime}
-                    onChange={(e) => setCutterTime(e.target.value)}
-                    className="glass-input"
-                  />
                 </div>
               </div>
             )}
 
-            {/* TAB 4: PRINTER SETTINGS (Matches Photo 4) */}
+            {/* TAB 4: PRINTER SETTINGS */}
             {activeTab === 'Printer' && (
-              <div className="space-y-3 text-xs">
-                {/* Printer Mac Card */}
-                <div className="p-3 rounded-xl bg-emerald-500/10 border border-emerald-500/30 flex items-center justify-between">
-                  <div className="flex items-center gap-2">
-                    <Bluetooth className="w-5 h-5 text-emerald-400" />
+              <div className="space-y-4 text-xs">
+                <div className="p-4 rounded-2xl bg-emerald-500/10 border border-emerald-500/30 flex items-center justify-between">
+                  <div className="flex items-center gap-3">
+                    <Bluetooth className="w-6 h-6 text-emerald-400" />
                     <div>
-                      <span className="font-bold text-white block">SET RECEIPT PRINTER</span>
-                      <span className="text-[11px] font-mono text-emerald-300">{btPrinterMac}</span>
+                      <span className="font-extrabold text-sm text-white block">SET RECEIPT PRINTER</span>
+                      <span className="text-xs font-mono text-emerald-300">{btPrinterMac}</span>
                     </div>
                   </div>
                   <button
                     type="button"
-                    onClick={() => alert("Searching for Bluetooth printers...")}
-                    className="px-2.5 py-1 rounded bg-emerald-500 text-slate-950 font-bold text-[10px]"
+                    onClick={() => alert("Scanning for Bluetooth printers...")}
+                    className="px-3 py-1.5 rounded-xl bg-emerald-500 text-slate-950 font-black text-xs shadow-md"
                   >
                     Scan BT
                   </button>
                 </div>
 
-                <div className="p-3 rounded-xl bg-slate-950/70 border border-white/10 space-y-2">
-                  <div className="flex justify-between items-center">
+                <div className="p-4 rounded-2xl bg-slate-900 border border-slate-800 space-y-3">
+                  <div className="flex justify-between items-center text-sm font-bold">
                     <span className="text-white">Print Slip (Receipt Print)</span>
                     <input
                       type="checkbox"
                       checked={printSlip}
                       onChange={(e) => setPrintSlip(e.target.checked)}
-                      className="w-4 h-4 accent-pink-500 cursor-pointer"
+                      className="w-5 h-5 accent-emerald-500 cursor-pointer"
                     />
                   </div>
-                  <div className="flex justify-between items-center">
-                    <span className="text-white">Usb Slip Printing (USB Cable Print)</span>
+                  <div className="flex justify-between items-center text-sm font-bold">
+                    <span className="text-white">Usb Slip Printing</span>
                     <input
                       type="checkbox"
                       checked={usbSlipPrinting}
                       onChange={(e) => setUsbSlipPrinting(e.target.checked)}
-                      className="w-4 h-4 accent-pink-500 cursor-pointer"
-                    />
-                  </div>
-                  <div className="flex justify-between items-center">
-                    <span className="text-white">English Number (Digits in English)</span>
-                    <input
-                      type="checkbox"
-                      checked={englishNumber}
-                      onChange={(e) => setEnglishNumber(e.target.checked)}
-                      className="w-4 h-4 accent-pink-500 cursor-pointer"
+                      className="w-5 h-5 accent-emerald-500 cursor-pointer"
                     />
                   </div>
                 </div>
               </div>
             )}
 
-            {/* Save Action */}
-            <div className="pt-3 flex gap-2">
-              <button type="submit" className="glass-btn flex-1">
-                Save Settings
+            <div className="pt-2 flex gap-3">
+              <button type="submit" className="flex-1 py-3.5 rounded-2xl bg-cyan-600 hover:bg-cyan-500 font-extrabold text-white text-base shadow-lg shadow-cyan-600/30">
+                Save Settings (सेटिंग्स सेव करें)
               </button>
-              <button type="button" onClick={onClose} className="glass-btn-secondary">
+              <button type="button" onClick={onClose} className="px-5 py-3.5 rounded-2xl bg-slate-800 text-slate-300 font-bold">
                 Cancel
               </button>
             </div>

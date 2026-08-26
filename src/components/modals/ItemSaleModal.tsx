@@ -42,48 +42,47 @@ export default function ItemSaleModal({ members, onSave, onClose }: ItemSaleModa
   };
 
   return (
-    <div className="glass-modal-overlay">
-      <div className="glass-modal-container p-6 sm:p-7">
-        <div className="flex items-center justify-between pb-4 mb-5 border-b border-slate-800">
-          <div className="flex items-center gap-3">
-            <div className="p-2.5 rounded-2xl bg-purple-500/15 border border-purple-500/30 text-purple-400">
-              <PackageCheck className="w-5 h-5" />
-            </div>
-            <div>
-              <h2 className="text-lg font-extrabold text-white tracking-tight">Item / Feed Sale <span className="text-xs font-semibold text-slate-400">(Item Sale)</span></h2>
-              <p className="text-xs text-slate-400">Feed, Khal & Mineral Mixture Sales</p>
-            </div>
-          </div>
-          <button 
-            onClick={onClose} 
-            className="p-2 rounded-xl bg-slate-800/80 hover:bg-slate-700 text-slate-400 hover:text-white transition-colors border border-slate-700/60"
-          >
-            <X className="w-5 h-5" />
-          </button>
+    <div className="fixed inset-0 z-50 w-full h-full bg-slate-950 text-slate-100 flex flex-col overflow-hidden">
+      {/* Top Mobile Header */}
+      <div className="h-12 bg-purple-800 text-white px-4 flex items-center justify-between shadow-md border-b border-purple-700 flex-shrink-0">
+        <div className="flex items-center gap-2">
+          <PackageCheck className="w-5 h-5 text-purple-200" />
+          <span className="font-extrabold text-sm tracking-tight">SM MILK / Item & Feed Sale (दाना / पशु आहार बिक्री)</span>
         </div>
+        <button
+          onClick={onClose}
+          className="p-1.5 rounded-lg bg-purple-900/80 hover:bg-red-600 text-white transition-colors"
+        >
+          <X className="w-5 h-5" />
+        </button>
+      </div>
 
+      {/* Main Content */}
+      <div className="flex-1 overflow-y-auto p-4 space-y-4 bg-slate-900">
         {isSaved ? (
-          <div className="text-center py-6 space-y-4">
-            <CheckCircle className="w-12 h-12 text-purple-400 mx-auto animate-bounce" />
-            <h3 className="text-base font-extrabold text-white">Item sale recorded!</h3>
-            <p className="text-xs text-slate-400">Item: <strong className="text-purple-300">{itemName}</strong> | Total Bill: <strong className="text-emerald-400">₹{totalAmount}</strong></p>
-            <button onClick={onClose} className="glass-btn w-full mt-4 py-3 bg-gradient-to-r from-purple-500 to-indigo-600">
-              OK (Close)
+          <div className="text-center py-10 space-y-4 bg-slate-950 p-6 rounded-3xl border border-purple-500/40 shadow-xl">
+            <CheckCircle className="w-14 h-14 text-purple-400 mx-auto animate-bounce" />
+            <h3 className="text-lg font-black text-white">Feed Sale Recorded Successfully!</h3>
+            <p className="text-sm text-slate-400">
+              Item: <strong className="text-purple-300">{itemName}</strong> | Total Bill: <strong className="text-emerald-400">₹{totalAmount.toFixed(2)}</strong>
+            </p>
+            <button onClick={onClose} className="w-full py-3.5 rounded-2xl bg-purple-600 font-extrabold text-white text-base shadow-lg shadow-purple-600/40">
+              OK (Done)
             </button>
           </div>
         ) : (
-          <form onSubmit={handleSubmit} className="space-y-4">
+          <form onSubmit={handleSubmit} className="space-y-4 bg-slate-950 p-5 rounded-3xl border border-slate-800 shadow-xl">
             <div>
               <label className="block text-xs font-bold text-slate-300 mb-1.5 uppercase tracking-wider">
-                1. Select Member
+                1. Select Member (किसान का चुनाव)
               </label>
               <select
                 value={memberCode}
                 onChange={(e) => setMemberCode(e.target.value)}
-                className="glass-select"
+                className="w-full bg-slate-900 border border-slate-700 rounded-xl p-3 text-white text-sm outline-none"
               >
                 {members.map((m) => (
-                  <option key={m.code} value={m.code} className="bg-slate-900 text-white">
+                  <option key={m.code} value={m.code}>
                     #{m.code} - {m.name} ({m.village})
                   </option>
                 ))}
@@ -92,7 +91,7 @@ export default function ItemSaleModal({ members, onSave, onClose }: ItemSaleModa
 
             <div>
               <label className="block text-xs font-bold text-slate-300 mb-1.5 uppercase tracking-wider">
-                2. Select Feed Product
+                2. Select Product (दाना / खल उत्पाद)
               </label>
               <select
                 value={itemName}
@@ -102,60 +101,61 @@ export default function ItemSaleModal({ members, onSave, onClose }: ItemSaleModa
                   else if (e.target.value.includes("Kapas Khal")) setUnitPrice("1400");
                   else if (e.target.value.includes("Mineral")) setUnitPrice("250");
                 }}
-                className="glass-select"
+                className="w-full bg-slate-900 border border-slate-700 rounded-xl p-3 text-white text-sm outline-none"
               >
-                <option value="Amul Cattle Feed (50kg Bag)" className="bg-slate-900 text-white">Amul Cattle Feed 50Kg (₹1250)</option>
-                <option value="Kapas Khal / Cotton Seed (50kg)" className="bg-slate-900 text-white">Cotton Seed Khal 50Kg (₹1400)</option>
-                <option value="Mineral Mixture (1kg Pack)" className="bg-slate-900 text-white">Mineral Mixture 1Kg (₹250)</option>
+                <option value="Amul Cattle Feed (50kg Bag)">Amul Cattle Feed 50Kg (₹1250)</option>
+                <option value="Kapas Khal / Cotton Seed (50kg)">Cotton Seed Khal 50Kg (₹1400)</option>
+                <option value="Mineral Mixture (1kg Pack)">Mineral Mixture 1Kg (₹250)</option>
               </select>
             </div>
 
-            <div className="grid grid-cols-2 gap-3.5">
+            <div className="grid grid-cols-2 gap-3">
               <div>
                 <label className="block text-xs font-bold text-slate-300 mb-1.5 uppercase tracking-wider">
-                  3. Quantity
+                  3. Quantity (नग/बोरी)
                 </label>
                 <input
                   type="number"
                   value={quantity}
                   onChange={(e) => setQuantity(e.target.value)}
-                  className="glass-input"
+                  className="w-full bg-slate-900 border border-slate-700 rounded-xl p-3 text-white text-sm font-mono font-bold outline-none"
                   min="1"
                   required
                 />
               </div>
               <div>
                 <label className="block text-xs font-bold text-slate-300 mb-1.5 uppercase tracking-wider">
-                  4. Price per Pack (₹/Pack)
+                  4. Price per Pack (कीमत ₹)
                 </label>
                 <input
                   type="number"
                   value={unitPrice}
                   onChange={(e) => setUnitPrice(e.target.value)}
-                  className="glass-input"
+                  className="w-full bg-slate-900 border border-slate-700 rounded-xl p-3 text-white text-sm font-mono font-bold outline-none"
                   required
                 />
               </div>
             </div>
 
+            {/* Bill Summary */}
             <div className="p-4 rounded-2xl bg-gradient-to-r from-slate-900 to-slate-950 border border-purple-500/30 shadow-md flex items-center justify-between">
               <div className="flex items-center gap-3">
                 <div className="p-2.5 rounded-xl bg-purple-500/15 text-purple-400 border border-purple-500/30">
                   <Calculator className="w-5 h-5" />
                 </div>
                 <div>
-                  <span className="text-[11px] font-bold text-slate-400 block uppercase tracking-wider">Total Feed Bill Amount</span>
+                  <span className="text-[11px] font-bold text-slate-400 block uppercase">Total Feed Bill Amount</span>
                   <span className="text-xs text-slate-400">{quantity} Pack × ₹{unitPrice}</span>
                 </div>
               </div>
-              <span className="text-xl font-black text-purple-300 font-mono tracking-tight">₹{totalAmount.toFixed(2)}</span>
+              <span className="text-2xl font-black text-purple-300 font-mono">₹{totalAmount.toFixed(2)}</span>
             </div>
 
             <div className="pt-2 flex gap-3">
-              <button type="submit" className="glass-btn flex-1 py-3.5 text-base bg-gradient-to-r from-purple-600 to-indigo-600">
-                Save Bill
+              <button type="submit" className="flex-1 py-3.5 rounded-2xl bg-purple-600 hover:bg-purple-500 font-extrabold text-white text-base shadow-lg shadow-purple-600/30">
+                Save Bill (बिल सेव करें)
               </button>
-              <button type="button" onClick={onClose} className="glass-btn-secondary px-5">
+              <button type="button" onClick={onClose} className="px-5 py-3.5 rounded-2xl bg-slate-800 text-slate-300 font-bold">
                 Cancel
               </button>
             </div>
@@ -165,4 +165,3 @@ export default function ItemSaleModal({ members, onSave, onClose }: ItemSaleModa
     </div>
   );
 }
-

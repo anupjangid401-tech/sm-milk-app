@@ -31,113 +31,113 @@ export default function PassbookModal({ members, purchases, itemSales, onClose }
   );
 
   return (
-    <div className="glass-modal-overlay">
-      <div className="glass-modal-container p-5 max-w-lg">
-        <div className="flex items-center justify-between pb-3 mb-3 border-b border-white/10">
-          <div className="flex items-center gap-2">
-            <div className="p-2 rounded-xl bg-emerald-500/20 text-emerald-300">
-              <BookOpen className="w-5 h-5" />
-            </div>
-            <div>
-              <h2 className="text-lg font-bold text-white">Customer Passbook</h2>
-              <p className="text-xs text-slate-400">Milk Payment & Account Statement</p>
-            </div>
-          </div>
-          <button onClick={onClose} className="p-1.5 rounded-lg bg-white/5 hover:bg-white/10 text-slate-300">
-            <X className="w-5 h-5" />
-          </button>
+    <div className="fixed inset-0 z-50 w-full h-full bg-slate-950 text-slate-100 flex flex-col overflow-hidden">
+      {/* Top Mobile Bar */}
+      <div className="h-12 bg-emerald-800 text-white px-4 flex items-center justify-between shadow-md border-b border-emerald-700 flex-shrink-0">
+        <div className="flex items-center gap-2">
+          <BookOpen className="w-5 h-5 text-emerald-200" />
+          <span className="font-extrabold text-sm tracking-tight">SM MILK / Passbook (किसान लेजर पासबुक)</span>
+        </div>
+        <button
+          onClick={onClose}
+          className="p-1.5 rounded-lg bg-emerald-900/80 hover:bg-red-600 text-white transition-colors"
+        >
+          <X className="w-5 h-5" />
+        </button>
+      </div>
+
+      {/* Main Full Screen Body */}
+      <div className="flex-1 overflow-y-auto p-4 space-y-4 bg-slate-900">
+        {/* Search Input */}
+        <div className="relative">
+          <Search className="w-4 h-4 text-slate-400 absolute left-3.5 top-3.5" />
+          <input
+            type="text"
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
+            placeholder="Search farmer name or code..."
+            className="w-full bg-slate-950 border border-slate-800 rounded-2xl pl-10 pr-4 py-3 text-sm text-white outline-none focus:border-emerald-400"
+          />
         </div>
 
-        {/* Member Selector / Search */}
-        <div className="mb-4">
-          <div className="relative mb-2">
-            <Search className="w-4 h-4 text-slate-400 absolute left-3 top-3" />
-            <input
-              type="text"
-              value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
-              placeholder="Search by name or code..."
-              className="glass-input pl-9 text-xs"
-            />
-          </div>
-
-          <div className="flex gap-2 overflow-x-auto pb-1 no-scrollbar">
-            {filteredMembers.map((m) => (
-              <button
-                key={m.code}
-                onClick={() => setSelectedCode(m.code)}
-                className={`px-3 py-1.5 rounded-xl text-xs font-semibold whitespace-nowrap border transition-all ${
-                  selectedCode === m.code
-                    ? "bg-emerald-500/25 border-emerald-400 text-emerald-300 shadow-lg shadow-emerald-500/20"
-                    : "bg-white/5 border-white/10 text-slate-300 hover:bg-white/10"
-                }`}
-              >
-                #{m.code} {m.name}
-              </button>
-            ))}
-          </div>
+        {/* Farmer Selector Pills */}
+        <div className="flex gap-2 overflow-x-auto pb-1 no-scrollbar">
+          {filteredMembers.map((m) => (
+            <button
+              key={m.code}
+              onClick={() => setSelectedCode(m.code)}
+              className={`px-3.5 py-2 rounded-xl text-xs font-bold whitespace-nowrap border transition-all ${
+                selectedCode === m.code
+                  ? "bg-emerald-600 border-emerald-400 text-white shadow-md"
+                  : "bg-slate-950 border-slate-800 text-slate-300"
+              }`}
+            >
+              #{m.code} {m.name}
+            </button>
+          ))}
         </div>
 
-        {/* Selected Member Passbook Card */}
-        {currentMember && (
+        {/* Selected Member Ledger Card */}
+        {currentMember ? (
           <div className="space-y-3">
-            {/* Header info card */}
-            <div className="p-3.5 rounded-xl bg-slate-900/90 border border-emerald-500/30 flex items-center justify-between">
-              <div className="flex items-center gap-2.5">
-                <div className="w-10 h-10 rounded-full bg-emerald-500/20 text-emerald-300 flex items-center justify-center font-bold">
+            <div className="p-4 rounded-3xl bg-slate-950 border border-emerald-500/30 flex items-center justify-between shadow-xl">
+              <div className="flex items-center gap-3">
+                <div className="w-12 h-12 rounded-2xl bg-emerald-500/20 text-emerald-300 flex items-center justify-center font-black text-lg border border-emerald-500/40">
                   {currentMember.name[0]}
                 </div>
                 <div>
-                  <h3 className="text-sm font-bold text-white flex items-center gap-1.5">
+                  <h3 className="text-base font-extrabold text-white flex items-center gap-1.5">
                     {currentMember.name}
-                    <UserCheck className="w-3.5 h-3.5 text-emerald-400" />
+                    <UserCheck className="w-4 h-4 text-emerald-400" />
                   </h3>
-                  <p className="text-[11px] text-slate-400">
-                    Code: <strong className="text-cyan-300">{currentMember.code}</strong> | Village: {currentMember.village}
+                  <p className="text-xs text-slate-400">
+                    Code: <strong className="text-cyan-300">#{currentMember.code}</strong> | {currentMember.village}
                   </p>
                 </div>
               </div>
               <div className="text-right">
-                <span className="text-[10px] text-slate-400 block">Net Balance</span>
-                <span className="text-base font-black text-emerald-400">₹{netBalance.toFixed(2)}</span>
+                <span className="text-[10px] text-slate-400 block uppercase tracking-wider">Net Balance</span>
+                <span className="text-xl font-black text-emerald-400 font-mono">₹{netBalance.toFixed(2)}</span>
               </div>
             </div>
 
-            {/* Transactions History */}
-            <div className="max-h-60 overflow-y-auto space-y-2 pr-1">
-              <h4 className="text-xs font-bold text-slate-400 uppercase tracking-wider">Milk Deposit History (Milk Transactions)</h4>
+            {/* Milk Transactions List */}
+            <div className="space-y-2">
+              <h4 className="text-xs font-bold text-slate-400 uppercase tracking-wider px-1">Milk Deposit History (दूध जमा रिकॉर्ड)</h4>
 
               {memberPurchases.length === 0 ? (
-                <p className="text-xs text-slate-500 text-center py-4">No milk deposit records found.</p>
+                <div className="p-6 text-center text-slate-500 bg-slate-950 rounded-2xl border border-slate-800 text-xs">
+                  कोई दूध रिकॉर्ड नहीं मिला।
+                </div>
               ) : (
                 memberPurchases.map((p) => (
-                  <div key={p.id} className="p-2.5 rounded-xl bg-slate-950/70 border border-white/10 flex items-center justify-between text-xs">
+                  <div key={p.id} className="p-3 rounded-2xl bg-slate-950 border border-slate-800 flex items-center justify-between text-xs">
                     <div>
-                      <div className="font-semibold text-white">
-                        {p.date} ({p.shift === 'MORNING' ? 'Morning' : 'Evening'})
+                      <div className="font-bold text-white">
+                        {p.date} ({p.shift === "MORNING" ? "Morning" : "Evening"})
                       </div>
-                      <div className="text-[10px] text-slate-400">
+                      <div className="text-[11px] text-slate-400 font-mono mt-0.5">
                         {p.liters} Ltr | FAT {p.fat}% | SNF {p.snf}% @ ₹{p.ratePerLiter}/L
                       </div>
                     </div>
-                    <div className="text-right font-bold text-emerald-400">
+                    <div className="text-right font-extrabold text-emerald-400 text-sm font-mono">
                       +₹{p.totalAmount}
                     </div>
                   </div>
                 ))
               )}
 
-              {/* Feed Sales Deductions */}
+              {/* Feed Deductions */}
               {memberItemSales.length > 0 && (
                 <>
-                  <h4 className="text-xs font-bold text-amber-400 uppercase tracking-wider pt-2">Feed / Item Deductions</h4>
+                  <h4 className="text-xs font-bold text-amber-400 uppercase tracking-wider px-1 pt-2">Feed Deductions (आहार कटौती)</h4>
                   {memberItemSales.map((item) => (
-                    <div key={item.id} className="p-2.5 rounded-xl bg-amber-500/10 border border-amber-500/20 flex items-center justify-between text-xs">
+                    <div key={item.id} className="p-3 rounded-2xl bg-amber-500/10 border border-amber-500/30 flex items-center justify-between text-xs">
                       <div>
-                        <div className="font-semibold text-amber-200">{item.itemName}</div>
-                        <div className="text-[10px] text-amber-400/80">Qty: {item.quantity} | {item.date}</div>
+                        <div className="font-bold text-amber-200">{item.itemName}</div>
+                        <div className="text-[11px] text-amber-400/80 font-mono mt-0.5">Qty: {item.quantity} | {item.date}</div>
                       </div>
-                      <div className="text-right font-bold text-rose-400">
+                      <div className="text-right font-extrabold text-rose-400 text-sm font-mono">
                         -₹{item.totalAmount}
                       </div>
                     </div>
@@ -146,12 +146,14 @@ export default function PassbookModal({ members, purchases, itemSales, onClose }
               )}
             </div>
 
-            {/* Footer Summary */}
-            <div className="p-3 rounded-xl bg-slate-950 border border-white/10 flex justify-between text-xs font-semibold">
-              <span className="text-slate-300">Total Milk Bill: <strong className="text-emerald-400">₹{totalMilkEarnings.toFixed(2)}</strong></span>
-              <span className="text-slate-300">Feed Deductions: <strong className="text-rose-400">₹{totalItemDeductions.toFixed(2)}</strong></span>
+            {/* Passbook Summary */}
+            <div className="p-3.5 rounded-2xl bg-slate-950 border border-slate-800 flex justify-between text-xs font-bold">
+              <span className="text-slate-300">Total Milk Bill: <strong className="text-emerald-400 font-mono text-sm">₹{totalMilkEarnings.toFixed(2)}</strong></span>
+              <span className="text-slate-300">Feed Deductions: <strong className="text-rose-400 font-mono text-sm">₹{totalItemDeductions.toFixed(2)}</strong></span>
             </div>
           </div>
+        ) : (
+          <div className="p-6 text-center text-slate-500 text-xs">कृपया किसान चुनें!</div>
         )}
       </div>
     </div>

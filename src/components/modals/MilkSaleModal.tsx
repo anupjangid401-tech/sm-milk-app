@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { MilkSaleRecord, MilkType, ShiftType } from "@/lib/types";
-import { X, ShoppingCart, CheckCircle, Calculator } from "lucide-react";
+import { X, ShoppingCart, CheckCircle, Calculator, Sun, Moon } from "lucide-react";
 
 interface MilkSaleModalProps {
   shift: ShiftType;
@@ -42,76 +42,75 @@ export default function MilkSaleModal({ shift, onSave, onClose }: MilkSaleModalP
   };
 
   return (
-    <div className="glass-modal-overlay">
-      <div className="glass-modal-container p-6 sm:p-7">
-        <div className="flex items-center justify-between pb-4 mb-5 border-b border-slate-800">
-          <div className="flex items-center gap-3">
-            <div className="p-2.5 rounded-2xl bg-emerald-500/15 border border-emerald-500/30 text-emerald-400">
-              <ShoppingCart className="w-5 h-5" />
-            </div>
-            <div>
-              <h2 className="text-lg font-extrabold text-white tracking-tight">Milk Sale <span className="text-xs font-semibold text-slate-400">(Milk Sale Entry)</span></h2>
-              <p className="text-xs text-slate-400">Retail / Dairy Milk Sale Record</p>
-            </div>
-          </div>
-          <button 
-            onClick={onClose} 
-            className="p-2 rounded-xl bg-slate-800/80 hover:bg-slate-700 text-slate-400 hover:text-white transition-colors border border-slate-700/60"
-          >
-            <X className="w-5 h-5" />
-          </button>
+    <div className="fixed inset-0 z-50 w-full h-full bg-slate-950 text-slate-100 flex flex-col overflow-hidden">
+      {/* Top Mobile Bar */}
+      <div className="h-12 bg-emerald-800 text-white px-4 flex items-center justify-between shadow-md border-b border-emerald-700 flex-shrink-0">
+        <div className="flex items-center gap-2">
+          <ShoppingCart className="w-5 h-5 text-emerald-200" />
+          <span className="font-extrabold text-sm tracking-tight">SM MILK / Milk Sale (दूध बिक्री)</span>
         </div>
+        <button
+          onClick={onClose}
+          className="p-1.5 rounded-lg bg-emerald-900/80 hover:bg-red-600 text-white transition-colors"
+        >
+          <X className="w-5 h-5" />
+        </button>
+      </div>
 
+      {/* Main Full Screen Body */}
+      <div className="flex-1 overflow-y-auto p-4 space-y-4 bg-slate-900">
         {isSaved ? (
-          <div className="text-center py-6 space-y-4">
-            <CheckCircle className="w-12 h-12 text-emerald-400 mx-auto animate-bounce" />
-            <h3 className="text-base font-extrabold text-white">Milk Sale Recorded!</h3>
-            <p className="text-xs text-slate-400">Customer: <strong className="text-cyan-300">{customerName}</strong> | Total Bill: <strong className="text-emerald-400">₹{totalAmount}</strong></p>
-            <button onClick={onClose} className="glass-btn w-full mt-4 py-3">
-              OK (Close)
+          <div className="text-center py-10 space-y-4 bg-slate-950 p-6 rounded-3xl border border-emerald-500/40">
+            <CheckCircle className="w-14 h-14 text-emerald-400 mx-auto animate-bounce" />
+            <h3 className="text-lg font-black text-white">Milk Sale Recorded Successfully!</h3>
+            <p className="text-sm text-slate-400">
+              Customer: <strong className="text-cyan-300">{customerName}</strong> | Total Bill: <strong className="text-emerald-400">₹{totalAmount.toFixed(2)}</strong>
+            </p>
+            <button onClick={onClose} className="w-full py-3.5 rounded-2xl bg-emerald-600 font-extrabold text-white text-base shadow-lg shadow-emerald-600/40">
+              OK (Done)
             </button>
           </div>
         ) : (
-          <form onSubmit={handleSubmit} className="space-y-4">
+          <form onSubmit={handleSubmit} className="space-y-4 bg-slate-950 p-5 rounded-3xl border border-slate-800 shadow-xl">
             <div>
               <label className="block text-xs font-bold text-slate-300 mb-1.5 uppercase tracking-wider">
-                1. Customer Name
+                1. Customer / Dairy Name (ग्राहक नाम)
               </label>
               <input
                 type="text"
                 value={customerName}
                 onChange={(e) => setCustomerName(e.target.value)}
-                placeholder="e.g. Gupta Sweets / City Hotel"
-                className="glass-input"
+                placeholder="e.g. Krishna Dairy / City Sweets"
+                className="w-full bg-slate-900 border border-slate-700 rounded-xl p-3 text-white text-sm outline-none focus:border-emerald-400"
                 required
               />
             </div>
 
-            <div className="grid grid-cols-2 gap-3.5">
+            <div className="grid grid-cols-2 gap-3">
               <div>
                 <label className="block text-xs font-bold text-slate-300 mb-1.5 uppercase tracking-wider">
-                  2. Milk Type
+                  2. Milk Type (प्रकार)
                 </label>
                 <select
                   value={milkType}
                   onChange={(e) => setMilkType(e.target.value as MilkType)}
-                  className="glass-select"
+                  className="w-full bg-slate-900 border border-slate-700 rounded-xl p-3 text-white text-sm outline-none"
                 >
-                  <option value="BUFFALO" className="bg-slate-900 text-white">Buffalo Milk</option>
-                  <option value="COW" className="bg-slate-900 text-white">Cow Milk</option>
+                  <option value="BUFFALO">Buffalo Milk (भैंस)</option>
+                  <option value="COW">Cow Milk (गाय)</option>
                 </select>
               </div>
 
               <div>
                 <label className="block text-xs font-bold text-slate-300 mb-1.5 uppercase tracking-wider">
-                  3. Quantity (Liters)
+                  3. Quantity (लीटर)
                 </label>
                 <input
                   type="number"
                   step="0.5"
                   value={liters}
                   onChange={(e) => setLiters(e.target.value)}
-                  className="glass-input"
+                  className="w-full bg-slate-900 border border-slate-700 rounded-xl p-3 text-white text-sm font-bold font-mono outline-none"
                   required
                 />
               </div>
@@ -119,36 +118,37 @@ export default function MilkSaleModal({ shift, onSave, onClose }: MilkSaleModalP
 
             <div>
               <label className="block text-xs font-bold text-slate-300 mb-1.5 uppercase tracking-wider">
-                4. Rate per Liter (₹/Ltr)
+                4. Rate per Liter (दर ₹/Ltr)
               </label>
               <input
                 type="number"
                 step="1"
                 value={ratePerLiter}
                 onChange={(e) => setRatePerLiter(e.target.value)}
-                className="glass-input"
+                className="w-full bg-slate-900 border border-slate-700 rounded-xl p-3 text-white text-sm font-bold font-mono outline-none"
                 required
               />
             </div>
 
+            {/* Bill Summary Card */}
             <div className="p-4 rounded-2xl bg-gradient-to-r from-slate-900 to-slate-950 border border-emerald-500/30 shadow-md flex items-center justify-between">
               <div className="flex items-center gap-3">
                 <div className="p-2.5 rounded-xl bg-emerald-500/15 text-emerald-400 border border-emerald-500/30">
                   <Calculator className="w-5 h-5" />
                 </div>
                 <div>
-                  <span className="text-[11px] font-bold text-slate-400 block uppercase tracking-wider">Total Bill Amount</span>
+                  <span className="text-[11px] font-bold text-slate-400 block uppercase">Total Bill Amount</span>
                   <span className="text-xs text-slate-400">{liters} Ltr × ₹{ratePerLiter}</span>
                 </div>
               </div>
-              <span className="text-xl font-black text-emerald-400 font-mono tracking-tight">₹{totalAmount.toFixed(2)}</span>
+              <span className="text-2xl font-black text-emerald-400 font-mono">₹{totalAmount.toFixed(2)}</span>
             </div>
 
             <div className="pt-2 flex gap-3">
-              <button type="submit" className="glass-btn flex-1 py-3.5 text-base bg-gradient-to-r from-emerald-500 to-teal-600">
-                Save Sale
+              <button type="submit" className="flex-1 py-3.5 rounded-2xl bg-emerald-600 hover:bg-emerald-500 font-extrabold text-white text-base shadow-lg shadow-emerald-600/30">
+                Save Sale (बिक्री सेव करें)
               </button>
-              <button type="button" onClick={onClose} className="glass-btn-secondary px-5">
+              <button type="button" onClick={onClose} className="px-5 py-3.5 rounded-2xl bg-slate-800 text-slate-300 font-bold">
                 Cancel
               </button>
             </div>
@@ -158,4 +158,3 @@ export default function MilkSaleModal({ shift, onSave, onClose }: MilkSaleModalP
     </div>
   );
 }
-
