@@ -48,15 +48,15 @@ export default function PassbookModal({ members, purchases, itemSales, onClose }
 
       {/* Main Full Screen Body */}
       <div className="flex-1 overflow-y-auto p-4 space-y-4 bg-slate-900">
-        {/* Search Input */}
-        <div className="relative">
-          <Search className="w-4 h-4 text-slate-400 absolute left-3.5 top-3.5" />
+        {/* Search Input - Perfectly Centered Search Icon */}
+        <div className="relative flex items-center">
+          <Search className="w-4 h-4 text-slate-400 absolute left-3.5 pointer-events-none" />
           <input
             type="text"
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
             placeholder="Search farmer name or code..."
-            className="w-full bg-slate-950 border border-slate-800 rounded-2xl pl-10 pr-4 py-3 text-sm text-white outline-none focus:border-cyan-400"
+            className="w-full bg-slate-950 border border-slate-800 rounded-2xl pl-10 pr-4 py-2.5 text-sm text-white outline-none focus:border-cyan-400"
           />
         </div>
 
