@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { Member, MilkPurchaseRecord, MilkType, ShiftType } from "@/lib/types";
-import { X, CheckCircle, Printer, Calculator, Droplets } from "lucide-react";
+import { X, CheckCircle, Printer, Calculator, Droplets, Sun, Moon } from "lucide-react";
 
 interface MilkPurchaseModalProps {
   members: Member[];
@@ -20,7 +20,6 @@ export default function MilkPurchaseModal({ members, shift, onSave, onClose }: M
   const [lastSavedSlip, setLastSavedSlip] = useState<MilkPurchaseRecord | null>(null);
 
   // Auto calculate rate per liter based on Fat & SNF
-  // Formula: Base Rate + (Fat * 5.2) + (SNF * 2.1)
   const numFat = parseFloat(fat) || 0;
   const numSnf = parseFloat(snf) || 0;
   const numLiters = parseFloat(liters) || 0;
@@ -63,39 +62,50 @@ export default function MilkPurchaseModal({ members, shift, onSave, onClose }: M
 
   return (
     <div className="glass-modal-overlay">
-      <div className="glass-modal-container p-5">
-        {/* Header */}
-        <div className="flex items-center justify-between pb-3 mb-4 border-b border-white/10">
-          <div className="flex items-center gap-2">
-            <div className="p-2 rounded-xl bg-amber-500/20 text-amber-300">
+      <div className="glass-modal-container p-6 sm:p-7">
+        {/* Modal Top Header */}
+        <div className="flex items-center justify-between pb-4 mb-5 border-b border-slate-800">
+          <div className="flex items-center gap-3">
+            <div className="p-2.5 rounded-2xl bg-amber-500/15 border border-amber-500/30 text-amber-400">
               <Droplets className="w-5 h-5" />
             </div>
             <div>
-              <h2 className="text-lg font-bold text-white">दूध खरीद प्रविष्टि (Milk Purchase)</h2>
-              <p className="text-xs text-slate-400">शिफ्ट: {shift === 'MORNING' ? 'सुबह (AM)' : 'शाम (PM)'}</p>
+              <h2 className="text-lg font-extrabold text-white tracking-tight">दूध खरीद प्रविष्टि <span className="text-xs font-semibold text-slate-400">(Milk Purchase)</span></h2>
+              <div className="flex items-center gap-1.5 mt-0.5">
+                <span className="text-[11px] font-bold text-slate-400">शिफ्ट:</span>
+                <span className={`text-[10px] font-extrabold px-2 py-0.5 rounded-md flex items-center gap-1 border ${
+                  shift === 'MORNING' ? 'bg-amber-500/10 text-amber-300 border-amber-500/30' : 'bg-indigo-500/10 text-indigo-300 border-indigo-500/30'
+                }`}>
+                  {shift === 'MORNING' ? <Sun className="w-3 h-3 text-amber-400" /> : <Moon className="w-3 h-3 text-indigo-400" />}
+                  {shift === 'MORNING' ? 'सुबह (AM Shift)' : 'शाम (PM Shift)'}
+                </span>
+              </div>
             </div>
           </div>
-          <button onClick={onClose} className="p-1.5 rounded-lg bg-white/5 hover:bg-white/10 text-slate-300">
+          <button 
+            onClick={onClose} 
+            className="p-2 rounded-xl bg-slate-800/80 hover:bg-slate-700 text-slate-400 hover:text-white transition-colors border border-slate-700/60"
+          >
             <X className="w-5 h-5" />
           </button>
         </div>
 
         {lastSavedSlip ? (
           /* Receipt Slip View */
-          <div className="space-y-4">
-            <div className="p-4 rounded-xl bg-slate-900/90 border border-emerald-500/30 text-center">
-              <CheckCircle className="w-10 h-10 text-emerald-400 mx-auto mb-2 animate-bounce" />
-              <h3 className="text-base font-bold text-emerald-300">दूध प्रविष्टि सफलतापूर्व दर्ज की गई!</h3>
-              <p className="text-xs text-slate-400 mt-0.5">SM MILK Receipt Slip</p>
+          <div className="space-y-5">
+            <div className="p-5 rounded-2xl bg-slate-900 border border-emerald-500/40 text-center shadow-lg">
+              <CheckCircle className="w-12 h-12 text-emerald-400 mx-auto mb-2 animate-bounce" />
+              <h3 className="text-base font-extrabold text-emerald-300">दूध प्रविष्टि सफलतापूर्व दर्ज की गई!</h3>
+              <p className="text-xs text-slate-400 mt-1">SM MILK Official Receipt Slip</p>
 
-              <div className="mt-4 p-3 rounded-lg bg-slate-950 text-left text-xs font-mono space-y-1.5 border border-white/10">
-                <div className="flex justify-between border-b border-white/10 pb-1">
+              <div className="mt-4 p-4 rounded-xl bg-slate-950 text-left text-xs font-mono space-y-2 border border-slate-800">
+                <div className="flex justify-between border-b border-slate-800 pb-2">
                   <span className="text-slate-400">किसान कोड:</span>
                   <span className="text-cyan-300 font-bold">{lastSavedSlip.memberCode} - {lastSavedSlip.memberName}</span>
                 </div>
                 <div className="flex justify-between">
                   <span className="text-slate-400">दूध प्रकार:</span>
-                  <span className="text-amber-300 font-bold">{lastSavedSlip.milkType === 'BUFFALO' ? 'भैंस' : 'गाय'}</span>
+                  <span className="text-amber-300 font-bold">{lastSavedSlip.milkType === 'BUFFALO' ? 'भैंस (Buffalo)' : 'गाय (Cow)'}</span>
                 </div>
                 <div className="flex justify-between">
                   <span className="text-slate-400">मात्रा (Liters):</span>
@@ -109,23 +119,23 @@ export default function MilkPurchaseModal({ members, shift, onSave, onClose }: M
                   <span className="text-slate-400">दर (Rate/Ltr):</span>
                   <span className="text-emerald-300 font-bold">₹{lastSavedSlip.ratePerLiter}</span>
                 </div>
-                <div className="flex justify-between pt-1 border-t border-white/10 text-sm">
+                <div className="flex justify-between pt-2 border-t border-slate-800 text-sm">
                   <span className="text-white font-bold">कुल राशि:</span>
-                  <span className="text-emerald-400 font-extrabold">₹{lastSavedSlip.totalAmount}</span>
+                  <span className="text-emerald-400 font-extrabold text-base">₹{lastSavedSlip.totalAmount}</span>
                 </div>
               </div>
             </div>
 
-            <div className="flex gap-2">
+            <div className="flex gap-3">
               <button
                 onClick={() => setLastSavedSlip(null)}
-                className="glass-btn flex-1 text-sm"
+                className="glass-btn flex-1 text-sm py-3"
               >
                 नई एंट्री करें (+ Add Next)
               </button>
               <button
                 onClick={() => window.print()}
-                className="glass-btn-secondary p-3 rounded-xl hover:bg-white/15"
+                className="glass-btn-secondary p-3 rounded-xl hover:bg-slate-700"
                 title="Print Slip"
               >
                 <Printer className="w-5 h-5 text-white" />
@@ -134,17 +144,19 @@ export default function MilkPurchaseModal({ members, shift, onSave, onClose }: M
           </div>
         ) : (
           /* Input Form */
-          <form onSubmit={handleFormSubmit} className="space-y-3.5">
+          <form onSubmit={handleFormSubmit} className="space-y-4">
             {/* Member Selection */}
             <div>
-              <label className="block text-xs font-semibold text-slate-300 mb-1">किसान चुनें (Select Member)</label>
+              <label className="block text-xs font-bold text-slate-300 mb-1.5 uppercase tracking-wider">
+                1. किसान चुनें (Select Member)
+              </label>
               <select
                 value={selectedMemberCode}
                 onChange={(e) => handleMemberChange(e.target.value)}
                 className="glass-select"
               >
                 {members.map((m) => (
-                  <option key={m.code} value={m.code} className="bg-slate-900 text-white">
+                  <option key={m.code} value={m.code} className="bg-slate-900 text-white py-1">
                     {m.code} - {m.name} ({m.village})
                   </option>
                 ))}
@@ -152,9 +164,11 @@ export default function MilkPurchaseModal({ members, shift, onSave, onClose }: M
             </div>
 
             {/* Milk Type & Liters */}
-            <div className="grid grid-cols-2 gap-3">
+            <div className="grid grid-cols-2 gap-3.5">
               <div>
-                <label className="block text-xs font-semibold text-slate-300 mb-1">दूध का प्रकार</label>
+                <label className="block text-xs font-bold text-slate-300 mb-1.5 uppercase tracking-wider">
+                  2. दूध प्रकार
+                </label>
                 <select
                   value={milkType}
                   onChange={(e) => setMilkType(e.target.value as MilkType)}
@@ -164,8 +178,11 @@ export default function MilkPurchaseModal({ members, shift, onSave, onClose }: M
                   <option value="COW" className="bg-slate-900 text-white">गाय (Cow)</option>
                 </select>
               </div>
+
               <div>
-                <label className="block text-xs font-semibold text-slate-300 mb-1">मात्रा (Liters)</label>
+                <label className="block text-xs font-bold text-slate-300 mb-1.5 uppercase tracking-wider">
+                  3. मात्रा (Liters)
+                </label>
                 <input
                   type="number"
                   step="0.1"
@@ -179,54 +196,68 @@ export default function MilkPurchaseModal({ members, shift, onSave, onClose }: M
             </div>
 
             {/* FAT % & SNF % */}
-            <div className="grid grid-cols-2 gap-3">
+            <div className="grid grid-cols-2 gap-3.5">
               <div>
-                <label className="block text-xs font-semibold text-amber-300 mb-1">FAT % (वसा)</label>
+                <div className="flex items-center justify-between mb-1.5">
+                  <label className="block text-xs font-bold text-amber-300 uppercase tracking-wider">
+                    4. FAT % (वसा)
+                  </label>
+                  <span className="text-[10px] text-amber-400/80 font-bold bg-amber-500/10 px-1.5 py-0.5 rounded border border-amber-500/20">Quality</span>
+                </div>
                 <input
                   type="number"
                   step="0.1"
                   value={fat}
                   onChange={(e) => setFat(e.target.value)}
-                  className="glass-input border-amber-500/30 focus:border-amber-400"
+                  className="glass-input border-amber-500/40 focus:border-amber-400"
                   placeholder="e.g. 6.5"
                   required
                 />
               </div>
+
               <div>
-                <label className="block text-xs font-semibold text-purple-300 mb-1">SNF % (एसएनएफ)</label>
+                <div className="flex items-center justify-between mb-1.5">
+                  <label className="block text-xs font-bold text-purple-300 uppercase tracking-wider">
+                    5. SNF % (एसएनएफ)
+                  </label>
+                  <span className="text-[10px] text-purple-400/80 font-bold bg-purple-500/10 px-1.5 py-0.5 rounded border border-purple-500/20">Matrix</span>
+                </div>
                 <input
                   type="number"
                   step="0.1"
                   value={snf}
                   onChange={(e) => setSnf(e.target.value)}
-                  className="glass-input border-purple-500/30 focus:border-purple-400"
+                  className="glass-input border-purple-500/40 focus:border-purple-400"
                   placeholder="e.g. 8.8"
                   required
                 />
               </div>
             </div>
 
-            {/* Live Calculation Display Box */}
-            <div className="p-3 rounded-xl bg-slate-950/80 border border-cyan-500/30 flex items-center justify-between">
-              <div className="flex items-center gap-2">
-                <Calculator className="w-5 h-5 text-cyan-400" />
+            {/* Pro Calculation Summary Card */}
+            <div className="p-4 rounded-2xl bg-gradient-to-r from-slate-900 via-slate-900 to-slate-950 border border-cyan-500/30 shadow-md flex items-center justify-between">
+              <div className="flex items-center gap-3">
+                <div className="p-2.5 rounded-xl bg-cyan-500/15 text-cyan-400 border border-cyan-500/30">
+                  <Calculator className="w-5 h-5" />
+                </div>
                 <div>
-                  <span className="text-xs text-slate-400 block">अनुमानित दर (Rate/Ltr)</span>
-                  <span className="text-sm font-bold text-cyan-300">₹{calculatedRate.toFixed(2)} / Ltr</span>
+                  <span className="text-[11px] font-bold text-slate-400 block uppercase tracking-wider">दर (Rate/Ltr)</span>
+                  <span className="text-sm font-extrabold text-cyan-300 font-mono">₹{calculatedRate.toFixed(2)} <span className="text-xs text-slate-400 font-sans">/ Ltr</span></span>
                 </div>
               </div>
+              
               <div className="text-right">
-                <span className="text-xs text-slate-400 block">कुल राशि (Total)</span>
-                <span className="text-lg font-black text-emerald-400">₹{totalAmount.toFixed(2)}</span>
+                <span className="text-[11px] font-bold text-slate-400 block uppercase tracking-wider">कुल राशि (Total)</span>
+                <span className="text-xl font-black text-emerald-400 font-mono tracking-tight">₹{totalAmount.toFixed(2)}</span>
               </div>
             </div>
 
-            {/* Buttons */}
-            <div className="pt-2 flex gap-2">
-              <button type="submit" className="glass-btn flex-1">
+            {/* Form Buttons */}
+            <div className="pt-2 flex gap-3">
+              <button type="submit" className="glass-btn flex-1 py-3.5 text-base">
                 दूध जमा करें (Save Entry)
               </button>
-              <button type="button" onClick={onClose} className="glass-btn-secondary">
+              <button type="button" onClick={onClose} className="glass-btn-secondary px-5">
                 रद्द करें
               </button>
             </div>
@@ -236,3 +267,4 @@ export default function MilkPurchaseModal({ members, shift, onSave, onClose }: M
     </div>
   );
 }
+

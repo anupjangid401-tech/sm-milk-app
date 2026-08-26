@@ -2,25 +2,25 @@ import type { Metadata } from "next";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: "SM MILK - Dairy Management Application",
-  description: "SM MILK Dairy Management Application - Milk Purchase, Milk Sale, Customer Passbook & Rate Charts.",
+  title: "SM MILK — Smart Dairy Collection Command Center",
+  description:
+    "SM MILK Enterprise Dairy Management System — Milk Purchase, Milk Sale, Member Passbook & Rate Charts.",
 };
 
 export default function RootLayout({
   children,
-}: Readonly<{
-  children: React.ReactNode;
-}>) {
+}: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html lang="en">
+    <html lang="hi">
       <head>
         <link rel="manifest" href="/manifest.json" />
-        <meta name="theme-color" content="#0b1329" />
-        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
+        <meta name="theme-color" content="#070c17" />
+        <meta
+          name="viewport"
+          content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"
+        />
       </head>
-      <body>
-        {children}
-      </body>
+      <body>{children}</body>
     </html>
   );
 }

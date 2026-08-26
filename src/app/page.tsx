@@ -1,10 +1,20 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import MilkHeader from "@/components/MilkHeader";
-import QuickStats from "@/components/QuickStats";
+import { RefreshCw } from "lucide-react";
+
+// Layout
+import Sidebar from "@/components/layout/Sidebar";
+import TopBar from "@/components/layout/TopBar";
+
+// Dashboard components
+import KPICards from "@/components/dashboard/KPICards";
+import CollectionChart from "@/components/dashboard/CollectionChart";
+import ShiftBarChart from "@/components/dashboard/ShiftBarChart";
+import RecentTable from "@/components/dashboard/RecentTable";
 import ModuleGrid from "@/components/ModuleGrid";
 
+// Modals (all preserved)
 import MilkPurchaseModal from "@/components/modals/MilkPurchaseModal";
 import MilkSaleModal from "@/components/modals/MilkSaleModal";
 import MemberEntryModal from "@/components/modals/MemberEntryModal";
@@ -15,13 +25,24 @@ import ReportsModal from "@/components/modals/ReportsModal";
 import HelpModal from "@/components/modals/HelpModal";
 import SettingsModal from "@/components/modals/SettingsModal";
 
-import { Member, MilkPurchaseRecord, MilkSaleRecord, ItemSaleRecord, ShiftType } from "@/lib/types";
-import { INITIAL_MEMBERS, INITIAL_PURCHASES, INITIAL_SALES, INITIAL_ITEM_SALES } from "@/lib/initialData";
-import { Smartphone, RefreshCw, Sparkles, Monitor } from "lucide-react";
+// Types & initial data
+import {
+  Member,
+  MilkPurchaseRecord,
+  MilkSaleRecord,
+  ItemSaleRecord,
+  ShiftType,
+} from "@/lib/types";
+import {
+  INITIAL_MEMBERS,
+  INITIAL_PURCHASES,
+  INITIAL_SALES,
+  INITIAL_ITEM_SALES,
+} from "@/lib/initialData";
 
 export default function Home() {
   const [shift, setShift] = useState<ShiftType>("MORNING");
-  const [viewMode, setViewMode] = useState<'desktop' | 'mobile'>('desktop');
+  const [sidebarCollapsed, setSidebarCollapsed] = useState(false);
   const [activeModal, setActiveModal] = useState<string | null>(null);
 
   const [members, setMembers] = useState<Member[]>(INITIAL_MEMBERS);
@@ -29,24 +50,23 @@ export default function Home() {
   const [sales, setSales] = useState<MilkSaleRecord[]>(INITIAL_SALES);
   const [itemSales, setItemSales] = useState<ItemSaleRecord[]>(INITIAL_ITEM_SALES);
 
-  // Load state from localStorage on client load
+  // Load from localStorage on mount
   useEffect(() => {
     try {
-      const savedMembers = localStorage.getItem("sm_members");
+      const savedMembers   = localStorage.getItem("sm_members");
       const savedPurchases = localStorage.getItem("sm_purchases");
-      const savedSales = localStorage.getItem("sm_sales");
+      const savedSales     = localStorage.getItem("sm_sales");
       const savedItemSales = localStorage.getItem("sm_item_sales");
-
-      if (savedMembers) setMembers(JSON.parse(savedMembers));
+      if (savedMembers)   setMembers(JSON.parse(savedMembers));
       if (savedPurchases) setPurchases(JSON.parse(savedPurchases));
-      if (savedSales) setSales(JSON.parse(savedSales));
+      if (savedSales)     setSales(JSON.parse(savedSales));
       if (savedItemSales) setItemSales(JSON.parse(savedItemSales));
     } catch (err) {
       console.error("Failed to load local state", err);
     }
   }, []);
 
-  // Save to localStorage when state changes
+  // Persist helpers
   const saveMembers = (newMembers: Member[]) => {
     setMembers(newMembers);
     localStorage.setItem("sm_members", JSON.stringify(newMembers));
@@ -70,88 +90,94 @@ export default function Home() {
     localStorage.setItem("sm_item_sales", JSON.stringify(updated));
   };
 
-  const handleToggleShift = () => {
-    setShift((prev) => (prev === "MORNING" ? "EVENING" : "MORNING"));
-  };
-
-  const handleToggleViewMode = () => {
-    setViewMode((prev) => (prev === "desktop" ? "mobile" : "desktop"));
-  };
+  // Today's purchases only (for KPI)
+  const todayStr = new Date().toISOString().split("T")[0];
+  const todayPurchases = purchases.filter((p) => p.date === todayStr);
 
   return (
-    <div className="min-h-screen bg-slate-950 text-slate-100 flex flex-col justify-center items-center py-0 sm:py-4">
-      {/* Container Wrapper: Full width desktop or phone frame based on viewMode */}
-      <div
-        className={`w-full transition-all duration-500 ease-in-out relative flex flex-col ${
-          viewMode === 'mobile'
-            ? 'max-w-[480px] min-h-screen sm:min-h-[850px] sm:h-[850px] sm:rounded-[36px] sm:overflow-hidden sm:border sm:border-white/20 sm:shadow-2xl sm:shadow-cyan-500/10'
-            : 'max-w-6xl min-h-screen sm:min-h-[900px] sm:rounded-[28px] sm:overflow-hidden sm:border sm:border-white/15 sm:shadow-2xl'
-        }`}
-      >
-        {/* App Header */}
-        <MilkHeader
-          shift={shift}
-          viewMode={viewMode}
-          onToggleShift={handleToggleShift}
-          onToggleViewMode={handleToggleViewMode}
+    <div className="app-shell">
+      {/* Sidebar */}
+      <Sidebar
+        collapsed={sidebarCollapsed}
+        onToggle={() => setSidebarCollapsed((v) => !v)}
+        onOpenSettings={() => setActiveModal("sm-settings")}
+      />
+
+      {/* Main area */}
+      <div className="main-area">
+        {/* TopBar */}
+        <TopBar
+          currentShift={shift}
+          onToggleShift={() => setShift((s) => (s === "MORNING" ? "EVENING" : "MORNING"))}
           onOpenSettings={() => setActiveModal("sm-settings")}
+          onToggleSidebar={() => setSidebarCollapsed((v) => !v)}
+          purchaseCount={todayPurchases.length}
         />
 
-        {/* Dashboard Main Content Area */}
-        <div className="flex-1 overflow-y-auto no-scrollbar pb-16">
-          {/* Quick Metrics Cards */}
-          <QuickStats purchases={purchases} memberCount={members.length} />
+        {/* Dashboard content */}
+        <main className="page-content">
+          {/* KPI Cards */}
+          <KPICards purchases={todayPurchases} memberCount={members.length} />
 
-          {/* Section Header */}
-          <div className="px-4 py-2 flex items-center justify-between">
-            <div className="flex items-center gap-2">
-              <Sparkles className="w-4 h-4 text-cyan-400" />
-              <h2 className="text-xs font-extrabold uppercase tracking-widest text-slate-300">
-                डेयरी सेवाएं एवं नियंत्रण (Services & Operations)
-              </h2>
-            </div>
-            <span className="text-[10px] font-bold text-cyan-300 bg-cyan-500/15 px-2.5 py-1 rounded-full border border-cyan-500/30">
-              12 Active Modules
-            </span>
+          {/* Charts Row */}
+          <div className="charts-grid">
+            <CollectionChart purchases={purchases} />
+            <ShiftBarChart purchases={todayPurchases} />
           </div>
 
-          {/* 12 Luxury Dashboard Module Cards */}
+          {/* Recent Entries Table */}
+          <RecentTable
+            purchases={purchases}
+            onOpenPurchase={() => setActiveModal("milk-purchase")}
+          />
+
+          {/* Operations Module Grid */}
           <ModuleGrid onSelectModule={(id) => setActiveModal(id)} />
-        </div>
 
-        {/* Bottom App Status Bar */}
-        <div className="glass-nav absolute bottom-0 left-0 right-0 py-2.5 px-4 flex items-center justify-between border-t border-white/10 text-xs backdrop-blur-2xl">
-          <div className="flex items-center gap-2 text-slate-300">
-            <Smartphone className="w-4 h-4 text-cyan-400" />
-            <span className="text-[11px] font-bold text-slate-200">SM MILK Mobile ERP v3.5 Pro</span>
-          </div>
-
-          <div className="flex items-center gap-2">
-            <button
-              onClick={handleToggleViewMode}
-              className="hidden sm:flex items-center gap-1 text-[10px] text-cyan-300 bg-cyan-500/15 hover:bg-cyan-500/25 px-2.5 py-1 rounded-lg border border-cyan-500/30"
-            >
-              {viewMode === 'mobile' ? <Monitor className="w-3 h-3" /> : <Smartphone className="w-3 h-3" />}
-              <span>{viewMode === 'mobile' ? 'Desktop View' : 'Phone View'}</span>
-            </button>
-
+          {/* Footer reset */}
+          <div
+            style={{
+              display: "flex",
+              justifyContent: "space-between",
+              alignItems: "center",
+              padding: "12px 0",
+              borderTop: "1px solid var(--border-muted)",
+              fontSize: 11,
+              color: "var(--text-dim)",
+            }}
+          >
+            <span>SM MILK ERP v3.5 Pro — स्मार्ट डेयरी कलेक्शन मैनेजमेंट</span>
             <button
               onClick={() => {
-                if (confirm("क्या आप डेमो डेटा रीसेट करना चाहते हैं?")) {
+                if (confirm("क्या आप डेमो डेटा रीसेट करना चाहते हैं? All data will be cleared.")) {
                   localStorage.clear();
                   window.location.reload();
                 }
               }}
-              className="flex items-center gap-1 text-[10px] text-slate-400 hover:text-white bg-white/5 hover:bg-white/10 px-2.5 py-1 rounded-lg border border-white/10"
+              style={{
+                display: "flex",
+                alignItems: "center",
+                gap: 5,
+                cursor: "pointer",
+                background: "none",
+                border: "1px solid var(--border)",
+                borderRadius: "var(--radius-sm)",
+                padding: "4px 10px",
+                color: "var(--text-dim)",
+                fontSize: 11,
+                transition: "all 0.15s ease",
+              }}
+              onMouseOver={(e) => (e.currentTarget.style.color = "var(--red)")}
+              onMouseOut={(e) => (e.currentTarget.style.color = "var(--text-dim)")}
             >
-              <RefreshCw className="w-3 h-3 text-slate-400" />
-              <span>Reset Data</span>
+              <RefreshCw size={11} />
+              Reset Data
             </button>
           </div>
-        </div>
+        </main>
       </div>
 
-      {/* MODAL DIALOGS */}
+      {/* ── ALL MODALS (fully preserved) ── */}
       {activeModal === "milk-purchase" && (
         <MilkPurchaseModal
           members={members}
