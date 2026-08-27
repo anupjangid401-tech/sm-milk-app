@@ -2,7 +2,15 @@
 
 import { useState } from "react";
 import { Member, MilkType } from "@/lib/types";
-import { X, UserPlus, CheckCircle, Users } from "lucide-react";
+import {
+  X,
+  Calendar,
+  User,
+  Search,
+  Send,
+  ExternalLink,
+  Plus
+} from "lucide-react";
 
 interface MemberEntryModalProps {
   members: Member[];
@@ -11,147 +19,127 @@ interface MemberEntryModalProps {
 }
 
 export default function MemberEntryModal({ members, onAddMember, onClose }: MemberEntryModalProps) {
-  const nextCode = (Math.max(...members.map((m) => parseInt(m.code) || 100), 100) + 1).toString();
-
-  const [code, setCode] = useState(nextCode);
-  const [name, setName] = useState("");
-  const [phone, setPhone] = useState("");
-  const [village, setVillage] = useState("Surajpura");
+  const [code, setCode] = useState<string>("");
+  const [name, setName] = useState<string>("");
   const [milkType, setMilkType] = useState<MilkType>("BUFFALO");
-  const [isSuccess, setIsSuccess] = useState(false);
+  const [phone, setPhone] = useState<string>("");
+  const [activeField, setActiveField] = useState<"code" | "name" | "phone">("code");
 
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    if (!name.trim()) return;
+  const handleKeypadPress = (val: string) => {
+    let currentVal = activeField === "code" ? code : activeField === "phone" ? phone : name;
+    if (val === "ERASE") currentVal = currentVal.slice(0, -1);
+    else currentVal += val;
 
-    const newMember: Member = {
-      id: "mem-" + Date.now(),
-      code: code.trim(),
-      name: name.trim(),
-      phone: phone.trim() || "N/A",
-      village: village.trim(),
-      milkType: milkType,
-      balance: 0,
-    };
-
-    onAddMember(newMember);
-    setIsSuccess(true);
+    if (activeField === "code") setCode(currentVal);
+    else if (activeField === "phone") setPhone(currentVal);
   };
 
   return (
-    <div className="fixed inset-0 z-50 w-full h-full bg-slate-950 text-slate-100 flex flex-col overflow-hidden">
-      {/* Top Mobile Header */}
-      <div className="h-12 bg-sky-900 text-white px-4 flex items-center justify-between shadow-md border-b border-sky-800 flex-shrink-0">
-        <div className="flex items-center gap-2">
-          <UserPlus className="w-5 h-5 text-cyan-300" />
-          <span className="font-extrabold text-sm tracking-tight">SM MILK / Member Entry</span>
-        </div>
-        <button
-          onClick={onClose}
-          className="p-1.5 rounded-lg bg-sky-950 hover:bg-red-600 text-white transition-colors"
-        >
-          <X className="w-5 h-5" />
-        </button>
+    <div className="fixed inset-0 z-50 w-full h-full bg-white text-slate-900 flex flex-col overflow-hidden font-sans">
+      {/* ── HEADER ── */}
+      <div className="h-14 bg-[#4682b4] text-white px-4 flex items-center shadow-md flex-shrink-0">
+        <span className="font-bold text-lg">SM MILK/Member Entry</span>
       </div>
 
-      {/* Main Content */}
-      <div className="flex-1 overflow-y-auto p-4 space-y-4 bg-slate-900">
-        {isSuccess ? (
-          <div className="text-center py-10 space-y-4 bg-slate-950 p-6 rounded-3xl border border-slate-800 shadow-xl">
-            <CheckCircle className="w-14 h-14 text-emerald-400 mx-auto animate-bounce" />
-            <h3 className="text-lg font-black text-white">Farmer Registered Successfully!</h3>
-            <p className="text-sm text-slate-400">
-              Code: <strong className="text-cyan-300">#{code}</strong> | Name: <strong className="text-white">{name}</strong>
-            </p>
-            <button onClick={onClose} className="w-full py-3.5 rounded-2xl bg-gradient-to-r from-sky-600 to-blue-700 font-extrabold text-white text-base shadow-lg">
-              OK (Done)
-            </button>
+      <div className="flex-1 overflow-y-auto p-2 bg-[#f4f7f6]">
+        {/* ROW 1: Status */}
+        <div className="grid grid-cols-3 gap-2 mb-2">
+          <div className="border border-gray-400 bg-white rounded-md p-1 flex items-center justify-center font-bold text-lg">New</div>
+          <div className="border border-gray-400 bg-white rounded-md p-1 flex items-center justify-between px-2 font-bold text-sm">
+            25-08-2026 <Calendar className="w-5 h-5 text-red-500" />
           </div>
-        ) : (
-          <form onSubmit={handleSubmit} className="space-y-4 bg-slate-950 p-5 rounded-3xl border border-slate-800 shadow-xl">
-            <div className="grid grid-cols-2 gap-3">
-              <div>
-                <label className="block text-xs font-bold text-slate-300 mb-1.5 uppercase tracking-wider">
-                  1. Member Code
-                </label>
-                <input
-                  type="text"
-                  value={code}
-                  onChange={(e) => setCode(e.target.value)}
-                  className="w-full bg-slate-900 border border-slate-800 rounded-xl p-3 text-cyan-300 font-bold font-mono outline-none"
-                  required
-                />
-              </div>
-              <div>
-                <label className="block text-xs font-bold text-slate-300 mb-1.5 uppercase tracking-wider">
-                  2. Default Milk
-                </label>
-                <select
-                  value={milkType}
-                  onChange={(e) => setMilkType(e.target.value as MilkType)}
-                  className="w-full bg-slate-900 border border-slate-800 rounded-xl p-3 text-white text-sm outline-none"
-                >
-                  <option value="BUFFALO">Buffalo</option>
-                  <option value="COW">Cow</option>
-                </select>
-              </div>
-            </div>
+          <button className="border border-gray-400 bg-white rounded-md p-1 font-bold text-sm">Member</button>
+        </div>
 
-            <div>
-              <label className="block text-xs font-bold text-slate-300 mb-1.5 uppercase tracking-wider">
-                3. Farmer Full Name
-              </label>
-              <input
-                type="text"
-                value={name}
-                onChange={(e) => setName(e.target.value)}
-                placeholder="e.g. Ramprasad Jangid"
-                className="w-full bg-slate-900 border border-slate-800 rounded-xl p-3 text-white text-sm outline-none focus:border-cyan-400"
-                required
-              />
-            </div>
+        {/* ROW 2: Code & Milk Type */}
+        <div className="flex gap-2 mb-2">
+          <div className="flex-1 relative flex items-center border-b-2 border-pink-500 pt-4 pb-1" onClick={() => setActiveField("code")}>
+            <User className="w-6 h-6 text-blue-400 mr-2" />
+            <div className="absolute top-0 left-8 text-[10px] text-pink-500 font-bold">Member Code</div>
+            <span className="text-xl font-bold min-h-[28px]">{code}</span>
+          </div>
+          <button className="w-20 border border-gray-400 rounded-xl bg-white font-bold text-sm">
+            {milkType === "BUFFALO" ? "Buffalo" : "Cow"}
+          </button>
+        </div>
 
-            <div className="grid grid-cols-2 gap-3">
-              <div>
-                <label className="block text-xs font-bold text-slate-300 mb-1.5 uppercase tracking-wider">
-                  4. Mobile Number
-                </label>
-                <input
-                  type="tel"
-                  value={phone}
-                  onChange={(e) => setPhone(e.target.value)}
-                  placeholder="98290XXXXX"
-                  className="w-full bg-slate-900 border border-slate-800 rounded-xl p-3 text-white text-sm font-mono outline-none"
-                />
-              </div>
-              <div>
-                <label className="block text-xs font-bold text-slate-300 mb-1.5 uppercase tracking-wider">
-                  5. Village Name
-                </label>
-                <input
-                  type="text"
-                  value={village}
-                  onChange={(e) => setVillage(e.target.value)}
-                  className="w-full bg-slate-900 border border-slate-800 rounded-xl p-3 text-white text-sm outline-none"
-                />
-              </div>
-            </div>
+        {/* ROW 3: Name Entry */}
+        <div className="border border-gray-400 bg-white rounded-sm overflow-hidden mb-2">
+          <div className="bg-green-600 text-white text-[10px] text-center font-bold py-0.5">Full Name(English)</div>
+          <input
+            type="text"
+            value={name}
+            onChange={(e) => setName(e.target.value)}
+            className="w-full p-2 outline-none font-bold text-center"
+            placeholder="ENTER FARMER NAME"
+            onClick={() => setActiveField("name")}
+          />
+        </div>
 
-            <div className="pt-2 flex gap-3">
-              <button type="submit" className="flex-1 py-3.5 rounded-2xl bg-gradient-to-r from-sky-600 to-blue-700 hover:opacity-90 font-extrabold text-white text-base shadow-lg">
-                Save Member
-              </button>
-              <button type="button" onClick={onClose} className="px-5 py-3.5 rounded-2xl bg-slate-800 text-slate-300 font-bold">
-                Cancel
-              </button>
-            </div>
+        {/* ROW 4: Mobile Entry */}
+        <div className="flex items-center border-b-2 border-gray-300 pb-1 mb-4" onClick={() => setActiveField("phone")}>
+          <div className="w-8 h-8 bg-blue-400 rounded-full flex items-center justify-center mr-2"><User className="w-5 h-5 text-white" /></div>
+          <span className="text-3xl font-bold text-gray-500 mr-2 italic">Mob.</span>
+          <span className="text-3xl font-bold">{phone}</span>
+        </div>
 
-            <div className="pt-3 border-t border-slate-800 text-center text-xs text-slate-400 flex items-center justify-center gap-1.5">
-              <Users className="w-4 h-4 text-cyan-400" />
-              <span>Total Registered Farmers: <strong className="text-white">{members.length}</strong></span>
+        {/* DATA TABLE */}
+        <div className="border border-[#4682b4] mb-4">
+          <table className="w-full text-[10px] text-center">
+            <thead className="bg-[#4682b4] text-white">
+              <tr>
+                <th className="p-1 border-r border-white">CODE</th>
+                <th className="p-1 border-r border-white">NAME</th>
+                <th className="p-1 border-r border-white">MILK</th>
+                <th className="p-1">MOBILE</th>
+              </tr>
+            </thead>
+            <tbody className="bg-white">
+              {members.slice(0, 3).map(m => (
+                <tr key={m.id} className="border-b">
+                  <td className="p-1 font-bold">{m.code}</td>
+                  <td className="p-1">{m.name}</td>
+                  <td className="p-1">{m.milkType === 'BUFFALO' ? 'B' : 'C'}</td>
+                  <td className="p-1">{m.phone}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+
+        {/* KEYPAD AREA */}
+        <div className="flex justify-end gap-4">
+          <div className="flex flex-col gap-4">
+             <div className="w-8 h-8 bg-blue-700 rounded-full flex items-center justify-center"><Plus className="w-6 h-6 text-white" /></div>
+             <div className="w-8 h-8 bg-red-500 rounded-full flex items-center justify-center" onClick={onClose}><X className="w-6 h-6 text-white" /></div>
+             <ExternalLink className="w-8 h-8 text-gray-400" />
+          </div>
+
+          <div className="w-64 bg-[#2c5e7c] p-1 rounded-xl shadow-inner">
+            <div className="grid grid-cols-4 gap-1">
+              {[7, 8, 9].map(n => <button key={n} onClick={() => handleKeypadPress(n.toString())} className="h-12 bg-[#4682b4] text-white font-bold rounded-lg border border-slate-900">{n}</button>)}
+              <button onClick={() => handleKeypadPress("ERASE")} className="h-12 bg-[#4682b4] text-white text-[10px] font-bold rounded-lg border border-slate-900">ERASE</button>
+              {[4, 5, 6].map(n => <button key={n} onClick={() => handleKeypadPress(n.toString())} className="h-12 bg-[#4682b4] text-white font-bold rounded-lg border border-slate-900">{n}</button>)}
+              <button className="row-span-2 bg-[#4682b4] text-white font-bold rounded-lg border border-slate-900">SAVE</button>
+              {[1, 2, 3].map(n => <button key={n} onClick={() => handleKeypadPress(n.toString())} className="h-12 bg-[#4682b4] text-white font-bold rounded-lg border border-slate-900">{n}</button>)}
+              <button className="h-12 bg-[#4682b4] text-white text-[10px] font-bold rounded-lg border border-slate-900">PREV</button>
+              <button onClick={() => handleKeypadPress("0")} className="h-12 bg-[#4682b4] text-white font-bold rounded-lg border border-slate-900">0</button>
+              <button className="h-12 bg-[#4682b4] text-white font-bold rounded-lg border border-slate-900">.</button>
+              <button className="h-12 bg-[#4682b4] text-white text-[10px] font-bold rounded-lg border border-slate-900">NEXT</button>
             </div>
-          </form>
-        )}
+          </div>
+        </div>
+      </div>
+
+      {/* FOOTER */}
+      <div className="h-10 bg-[#4682b4] flex items-center border-t border-white">
+        <div className="w-12 h-full bg-white flex items-center justify-center border-r border-gray-400">
+          <Search className="w-6 h-6 text-blue-400" />
+        </div>
+        <div className="flex-1 grid grid-cols-2 h-full text-[11px] font-bold text-center">
+          <div className="flex items-center justify-center border-r border-gray-400 bg-blue-100 uppercase">Total Members</div>
+          <div className="flex items-center justify-center bg-blue-200">{members.length}</div>
+        </div>
       </div>
     </div>
   );

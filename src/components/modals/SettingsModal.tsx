@@ -1,55 +1,61 @@
 "use client";
 
-import { useState } from "react";
-import { X, Settings, Printer, Scale, Sliders, FileText, CheckCircle, Wifi, Bluetooth } from "lucide-react";
+import { useState, useRef } from "react";
+import { X, Settings, Database, Download, Upload, FileSpreadsheet, HardDrive, CheckCircle, RefreshCw, Wifi, Bluetooth } from "lucide-react";
+import { StorageEngine } from "@/lib/storageEngine";
 
 interface SettingsModalProps {
   onClose: () => void;
 }
 
 export default function SettingsModal({ onClose }: SettingsModalProps) {
-  const [activeTab, setActiveTab] = useState<'Slip' | 'Fat' | 'Weight' | 'Printer'>('Slip');
+  const [activeTab, setActiveTab] = useState<'Database' | 'Scale' | 'Printer'>('Database');
+  const [statusMsg, setStatusMsg] = useState<string | null>(null);
+  const fileInputRef = useRef<HTMLInputElement>(null);
 
-  // Slip Settings state
-  const [printLang, setPrintLang] = useState('English');
-  const [rollType, setRollType] = useState('Big');
-  const [skipLine, setSkipLine] = useState('4');
-  const [amountRound, setAmountRound] = useState('10');
-  const [smsSlip, setSmsSlip] = useState(true);
-  const [logoOnSlip, setLogoOnSlip] = useState(true);
-  const [autoCutter, setAutoCutter] = useState(false);
+  const stats = StorageEngine.loadAll();
+  const dbSizeKB = StorageEngine.getStorageSizeKB();
 
-  // Fat Settings state
-  const [fatChartType, setFatChartType] = useState('FAT SNF CHART RAJSTHAN');
-  const [maxFatCow, setMaxFatCow] = useState('10');
-  const [maxFatBuff, setMaxFatBuff] = useState('10');
-  const [avgFatDays, setAvgFatDays] = useState('5');
+  // Export JSON Backup
+  const handleExportBackup = () => {
+    StorageEngine.downloadBackupFile();
+    setStatusMsg("Backup file downloaded successfully! (Save it in phone storage)");
+  };
 
-  // Weight Settings state
-  const [weightType, setWeightType] = useState('VDC(WIFI)');
-  const [fatType, setFatType] = useState('Normal');
-  const [cutterTime, setCutterTime] = useState('0.5');
+  // Export CSV for Excel
+  const handleExportCSV = () => {
+    StorageEngine.downloadPurchasesCSV();
+    setStatusMsg("Excel CSV file exported successfully!");
+  };
 
-  // Printer Settings state
-  const [btPrinterMac, setBtPrinterMac] = useState('C8:47:8C:33:B5:41');
-  const [printSlip, setPrintSlip] = useState(true);
-  const [usbSlipPrinting, setUsbSlipPrinting] = useState(true);
-  const [englishNumber, setEnglishNumber] = useState(true);
+  // Handle Restore JSON File
+  const handleRestoreFile = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
 
-  const [isSaved, setIsSaved] = useState(false);
-
-  const handleSave = (e: React.FormEvent) => {
-    e.preventDefault();
-    setIsSaved(true);
+    const reader = new FileReader();
+    reader.onload = (event) => {
+      const content = event.target?.result as string;
+      if (content) {
+        const success = StorageEngine.restoreFromJSON(content);
+        if (success) {
+          alert("Database restored successfully! The app will reload now.");
+          window.location.reload();
+        } else {
+          alert("Invalid backup file format! Please upload a valid SM MILK .json backup.");
+        }
+      }
+    };
+    reader.readAsText(file);
   };
 
   return (
     <div className="fixed inset-0 z-50 w-full h-full bg-slate-950 text-slate-100 flex flex-col overflow-hidden">
-      {/* Top Mobile Bar */}
+      {/* Top Header */}
       <div className="h-12 bg-sky-900 text-white px-4 flex items-center justify-between shadow-md border-b border-sky-800 flex-shrink-0">
         <div className="flex items-center gap-2">
           <Settings className="w-5 h-5 text-cyan-300" />
-          <span className="font-extrabold text-sm tracking-tight">SM MILK / Settings (ऐप सेटिंग्स)</span>
+          <span className="font-extrabold text-sm tracking-tight">SM MILK / Enterprise Settings</span>
         </div>
         <button
           onClick={onClose}
@@ -59,253 +65,176 @@ export default function SettingsModal({ onClose }: SettingsModalProps) {
         </button>
       </div>
 
-      {/* Settings Navigation Tabs */}
-      <div className="flex gap-1 bg-slate-900 p-2 border-b border-slate-800 text-xs overflow-x-auto no-scrollbar flex-shrink-0">
-        {(['Slip', 'Fat', 'Weight', 'Printer'] as const).map((tab) => (
-          <button
-            key={tab}
-            onClick={() => setActiveTab(tab)}
-            className={`flex-1 py-2 px-3 rounded-xl font-bold text-center transition-all ${
-              activeTab === tab
-                ? 'bg-sky-700 text-white border border-cyan-400/50 shadow-md'
-                : 'text-slate-400 bg-slate-950 border border-slate-800 hover:text-white'
-            }`}
-          >
-            {tab === 'Slip' && 'Slip (रसीद)'}
-            {tab === 'Fat' && 'Fat (रेट/चार्ट)'}
-            {tab === 'Weight' && 'Weight (कांटा)'}
-            {tab === 'Printer' && 'Printer (प्रिंटर)'}
-          </button>
-        ))}
+      {/* Tabs */}
+      <div className="flex gap-1 bg-slate-900 p-2 border-b border-slate-800 text-xs flex-shrink-0">
+        <button
+          onClick={() => setActiveTab('Database')}
+          className={`flex-1 py-2 px-3 rounded-xl font-black text-center transition-all ${
+            activeTab === 'Database'
+              ? 'bg-sky-600 text-white shadow-md'
+              : 'text-slate-400 bg-slate-950 border border-slate-800'
+          }`}
+        >
+          Database & Backup
+        </button>
+        <button
+          onClick={() => setActiveTab('Scale')}
+          className={`flex-1 py-2 px-3 rounded-xl font-black text-center transition-all ${
+            activeTab === 'Scale'
+              ? 'bg-sky-600 text-white shadow-md'
+              : 'text-slate-400 bg-slate-950 border border-slate-800'
+          }`}
+        >
+          Weight Scale
+        </button>
+        <button
+          onClick={() => setActiveTab('Printer')}
+          className={`flex-1 py-2 px-3 rounded-xl font-black text-center transition-all ${
+            activeTab === 'Printer'
+              ? 'bg-sky-600 text-white shadow-md'
+              : 'text-slate-400 bg-slate-950 border border-slate-800'
+          }`}
+        >
+          BT Printer
+        </button>
       </div>
 
-      {/* Main Full Screen Body */}
+      {/* Body */}
       <div className="flex-1 overflow-y-auto p-4 space-y-4 bg-slate-900">
-        {isSaved ? (
-          <div className="text-center py-10 space-y-4 bg-slate-950 p-6 rounded-3xl border border-slate-800 shadow-xl">
-            <CheckCircle className="w-14 h-14 text-emerald-400 mx-auto animate-bounce" />
-            <h3 className="text-lg font-black text-white">Settings Saved Successfully!</h3>
-            <p className="text-sm text-slate-400">All printer, scale, and slip parameters have been saved.</p>
-            <button onClick={onClose} className="w-full py-3.5 rounded-2xl bg-gradient-to-r from-sky-600 to-blue-700 font-extrabold text-white text-base shadow-lg">
-              OK (Done)
-            </button>
+        {statusMsg && (
+          <div className="p-3 bg-emerald-500/20 border border-emerald-500/40 rounded-xl text-emerald-300 text-xs font-bold flex items-center gap-2">
+            <CheckCircle className="w-4 h-4 flex-shrink-0" />
+            <span>{statusMsg}</span>
           </div>
-        ) : (
-          <form onSubmit={handleSave} className="space-y-4 bg-slate-950 p-5 rounded-3xl border border-slate-800 shadow-xl">
-            {/* TAB 1: SLIP SETTINGS */}
-            {activeTab === 'Slip' && (
-              <div className="space-y-4 text-xs">
-                <div className="grid grid-cols-2 gap-3">
-                  <div>
-                    <label className="block text-slate-300 mb-1.5 font-bold uppercase tracking-wider">Print Language</label>
-                    <select
-                      value={printLang}
-                      onChange={(e) => setPrintLang(e.target.value)}
-                      className="w-full bg-slate-900 border border-slate-800 rounded-xl p-3 text-white text-sm outline-none"
-                    >
-                      <option value="English">English</option>
-                      <option value="Hindi">Hindi (हिंदी)</option>
-                    </select>
-                  </div>
-                  <div>
-                    <label className="block text-slate-300 mb-1.5 font-bold uppercase tracking-wider">Roll Size</label>
-                    <select
-                      value={rollType}
-                      onChange={(e) => setRollType(e.target.value)}
-                      className="w-full bg-slate-900 border border-slate-800 rounded-xl p-3 text-white text-sm outline-none"
-                    >
-                      <option value="Big">Big Roll (3 inch)</option>
-                      <option value="Small">Small Roll (2 inch)</option>
-                    </select>
-                  </div>
-                </div>
+        )}
 
-                <div className="grid grid-cols-2 gap-3">
-                  <div>
-                    <label className="block text-slate-300 mb-1.5 font-bold uppercase tracking-wider">Skip Line</label>
-                    <input
-                      type="number"
-                      value={skipLine}
-                      onChange={(e) => setSkipLine(e.target.value)}
-                      className="w-full bg-slate-900 border border-slate-800 rounded-xl p-3 text-white font-mono font-bold outline-none"
-                    />
-                  </div>
-                  <div>
-                    <label className="block text-slate-300 mb-1.5 font-bold uppercase tracking-wider">Amount Round</label>
-                    <input
-                      type="number"
-                      value={amountRound}
-                      onChange={(e) => setAmountRound(e.target.value)}
-                      className="w-full bg-slate-900 border border-slate-800 rounded-xl p-3 text-white font-mono font-bold outline-none"
-                    />
-                  </div>
+        {/* TAB 1: ADVANCED OFFLINE DATABASE MANAGER */}
+        {activeTab === 'Database' && (
+          <div className="space-y-4">
+            {/* Storage Health Stats Card */}
+            <div className="p-4 rounded-3xl bg-slate-950 border border-slate-800 space-y-3 shadow-xl">
+              <div className="flex items-center justify-between border-b border-slate-800 pb-2">
+                <div className="flex items-center gap-2">
+                  <HardDrive className="w-5 h-5 text-cyan-300" />
+                  <span className="font-black text-sm text-white">Offline Database Status</span>
                 </div>
+                <span className="text-[10px] font-extrabold bg-emerald-500/20 text-emerald-300 border border-emerald-500/40 px-2 py-0.5 rounded-full uppercase">
+                  100% Offline Active
+                </span>
+              </div>
 
-                <div className="p-4 rounded-2xl bg-slate-900 border border-slate-800 space-y-3">
-                  <div className="flex justify-between items-center text-sm font-bold">
-                    <span className="text-white">SMS Slip (Mobile Text)</span>
-                    <input
-                      type="checkbox"
-                      checked={smsSlip}
-                      onChange={(e) => setSmsSlip(e.target.checked)}
-                      className="w-5 h-5 accent-cyan-500 cursor-pointer"
-                    />
-                  </div>
-                  <div className="flex justify-between items-center text-sm font-bold">
-                    <span className="text-white">Logo On Slip (Dairy Logo)</span>
-                    <input
-                      type="checkbox"
-                      checked={logoOnSlip}
-                      onChange={(e) => setLogoOnSlip(e.target.checked)}
-                      className="w-5 h-5 accent-cyan-500 cursor-pointer"
-                    />
-                  </div>
+              <div className="grid grid-cols-3 gap-2 text-center text-xs font-mono pt-1">
+                <div className="bg-slate-900 p-2.5 rounded-2xl border border-slate-800">
+                  <div className="text-[9px] text-slate-400 font-sans font-bold">Farmers</div>
+                  <div className="text-base font-black text-white">{stats.members.length}</div>
+                </div>
+                <div className="bg-slate-900 p-2.5 rounded-2xl border border-slate-800">
+                  <div className="text-[9px] text-slate-400 font-sans font-bold">Milk Entries</div>
+                  <div className="text-base font-black text-cyan-300">{stats.purchases.length}</div>
+                </div>
+                <div className="bg-slate-900 p-2.5 rounded-2xl border border-slate-800">
+                  <div className="text-[9px] text-slate-400 font-sans font-bold">DB Size</div>
+                  <div className="text-base font-black text-emerald-400">{dbSizeKB} KB</div>
                 </div>
               </div>
-            )}
+            </div>
 
-            {/* TAB 2: FAT SETTINGS */}
-            {activeTab === 'Fat' && (
-              <div className="space-y-4 text-xs">
-                <div>
-                  <label className="block text-slate-300 mb-1.5 font-bold uppercase tracking-wider">Rate Chart Type</label>
-                  <select
-                    value={fatChartType}
-                    onChange={(e) => setFatChartType(e.target.value)}
-                    className="w-full bg-slate-900 border border-slate-800 rounded-xl p-3 text-white text-sm outline-none"
-                  >
-                    <option value="FAT SNF CHART RAJSTHAN">FAT SNF CHART RAJSTHAN</option>
-                    <option value="FAT SNF CHART GUJARAT">FAT SNF CHART GUJARAT</option>
-                    <option value="AMUL DAIRY RATE CHART">AMUL DAIRY RATE CHART</option>
-                  </select>
-                </div>
+            {/* Backup & Restore Action Buttons */}
+            <div className="space-y-3">
+              <h4 className="text-xs font-extrabold text-slate-400 uppercase tracking-wider px-1">Backup & Restore Operations</h4>
 
-                <div className="grid grid-cols-3 gap-2">
-                  <div>
-                    <label className="block text-slate-400 mb-1 font-bold">Max Cow Fat</label>
-                    <input
-                      type="number"
-                      value={maxFatCow}
-                      onChange={(e) => setMaxFatCow(e.target.value)}
-                      className="w-full bg-slate-900 border border-slate-800 rounded-xl p-2.5 text-white font-mono font-bold outline-none"
-                    />
+              <div className="grid grid-cols-2 gap-3">
+                {/* Download Backup Button */}
+                <button
+                  onClick={handleExportBackup}
+                  className="p-4 rounded-3xl bg-slate-950 border border-slate-800 hover:border-cyan-400 flex flex-col items-center text-center gap-2 shadow-lg active:scale-95 transition-all"
+                >
+                  <div className="p-2.5 rounded-2xl bg-cyan-500/20 text-cyan-300 border border-cyan-500/40">
+                    <Download className="w-6 h-6" />
                   </div>
                   <div>
-                    <label className="block text-slate-400 mb-1 font-bold">Max Buff Fat</label>
-                    <input
-                      type="number"
-                      value={maxFatBuff}
-                      onChange={(e) => setMaxFatBuff(e.target.value)}
-                      className="w-full bg-slate-900 border border-slate-800 rounded-xl p-2.5 text-white font-mono font-bold outline-none"
-                    />
+                    <span className="font-extrabold text-xs text-white block">Download Backup</span>
+                    <span className="text-[10px] text-slate-400">Save DB File (.json)</span>
+                  </div>
+                </button>
+
+                {/* Restore Backup Button */}
+                <button
+                  onClick={() => fileInputRef.current?.click()}
+                  className="p-4 rounded-3xl bg-slate-950 border border-slate-800 hover:border-purple-400 flex flex-col items-center text-center gap-2 shadow-lg active:scale-95 transition-all"
+                >
+                  <div className="p-2.5 rounded-2xl bg-purple-500/20 text-purple-300 border border-purple-500/40">
+                    <Upload className="w-6 h-6" />
                   </div>
                   <div>
-                    <label className="block text-slate-400 mb-1 font-bold">Avg Fat Days</label>
-                    <input
-                      type="number"
-                      value={avgFatDays}
-                      onChange={(e) => setAvgFatDays(e.target.value)}
-                      className="w-full bg-slate-900 border border-slate-800 rounded-xl p-2.5 text-white font-mono font-bold outline-none"
-                    />
+                    <span className="font-extrabold text-xs text-white block">Restore Backup</span>
+                    <span className="text-[10px] text-slate-400">Upload DB File (.json)</span>
                   </div>
-                </div>
+                </button>
+
+                {/* Hidden File Input */}
+                <input
+                  type="file"
+                  ref={fileInputRef}
+                  onChange={handleRestoreFile}
+                  accept=".json"
+                  className="hidden"
+                />
               </div>
-            )}
 
-            {/* TAB 3: WEIGHT SETTINGS */}
-            {activeTab === 'Weight' && (
-              <div className="space-y-4 text-xs">
-                <div className="p-4 rounded-2xl bg-slate-900 border border-slate-800 flex items-center justify-between">
-                  <div className="flex items-center gap-3">
-                    <Wifi className="w-6 h-6 text-cyan-400 animate-pulse" />
-                    <div>
-                      <span className="font-extrabold text-sm text-cyan-300 block">WiFi Weight Scale Integration</span>
-                      <span className="text-xs text-slate-400">VDC(WIFI) Scale Connected</span>
-                    </div>
+              {/* Excel CSV Export */}
+              <button
+                onClick={handleExportCSV}
+                className="w-full p-3.5 rounded-2xl bg-slate-950 border border-slate-800 hover:border-emerald-400 flex items-center justify-between shadow-lg text-xs font-extrabold text-white"
+              >
+                <div className="flex items-center gap-3">
+                  <div className="p-2 rounded-xl bg-emerald-500/20 text-emerald-300 border border-emerald-500/40">
+                    <FileSpreadsheet className="w-5 h-5" />
                   </div>
+                  <span>Export All Purchases to Excel (.CSV)</span>
                 </div>
-
-                <div className="grid grid-cols-2 gap-3">
-                  <div>
-                    <label className="block text-slate-300 mb-1.5 font-bold uppercase tracking-wider">Weight Scale Type</label>
-                    <select
-                      value={weightType}
-                      onChange={(e) => setWeightType(e.target.value)}
-                      className="w-full bg-slate-900 border border-slate-800 rounded-xl p-3 text-white text-sm outline-none"
-                    >
-                      <option value="VDC(WIFI)">VDC(WIFI)</option>
-                      <option value="BLUETOOTH(SCALE)">BLUETOOTH(SCALE)</option>
-                      <option value="MANUAL">MANUAL</option>
-                    </select>
-                  </div>
-                  <div>
-                    <label className="block text-slate-300 mb-1.5 font-bold uppercase tracking-wider">Fat Analyzer</label>
-                    <select
-                      value={fatType}
-                      onChange={(e) => setFatType(e.target.value)}
-                      className="w-full bg-slate-900 border border-slate-800 rounded-xl p-3 text-white text-sm outline-none"
-                    >
-                      <option value="Normal">Normal Auto</option>
-                      <option value="EkoMilk">EkoMilk Analyzer</option>
-                    </select>
-                  </div>
-                </div>
-              </div>
-            )}
-
-            {/* TAB 4: PRINTER SETTINGS */}
-            {activeTab === 'Printer' && (
-              <div className="space-y-4 text-xs">
-                <div className="p-4 rounded-2xl bg-slate-900 border border-slate-800 flex items-center justify-between">
-                  <div className="flex items-center gap-3">
-                    <Bluetooth className="w-6 h-6 text-cyan-300" />
-                    <div>
-                      <span className="font-extrabold text-sm text-white block">SET RECEIPT PRINTER</span>
-                      <span className="text-xs font-mono text-cyan-300">{btPrinterMac}</span>
-                    </div>
-                  </div>
-                  <button
-                    type="button"
-                    onClick={() => alert("Scanning for Bluetooth printers...")}
-                    className="px-3 py-1.5 rounded-xl bg-sky-700 text-white font-black text-xs shadow-md"
-                  >
-                    Scan BT
-                  </button>
-                </div>
-
-                <div className="p-4 rounded-2xl bg-slate-900 border border-slate-800 space-y-3">
-                  <div className="flex justify-between items-center text-sm font-bold">
-                    <span className="text-white">Print Slip (Receipt Print)</span>
-                    <input
-                      type="checkbox"
-                      checked={printSlip}
-                      onChange={(e) => setPrintSlip(e.target.checked)}
-                      className="w-5 h-5 accent-cyan-500 cursor-pointer"
-                    />
-                  </div>
-                  <div className="flex justify-between items-center text-sm font-bold">
-                    <span className="text-white">Usb Slip Printing</span>
-                    <input
-                      type="checkbox"
-                      checked={usbSlipPrinting}
-                      onChange={(e) => setUsbSlipPrinting(e.target.checked)}
-                      className="w-5 h-5 accent-cyan-500 cursor-pointer"
-                    />
-                  </div>
-                </div>
-              </div>
-            )}
-
-            <div className="pt-2 flex gap-3">
-              <button type="submit" className="flex-1 py-3.5 rounded-2xl bg-gradient-to-r from-sky-600 to-blue-700 hover:opacity-90 font-extrabold text-white text-base shadow-lg">
-                Save Settings (सेटिंग्स सेव करें)
-              </button>
-              <button type="button" onClick={onClose} className="px-5 py-3.5 rounded-2xl bg-slate-800 text-slate-300 font-bold">
-                Cancel
+                <Download className="w-4 h-4 text-emerald-400" />
               </button>
             </div>
-          </form>
+          </div>
         )}
+
+        {/* TAB 2: WEIGHT SCALE */}
+        {activeTab === 'Scale' && (
+          <div className="p-4 rounded-3xl bg-slate-950 border border-slate-800 space-y-3">
+            <div className="flex items-center gap-3">
+              <Wifi className="w-6 h-6 text-cyan-300 animate-pulse" />
+              <div>
+                <span className="font-extrabold text-sm text-white block">WiFi Scale Integration</span>
+                <span className="text-xs text-slate-400">VDC(WIFI) Scale Connected</span>
+              </div>
+            </div>
+          </div>
+        )}
+
+        {/* TAB 3: BT PRINTER */}
+        {activeTab === 'Printer' && (
+          <div className="p-4 rounded-3xl bg-slate-950 border border-slate-800 space-y-3">
+            <div className="flex items-center justify-between">
+              <div className="flex items-center gap-3">
+                <Bluetooth className="w-6 h-6 text-cyan-300" />
+                <div>
+                  <span className="font-extrabold text-sm text-white block">Thermal Bluetooth Printer</span>
+                  <span className="text-xs font-mono text-cyan-300">C8:47:8C:33:B5:41</span>
+                </div>
+              </div>
+              <button onClick={() => alert("Scanning...")} className="px-3 py-1.5 rounded-xl bg-sky-700 text-white font-black text-xs">
+                Scan BT
+              </button>
+            </div>
+          </div>
+        )}
+
+        <div className="pt-2">
+          <button onClick={onClose} className="w-full py-3.5 rounded-2xl bg-gradient-to-r from-sky-600 to-blue-700 text-white font-black text-sm shadow-lg">
+            Done (Close Settings)
+          </button>
+        </div>
       </div>
     </div>
   );

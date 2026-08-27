@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { MilkPurchaseRecord, MilkSaleRecord } from "@/lib/types";
-import { X, FileText, Printer, Bluetooth, Calendar, Filter } from "lucide-react";
+import { X, Calendar, Search, FileText, Printer } from "lucide-react";
 
 interface ReportsModalProps {
   reportType: 'purchase' | 'sale' | 'payment' | 'date-summary' | 'datewise';
@@ -12,137 +12,69 @@ interface ReportsModalProps {
 }
 
 export default function ReportsModal({ reportType, purchases, sales, onClose }: ReportsModalProps) {
-  const [filterShift, setFilterShift] = useState<'Morning' | 'Evening' | 'ALL'>('Morning');
-  const [orderType, setOrderType] = useState('Sampal Order');
-  const [selectedDate, setSelectedDate] = useState(new Date().toISOString().split("T")[0]);
-
-  const filteredPurchases = purchases.filter((p) => {
-    const shiftMatch = filterShift === 'ALL' || (filterShift === 'Morning' && p.shift === 'MORNING') || (filterShift === 'Evening' && p.shift === 'EVENING');
-    return shiftMatch;
-  });
-
-  const totalLiters = filteredPurchases.reduce((acc, p) => acc + p.liters, 0);
-  const totalAmount = filteredPurchases.reduce((acc, p) => acc + p.totalAmount, 0);
-  const avgFat = filteredPurchases.length > 0 ? (filteredPurchases.reduce((acc, p) => acc + (p.fat * p.liters), 0) / (totalLiters || 1)).toFixed(1) : "0.0";
-  const avgSnf = filteredPurchases.length > 0 ? (filteredPurchases.reduce((acc, p) => acc + (p.snf * p.liters), 0) / (totalLiters || 1)).toFixed(1) : "0.0";
-
-  const handlePrintAction = (type: 'DOT' | 'LSR' | 'BT') => {
-    alert(`[${type} PRINT]: Printing Milk Purchase Report via ${type === 'BT' ? 'Bluetooth Thermal Printer (C8:47:8C:33:B5:41)' : type === 'DOT' ? 'Dot Matrix Printer' : 'Laser Printer'}...`);
-  };
-
   return (
-    <div className="fixed inset-0 z-50 w-full h-full bg-slate-950 text-slate-100 flex flex-col overflow-hidden">
-      {/* Top Mobile Bar */}
-      <div className="h-12 bg-sky-900 text-white px-4 flex items-center justify-between shadow-md border-b border-sky-800 flex-shrink-0">
-        <div className="flex items-center gap-2">
-          <FileText className="w-5 h-5 text-cyan-300" />
-          <span className="font-extrabold text-sm tracking-tight">SM MILK / Purchase Report (दूध रिपोर्ट)</span>
-        </div>
-        <button
-          onClick={onClose}
-          className="p-1.5 rounded-lg bg-sky-950 hover:bg-red-600 text-white transition-colors"
-        >
-          <X className="w-5 h-5" />
-        </button>
+    <div className="fixed inset-0 z-50 w-full h-full bg-white text-slate-900 flex flex-col overflow-hidden font-sans">
+      {/* ── HEADER ── */}
+      <div className="h-14 bg-[#4682b4] text-white px-4 flex items-center shadow-md flex-shrink-0">
+        <span className="font-bold text-lg uppercase">SM MILK / {reportType} Report</span>
       </div>
 
-      {/* Main Full Screen Body */}
-      <div className="flex-1 overflow-y-auto p-4 space-y-3 bg-slate-900">
-        {/* Top Controls Row */}
-        <div className="grid grid-cols-3 gap-2 text-xs">
-          <input
-            type="date"
-            value={selectedDate}
-            onChange={(e) => setSelectedDate(e.target.value)}
-            className="bg-slate-950 border border-slate-800 rounded-xl p-2.5 text-cyan-300 font-bold outline-none"
-          />
-
-          <select
-            value={filterShift}
-            onChange={(e) => setFilterShift(e.target.value as any)}
-            className="bg-slate-950 border border-slate-800 rounded-xl p-2.5 text-white outline-none font-bold"
-          >
-            <option value="Morning">Morning</option>
-            <option value="Evening">Evening</option>
-            <option value="ALL">ALL Shifts</option>
-          </select>
-
-          <select
-            value={orderType}
-            onChange={(e) => setOrderType(e.target.value)}
-            className="bg-slate-950 border border-slate-800 rounded-xl p-2.5 text-white outline-none font-bold"
-          >
-            <option value="Sampal Order">Sampal Order</option>
-            <option value="Member Code Order">Code Order</option>
-          </select>
+      <div className="flex-1 overflow-y-auto p-2 bg-[#f4f7f6]">
+        {/* TOP CONTROLS */}
+        <div className="grid grid-cols-3 gap-2 mb-2 text-xs font-bold">
+           <div className="border border-gray-400 bg-white p-2 rounded-md flex justify-between">25-08-2026 <Calendar className="w-4 h-4 text-red-500" /></div>
+           <div className="border border-gray-400 bg-white p-2 rounded-md">Morning</div>
+           <button className="bg-[#4682b4] text-white rounded-md p-2">SHOW</button>
         </div>
 
-        {/* 4 Print Action Buttons (SHOW, DOT PRINT, LSR PRINT, BT PRINT) */}
-        <div className="grid grid-cols-4 gap-2 text-xs font-bold">
-          <button className="py-2.5 rounded-xl bg-slate-950 border border-slate-800 text-cyan-300 font-black shadow-md text-center">
-            SHOW
-          </button>
-          <button onClick={() => handlePrintAction('DOT')} className="py-2.5 rounded-xl bg-slate-950 border border-slate-800 text-white font-bold shadow-md text-center">
-            DOT PRINT
-          </button>
-          <button onClick={() => handlePrintAction('LSR')} className="py-2.5 rounded-xl bg-slate-950 border border-slate-800 text-white font-bold shadow-md text-center">
-            LSR PRINT
-          </button>
-          <button onClick={() => handlePrintAction('BT')} className="py-2.5 rounded-xl bg-sky-700 text-white font-bold shadow-md text-center flex items-center justify-center gap-1">
-            <Bluetooth className="w-3.5 h-3.5" />
-            <span>BT PRINT</span>
-          </button>
-        </div>
-
-        {/* Data Table */}
-        <div className="overflow-x-auto rounded-2xl border border-slate-800 bg-slate-950 shadow-xl">
-          <table className="w-full text-left text-xs border-collapse font-mono">
-            <thead className="bg-sky-950 text-cyan-300 font-bold border-b border-slate-800 uppercase text-[10px]">
+        {/* TABLE */}
+        <div className="border border-[#4682b4] overflow-hidden">
+          <table className="w-full text-[10px] text-center">
+            <thead className="bg-[#4682b4] text-white">
               <tr>
-                <th className="p-2.5 border-r border-slate-800">SR.N</th>
-                <th className="p-2.5 border-r border-slate-800">MEM</th>
-                <th className="p-2.5 border-r border-slate-800">NAME</th>
-                <th className="p-2.5 border-r border-slate-800">T</th>
-                <th className="p-2.5 border-r border-slate-800">WEIT.</th>
-                <th className="p-2.5 border-r border-slate-800">FAT</th>
-                <th className="p-2.5 border-r border-slate-800">SNF</th>
-                <th className="p-2.5 border-r border-slate-800 text-right">AMOUNT</th>
-                <th className="p-2.5">RATE</th>
+                <th className="p-2 border-r border-white">SR.N</th>
+                <th className="p-2 border-r border-white">CODE</th>
+                <th className="p-2 border-r border-white">NAME</th>
+                <th className="p-2 border-r border-white">LTR</th>
+                <th className="p-2 border-r border-white">FAT</th>
+                <th className="p-2">AMOUNT</th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-slate-800 text-slate-200">
-              {filteredPurchases.length === 0 ? (
-                <tr>
-                  <td colSpan={9} className="p-6 text-center text-slate-500 font-sans text-xs">
-                    कोई रिकॉर्ड उपलब्ध नहीं है। (No Purchase Records)
-                  </td>
-                </tr>
-              ) : (
-                filteredPurchases.map((p, idx) => (
-                  <tr key={p.id} className="hover:bg-slate-900">
-                    <td className="p-2.5 border-r border-slate-800 font-bold">{idx + 1}.0</td>
-                    <td className="p-2.5 border-r border-slate-800 font-bold text-cyan-300">{p.memberCode}</td>
-                    <td className="p-2.5 border-r border-slate-800 font-sans text-white truncate max-w-[100px]">{p.memberName}</td>
-                    <td className="p-2.5 border-r border-slate-800 font-bold text-cyan-300">{p.milkType === 'BUFFALO' ? 'B' : 'C'}</td>
-                    <td className="p-2.5 border-r border-slate-800 font-bold text-white">{p.liters}</td>
-                    <td className="p-2.5 border-r border-slate-800 text-cyan-300">{p.fat}</td>
-                    <td className="p-2.5 border-r border-slate-800 text-cyan-300">{p.snf}</td>
-                    <td className="p-2.5 border-r border-slate-800 text-right font-extrabold text-emerald-400">₹{p.totalAmount}</td>
-                    <td className="p-2.5 text-cyan-300">₹{p.ratePerLiter}</td>
-                  </tr>
-                ))
-              )}
+            <tbody className="bg-white">
+               {purchases.length === 0 ? (
+                 <tr><td colSpan={6} className="p-10 text-gray-400">No Records Found</td></tr>
+               ) : (
+                 purchases.map((p, i) => (
+                   <tr key={p.id} className="border-b">
+                     <td className="p-2">{i+1}</td>
+                     <td className="p-2 font-bold">{p.memberCode}</td>
+                     <td className="p-2">{p.memberName}</td>
+                     <td className="p-2">{p.liters}</td>
+                     <td className="p-2">{p.fat}</td>
+                     <td className="p-2 font-bold text-emerald-600">₹{p.totalAmount}</td>
+                   </tr>
+                 ))
+               )}
             </tbody>
           </table>
         </div>
+
+        <div className="flex justify-center gap-4 mt-6">
+           <button className="flex flex-col items-center gap-1"><div className="w-12 h-12 bg-blue-600 rounded-full flex items-center justify-center text-white"><Printer className="w-6 h-6" /></div><span className="text-[10px] font-bold">DOT PRINT</span></button>
+           <button className="flex flex-col items-center gap-1"><div className="w-12 h-12 bg-red-600 rounded-full flex items-center justify-center text-white"><X className="w-6 h-6" onClick={onClose} /></div><span className="text-[10px] font-bold">CLOSE</span></button>
+        </div>
       </div>
 
-      {/* Bottom Summary Bar */}
-      <div className="h-10 bg-sky-900 text-white px-4 flex items-center justify-between text-xs font-extrabold flex-shrink-0 border-t border-sky-800 font-mono">
-        <span>Count: <span className="text-cyan-300">{filteredPurchases.length}</span></span>
-        <span>Ltr: <span className="text-white">{totalLiters.toFixed(1)}</span></span>
-        <span>Fat: <span className="text-cyan-300">{avgFat}%</span></span>
-        <span>Amount: <span className="text-emerald-400 font-black text-sm">₹{totalAmount.toFixed(2)}</span></span>
+      {/* FOOTER */}
+      <div className="h-10 bg-[#4682b4] flex items-center border-t border-white">
+        <div className="w-12 h-full bg-white flex items-center justify-center border-r border-gray-400">
+          <Search className="w-6 h-6 text-blue-400" />
+        </div>
+        <div className="flex-1 grid grid-cols-3 h-full text-[11px] font-bold text-center">
+          <div className="flex items-center justify-center border-r border-gray-400 bg-blue-100">Count: {purchases.length}</div>
+          <div className="flex items-center justify-center border-r border-gray-400 bg-blue-200">Ltr: 0</div>
+          <div className="flex items-center justify-center bg-blue-300">Amt: ₹0</div>
+        </div>
       </div>
     </div>
   );
